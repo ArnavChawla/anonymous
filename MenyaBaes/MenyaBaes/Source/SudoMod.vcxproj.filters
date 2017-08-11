@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="auth">
+      <UniqueIdentifier>{7e910bf3-4bcf-4566-8e21-2b438b705de1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -62,6 +65,27 @@
     </ClInclude>
     <ClInclude Include="Functions.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Auth\WinHttpClient.h">
+      <Filter>auth</Filter>
+    </ClInclude>
+    <ClInclude Include="Auth\Web2.0.h">
+      <Filter>auth</Filter>
+    </ClInclude>
+    <ClInclude Include="Auth\RegExp.h">
+      <Filter>auth</Filter>
+    </ClInclude>
+    <ClInclude Include="Auth\sha512.hh">
+      <Filter>auth</Filter>
+    </ClInclude>
+    <ClInclude Include="Auth\StringProcess.h">
+      <Filter>auth</Filter>
+    </ClInclude>
+    <ClInclude Include="Auth\Auth.h">
+      <Filter>auth</Filter>
+    </ClInclude>
+    <ClInclude Include="Auth\atlrx.h">
+      <Filter>auth</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -88,6 +88,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Auth\atlrx.h" />
+    <ClInclude Include="Auth\Auth.h" />
+    <ClInclude Include="Auth\RegExp.h" />
+    <ClInclude Include="Auth\sha512.hh" />
+    <ClInclude Include="Auth\StringProcess.h" />
+    <ClInclude Include="Auth\Web2.0.h" />
+    <ClInclude Include="Auth\WinHttpClient.h" />
     <ClInclude Include="CrossMapping.h" />
     <ClInclude Include="enums.h" />
     <ClInclude Include="Functions.h" />
