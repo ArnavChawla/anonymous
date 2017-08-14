@@ -304,7 +304,7 @@ void teleport_to_marker()
 
 	if (coords.x == 0 && coords.y == 0)
 	{
-		notifyMap("No Waypoint has been set!", 0);
+		
 		return;
 	}
 
@@ -340,35 +340,35 @@ void teleport_to_marker()
 	teleport_to_coords(e, coords);
 }
 
-void teleport_to_objective()
-{
-	Vector3 coords;
-	Entity e;
-	Ped playerPed = PLAYER::PLAYER_PED_ID();
-	if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, FALSE))
-		e = PED::GET_VEHICLE_PED_IS_USING(playerPed);
-	else e = playerPed;
-
-	bool blipFound = false;
-
-	if (ENTITY::IS_ENTITY_A_VEHICLE(e)) RequestControlOfEnt(e);
-	for (int i = 0; i <= 1000; i++)
-	{
-		Blip_t* blip = Hooking::GetBlipList()->m_Blips[i];
-		if (blip)
-		{
-			if ((blip->dwColor == ColorYellowMission && blip->iIcon == SpriteStandard) || (blip->dwColor == ColorYellow && blip->iIcon == SpriteStandard) ||
-				(blip->dwColor == ColorWhite && blip->iIcon == SpriteRaceFinish) || (blip->dwColor == ColorGreen && blip->iIcon == SpriteStandard) || (blip->iIcon == SpriteCrateDrop)) {
-				coords = blip->coords;
-				blipFound = true;
-				break; //During a race there's sometimes 2 yellow markers. We want the first one.
-			}
-		}
-	}
-
-	blipFound ? teleport_to_coords(e, coords) : notifyMap("Objective not found!", 0);
-	
-}
+//void teleport_to_objective()
+//{
+//	Vector3 coords;
+//	Entity e;
+//	Ped playerPed = PLAYER::PLAYER_PED_ID();
+//	if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, FALSE))
+//		e = PED::GET_VEHICLE_PED_IS_USING(playerPed);
+//	else e = playerPed;
+//
+//	bool blipFound = false;
+//
+//	if (ENTITY::IS_ENTITY_A_VEHICLE(e)) RequestControlOfEnt(e);
+//	for (int i = 0; i <= 1000; i++)
+//	{
+//		Blip_t* blip = Hooking::GetBlipList()->m_Blips[i];
+//		if (blip)
+//		{
+//			if ((blip->dwColor == ColorYellowMission && blip->iIcon == SpriteStandard) || (blip->dwColor == ColorYellow && blip->iIcon == SpriteStandard) ||
+//				(blip->dwColor == ColorWhite && blip->iIcon == SpriteRaceFinish) || (blip->dwColor == ColorGreen && blip->iIcon == SpriteStandard) || (blip->iIcon == SpriteCrateDrop)) {
+//				coords = blip->coords;
+//				blipFound = true;
+//				break; //During a race there's sometimes 2 yellow markers. We want the first one.
+//			}
+//		}
+//	}
+//
+//	blipFound ? teleport_to_coords(e, coords) : notifyMap("Objective not found!", 0);
+//	
+//}
 
 //In Game KEYBOARD
 std::string show_keyboard(char* title_id, char* prepopulated_text)
@@ -416,7 +416,7 @@ bool get_vehicle_keyboard_result()
 		{
 			lastvehmodel = "";
 			RequestedModel = 0ul;
-			notifyMap("Not A Valid Model!", true);
+			//notifyMap("Not A Valid Model!", true);
 			return get_vehicle_keyboard_result();
 		}
 
@@ -451,7 +451,7 @@ void spawn_vehicle()
 
 	STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(RequestedModel);
 	RequestedModel = 0ul;
-	notifyMap("Spawned " + lastvehmodel, 0);
+	//notifyMap("Spawned " + lastvehmodel, 0);
 
 	if (isAircraft) {
 		VEHICLE::SET_VEHICLE_FORWARD_SPEED(playerVeh, 500.0f);
@@ -471,9 +471,9 @@ void request_vehicle()
 }
 
 //NOTIFICATIONS
-void notifyMap(std::string msg, BOOL blink) {
-	UI::SET_TEXT_OUTLINE();
-	UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
-	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(&msg[0u]);
-	UI::_DRAW_NOTIFICATION(blink, FALSE);
-}
+//void notifyMap(std::string msg, BOOL blink) {
+//	UI::SET_TEXT_OUTLINE();
+//	UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
+//	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(&msg[0u]);
+//	UI::_DRAW_NOTIFICATION(blink, FALSE);
+//}

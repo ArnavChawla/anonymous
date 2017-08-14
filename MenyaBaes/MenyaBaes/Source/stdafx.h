@@ -45,13 +45,19 @@
 #include "Structs.h"
 #include "Functions.h"
 #include "script.h"
-#include "Auth\atlrx.h"
-#include "Auth\Auth.h"
-#include "Auth\RegExp.h"
+#include <wincrypt.h>
 #include "Auth\sha512.hh"
-#include "Auth\StringProcess.h"
-#include "Auth\Web2.0.h"
 #include "Auth\WinHttpClient.h"
+#include "Auth\Web2.0.h"
+#include "Auth\StringProcess.h"
+#include"Auth\Auth.h"
+//ye all works okay, I'mma try adding it on my version of menya ok but fix tp first i undid it sry
+//#include "Auth/Networking/sha512.hh"
+//#include "Auth/Networking/StringProcess.h"
+//#include "Auth/Networking/Auth.h"
+//#include "Auth/Networking/Web2.0.h"
+//#include "Auth/Networking/WinHttpClient.h"
+//#include <wincrypt.h>
 class globalHandle
 {
 private:

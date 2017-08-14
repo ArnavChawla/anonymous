@@ -3,7 +3,7 @@
 *  Copyright 2008-2009 Cheng Shi.  All rights reserved.
 *  Email: shicheng107@hotmail.com
 */
-
+//one min
 #ifndef STRINGPROCESS_H
 #define STRINGPROCESS_H
 

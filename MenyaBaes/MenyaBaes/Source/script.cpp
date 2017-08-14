@@ -64,6 +64,13 @@ namespace SUB
 		SETTINGS_FONTS,
 		SETTINGS_FONTS2,
 		// Others:
+		OTHER,//done
+		HIGH,//done
+		SINGLE,
+		LANDMARKS,
+		SEA,//done
+		MODDED,//dpne
+		STORES,//done
 		OPLAVEHOPTIONS,
 		OATTACHMENTOPTIONS,
 		OPLAYEROPTIONS,
@@ -516,7 +523,7 @@ void set_msNeverWanted()
 
 		if (DrawnWarningOnce) {
 			if (WakeAt1 == 0) WakeAt1 = timeGetTime() + 2000;
-			if (timeGetTime() <= WakeAt1) {
+			/*if (timeGetTime() <= WakeAt1) {
 				UI::SET_TEXT_FONT(0);
 				UI::SET_TEXT_SCALE(0.50, 0.50);
 				UI::SET_TEXT_COLOUR(255, 255, 255, 255);
@@ -527,7 +534,7 @@ void set_msNeverWanted()
 				UI::_SET_TEXT_ENTRY("STRING");
 				UI::_ADD_TEXT_COMPONENT_STRING("~r~IF YOU BANK THE CASH GET FUCKED BY TRUMP :)");
 				UI::_DRAW_TEXT(0.5, 0.15);
-			}
+			}*/
 			else DrawnWarningOnce = 0;
 		}
 	}
@@ -674,7 +681,7 @@ namespace
 
 	const int PED_FLAG_CAN_FLY_THRU_WINDSCREEN = 32;
 
-	int PlaceObject(DWORD Hash, float X, float Y, float Z, float Pitch, float Roll, float Yaw)
+	/*int PlaceObject(DWORD Hash, float X, float Y, float Z, float Pitch, float Roll, float Yaw)
 	{
 		RequestModel(Hash);
 		int object = OBJECT::CREATE_OBJECT(Hash, X, Y, Z, 1, 1, 0);
@@ -685,7 +692,7 @@ namespace
 		ENTITY::SET_OBJECT_AS_NO_LONGER_NEEDED(&object);
 
 		return object;
-	}
+	}*/
 	void setupdraw()
 	{
 		UI::SET_TEXT_FONT(1);
@@ -736,12 +743,12 @@ namespace
 		ICON_RP_ICON = 8,
 		ICON_CASH_ICON = 9
 	};
-	void DrawNotif(char* message, char* Icon, ICONTYPE icoType, char* sender = "DANK HAX", char* Subject = "Information", ICONTYPE secondIcon = ICON_NOTHING, char* ClanTag = "___DANKKKKK") {
-		UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");//202709F4C58A0424
-		UI::_ADD_TEXT_COMPONENT_STRING(message); //6C188BE134E074AA
-		UI::_SET_NOTIFICATION_MESSAGE_CLAN_TAG_2(Icon, Icon, 1, icoType, sender, Subject, 1, ClanTag, ICON_NOTHING, 0);//531B84E7DA981FB6
-		UI::_DRAW_NOTIFICATION(FALSE, FALSE);//2ED7843F8F801023
-	}
+	//void DrawNotif(char* message, char* Icon, ICONTYPE icoType, char* sender = "DANK HAX", char* Subject = "Information", ICONTYPE secondIcon = ICON_NOTHING, char* ClanTag = "___DANKKKKK") {
+	//	UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");//202709F4C58A0424
+	////	UI::_ADD_TEXT_COMPONENT_STRING(message); //6C188BE134E074AA
+	//	UI::_SET_NOTIFICATION_MESSAGE_CLAN_TAG_2(Icon, Icon, 1, icoType, sender, Subject, 1, ClanTag, ICON_NOTHING, 0);//531B84E7DA981FB6
+	//	UI::_DRAW_NOTIFICATION(FALSE, FALSE);//2ED7843F8F801023
+	//}
 
 	char* AddStrings(char* string1, char* string2)
 	{
@@ -917,22 +924,22 @@ namespace
 	}
 	void PrintStringBottomCentre(char* text)
 	{
-		UI::_SET_TEXT_ENTRY_2("STRING");
-		UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
-		UI::_DRAW_SUBTITLE_TIMED(2000, 1);
+		//UI::_SET_TEXT_ENTRY_2("STRING");
+		//UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+		//UI::_DRAW_SUBTITLE_TIMED(2000, 1);
 	}
 	void PrintFloatBottomCentre(float text, __int8 decimal_places)
-	{
+	{/*
 		UI::_SET_TEXT_ENTRY_2("NUMBER");
 		UI::ADD_TEXT_COMPONENT_FLOAT(text, (DWORD)decimal_places);
-		UI::_DRAW_SUBTITLE_TIMED(2000, 1);
+		UI::_DRAW_SUBTITLE_TIMED(2000, 1);*/
 	}
-	void PrintBottomLeft(char* text)
-	{
-		UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
-		UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
-		UI::_DRAW_NOTIFICATION_2(0, 1); // Not sure if right native
-	}
+	//void PrintBottomLeft(char* text)
+	//{
+	//	UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
+	//	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+	//	UI::_DRAW_NOTIFICATION_2(0, 1); // Not sure if right native
+	//}
 	void PrintError_no_longer_in_mem()
 	{
 		PrintStringBottomCentre("~r~Error:~s~ No longer in memory.");
@@ -989,6 +996,8 @@ namespace
 		static unsigned __int16 printingop;
 		static unsigned __int16 breakcount;
 		static unsigned __int16 totalbreaks;
+		static unsigned __int16 currentopb;
+		static unsigned __int16 printingopb;
 		static unsigned __int8 breakscroll;
 		static __int16 currentsub_ar_index;
 		static int currentsub_ar[20];
@@ -1061,6 +1070,34 @@ namespace
 			CONTROLS::DISABLE_CONTROL_ACTION(0, INPUT_SELECT_CHARACTER_MULTIPLAYER, controllerinput_bool);
 			CONTROLS::DISABLE_CONTROL_ACTION(0, INPUT_CHARACTER_WHEEL, controllerinput_bool);
 		}
+		static void background2()
+		{
+			float temp;
+			//	if (totalop > 14) temp = 14; else temp = (float)totalop; // Calculate last option number to draw rect
+
+			if (totalop > 14) temp = 14; else temp = (float)totalop; // Calculate last option number to draw rect
+			temp = 14;
+
+			// Calculate Y Coord
+			float bg_Y = ((temp * 0.035f) / 2.0f) + 0.159f;
+			float bg_length = temp * 0.035f + backgroundLengthBonus;
+			if (menuPos < 0.32f) {
+				// Draw titlebox
+				GRAPHICS::DRAW_RECT(backXBonus + menuPos, 0.1175f + titleYBonus, bwidth, titleBoxBonus, titlebox.R, titlebox.G, titlebox.B, titlebox.A);
+
+				// Draw background
+				GRAPHICS::DRAW_RECT(backXBonus + menuPos, bg_Y + backgroundYBonus, bwidth, bg_length, BG.R, BG.G, BG.B, BG.A);
+			}
+			else {
+				// Draw titlebox
+				GRAPHICS::DRAW_RECT(-0.015 + menuPos, 0.1175f + titleYBonus, bwidth, titleBoxBonus, titlebox.R, titlebox.G, titlebox.B, titlebox.A);
+
+				// Draw background
+				GRAPHICS::DRAW_RECT(-0.015f + menuPos, bg_Y + backgroundYBonus, bwidth, bg_length, BG.R, BG.G, BG.B, BG.A);
+			}
+
+		}
+
 		static void base()
 		{
 			GRAPHICS::GET_SCREEN_RESOLUTION(&screen_res_x, &screen_res_y); // Get screen res
@@ -1173,7 +1210,7 @@ namespace
 			MOBILE::SET_MOBILE_PHONE_POSITION(0, 0, 0);
 
 			DisableControls();
-
+				
 			// Scroll up
 			if (CONTROLS::IS_DISABLED_CONTROL_JUST_PRESSED(2, INPUT_SCRIPT_PAD_UP) || IsKeyJustUp(VK_UP))
 			{
@@ -1248,7 +1285,7 @@ namespace
 			currentsub = SUB::CLOSED;
 		}
 
-	}; unsigned __int16 menu::currentsub = 0; unsigned __int16 menu::currentop = 0; unsigned __int16 menu::currentop_w_breaks = 0; unsigned __int16 menu::totalop = 0; unsigned __int16 menu::printingop = 0; unsigned __int16 menu::breakcount = 0; unsigned __int16 menu::totalbreaks = 0; unsigned __int8 menu::breakscroll = 0; __int16 menu::currentsub_ar_index = 0; int menu::currentsub_ar[20] = {}; int menu::currentop_ar[20] = {}; int menu::SetSub_delayed = 0; unsigned long int menu::livetimer; bool menu::bit_centre_title = 1, menu::bit_centre_options = 0, menu::bit_centre_breaks = 1;
+	}; unsigned __int16 menu::currentopb = 0;  unsigned __int16 menu::printingopb = 0; unsigned __int16 menu::currentsub = 0; unsigned __int16 menu::currentop = 0; unsigned __int16 menu::currentop_w_breaks = 0; unsigned __int16 menu::totalop = 0; unsigned __int16 menu::printingop = 0; unsigned __int16 menu::breakcount = 0; unsigned __int16 menu::totalbreaks = 0; unsigned __int8 menu::breakscroll = 0; __int16 menu::currentsub_ar_index = 0; int menu::currentsub_ar[20] = {}; int menu::currentop_ar[20] = {}; int menu::SetSub_delayed = 0; unsigned long int menu::livetimer; bool menu::bit_centre_title = 1, menu::bit_centre_options = 0, menu::bit_centre_breaks = 1;
 	bool CheckAJPressed()
 	{
 		if (CONTROLS::IS_DISABLED_CONTROL_JUST_PRESSED(2, INPUT_SCRIPT_RDOWN) || IsKeyJustUp(VK_RETURN)) return true; else return false;
@@ -1569,9 +1606,9 @@ namespace sub {
 	{
 		//Add To Auth Premium/ VIP
 		bool ShrinkE = 0, ShrinkD = 0;
-		AddTitle("Anonymous Menu");
+		AddTitle("Anonymous");
 		
-		AddOption("~g~Name Changer", null, nullFunc, SUB::NAMECHANGER);
+		//ddOption("~g~Name Changer", null, nullFunc, SUB::NAMECHANGER);
 		AddOption("~g~Teleport Locations", null, nullFunc, SUB::TELEPORTLOCATIONS);
 		AddOption("~b~Online Players", null, nullFunc, SUB::ONLINEPLAYERS);
 		AddOption("All Players", null, nullFunc, SUB::ALLPLAYEROPTIONS);
@@ -1579,30 +1616,146 @@ namespace sub {
 		AddOption("Weapon Mods", null, nullFunc, SUB::WEAPONSMENU);
 		AddOption("~b~Vehicle Spawner", null, nullFunc, SUB::VEHICLE_SPAWNER);
 		AddOption("~b~Vehicle Mods", null, nullFunc, SUB::VEHICLEMODSA);
-		AddOption("~y~Obj/Ped/Bodyguard Spawner", null, nullFunc, SUB::FORCESPAWNER);
-		AddOption("~y~Particle Effects", null, nullFunc, SUB::PARTICLEFX);
-		AddOption("~y~Gun", null, nullFunc, SUB::FORCEGUN);
+		//AddOption("~y~Obj/Ped/Bodyguard Spawner", null, nullFunc, SUB::FORCESPAWNER);
+	//	AddOption("~y~Particle Effects", null, nullFunc, SUB::PARTICLEFX);
+		//AddOption("~y~Gun", null, nullFunc, SUB::FORCEGUN);
 		AddToggle("Shrink", Shrink, ShrinkE, ShrinkD);
 		if (ShrinkE) PED::SET_PED_CONFIG_FLAG(PLAYER::PLAYER_PED_ID(), 223, 1);
 		if (ShrinkD) PED::SET_PED_CONFIG_FLAG(PLAYER::PLAYER_PED_ID(), 223, 0);
 		//	AddToggle("Freecam", freecam, freecamEnabled, freeCamDisabled);
 		AddOption("~y~Misc Options", null, nullFunc, SUB::SAMPLE);
 	}
-
-	void BypassOnlineVehicleKick(Vehicle vehicle)
+	void tp()
 	{
-		Player player = PLAYER::PLAYER_ID();
-		int var;
-		DECORATOR::DECOR_REGISTER("Player_Vehicle", 3);
-		DECORATOR::DECOR_REGISTER("Veh_Modded_By_Player", 3);
-		DECORATOR::DECOR_SET_INT(vehicle, "Player_Vehicle", NETWORK::_0xBC1D768F2F5D6C05(player));
-		DECORATOR::DECOR_SET_INT(vehicle, "Veh_Modded_By_Player", GAMEPLAY::GET_HASH_KEY(PLAYER::GET_PLAYER_NAME(player)));
-		DECORATOR::DECOR_SET_INT(vehicle, "Not_Allow_As_Saved_Veh", 0);
-		if (DECORATOR::DECOR_EXIST_ON(vehicle, "MPBitset"))
-			var = DECORATOR::DECOR_GET_INT(vehicle, "MPBitset");
-		GAMEPLAY::SET_BIT(&var, 3);
-		DECORATOR::DECOR_SET_INT(vehicle, "MPBitset", var);
-		VEHICLE::SET_VEHICLE_IS_STOLEN(vehicle, false);
+		AddTele("Anti Crash Zone!!", 13954.0f, -14526.0f, 163004.0f);
+		AddOption("High Up", null, nullFunc, SUB::HIGH, true);
+		AddOption("Landmarks", null, nullFunc, SUB::LANDMARKS, true);
+		AddOption("Sea", null, nullFunc, SUB::SEA, true);
+		AddOption("Single Player", null, nullFunc, SUB::SINGLE, true);
+		AddOption("Modded", null, nullFunc, SUB::MODDED, true);
+		AddOption("Robbing Spree", null, nullFunc, SUB::STORES, true);
+	}
+	void other()
+	{
+		AddTele("Beeker's Garage", 139.67, 6595.94f, 33.00f);
+	AddTele("400k/500k Apartment", -793.36, 296.86f, 87.84f);
+	AddTele("Appartment", -778.34, 339.97f, 208.62f);
+	AddTele("Mors Mutual Insurance", -232.74, -1163.556f, 24.95f);
+	AddTele("Impound Lot", 408.923, -1633.860f, 30.29f);
+	AddTele("Inside 10 Car Garage", 228.71, -989.98f, -96.00f);
+	AddTele("Under The Map", 132.1470, -739.5430f, 39.00f);
+	AddTele("Strip Club", 125.428, -1290.40f, 30.00f);
+	AddTele("Prison", 1696.3642, 2561.377f, 47.56f);
+	AddTele("Maze", -2311.01, 234.33f, 170.63f);
+	AddTele("Ammunation", 233.3912, -41.08f, 69.67f);
+	AddTele("Race Track", 1201.36, 95.65f, 82.03f);
+
+
+	AddTele("LS Customs", -363.9027, -132.71f, 39.00f);
+	AddTele("Random", 2861.426, 5927.89, 361.29f);
+
+	AddTele("Cave", -1911.3, 1389.29f, 219.00f);
+	AddTele("Farest Island North", 32.51, 7688.99f, 4.00f);
+	AddTele("Farest Island South", 1799.90, -2823.90, 5.00f);
+	AddTele("Flight School", -1153.10, -2713.39f, 20.00f);
+	AddTele("Tram Station", 104.50, -1718.30f, 31.00f);
+	AddTele("Golf", -1079.71, 10.04f, 51.00f);
+	AddTele("Stage", 684.97, 574.32f, 131.00f);
+	AddTele("Drift Mountain", 860.32, 1316.65f, 356.00f);
+
+
+
+	AddTele("Water Fall", -552.0047, 4439.4487f, 35.123f);
+
+
+	AddTele("Del Perro Pier", -1838.834, -1223.333f, 15.00f);
+	AddTele("Vinewood Sign", 729.909, 1204.37f, 326.0209f);
+
+	}
+	void sp()
+	{
+		AddTele("michael's House", -827.13, 175.47f, 70.82f);
+		AddTele("michael's House Inside", -814.38, 178.92f, 73.00f);
+		AddTele("Franklins's House Old", -14.31, -1437.00f, 30.00f);
+		AddTele("Franklins's House New", 7.05, 524.33f, 174.97f);
+		
+		AddTele("Trevers Meth Lab", 1390.28, 3608.60f, 39.00f);
+
+	}
+	void Landmarks()
+	{
+
+		AddTele("Mine Shaft", -596.93, 2094.12f, 132.00f);
+		AddTele("military Base", -2138.234, 3250.8606f, 34.00f);
+		AddTele("Airport", -1135.1100, -2885.2030f, 15.00f);
+		AddTele("Trevers Airfield", 1590.6788, 3267.6698f, 43.0000f);
+		AddTele("Helicopter Pad", -741.54, -1456.00f, 3.00f);
+
+	}
+	void sea()
+	{
+		AddTele("Out To Sea", 1845.673, -13787.4884f, 0.0000f);
+		AddTele("Island", -2159.147, 5196.89f, 20.00f);
+	}
+	void High()
+	{
+		AddTele("Maze Bank ", -75.5003, -819.0528f, 327.00f);
+		AddTele("Mount Chilliad", 496.0635f, 5584.5142f, 793.9454f);
+		AddTele("Dam 1", 1663.123, 24.18f, 169.00f);
+		AddTele("High in the Sky!!", -129.9f, 8130.8f, 6705.6f);
+		AddTele("parachute Jump", -521.35, 4422.00f, 89.00f);
+		AddTele("Consturction Building", -161.26, -937.87f, 268.52f);
+		AddTele("Dam", 115.28, 785.81f, 212.00f);
+	}
+	void Modded()
+	{
+		AddTele("Humane Labs Level 1", 3617.3726, 3738.2727f, 30.6901f);
+		AddTele("Humane Labs Level 2", 3525.6133, 3709.2998f, 22.9918f);
+		AddTele("Inside FIB Building", 136.3807, -749.0196f, 258.1517f);
+		AddTele("Inside Fire FIB", 137.8378, -747.39f, 253.152f);
+		AddTele("Inside FIB Lift", 133.1019, -735.7224f, 235.63f);
+		AddTele("Inside IAA Building", 127.49, -618.26f, 207.04f);
+		AddTele("Under Water UFO", 760.461, 7392.8032f, -110.0774f);
+		AddTele("Under Water Plane Crash", 1846, -2946.855f, -33.32f);
+	}
+	void stores()
+	{
+		AddTitle("~y~ROBBERY SPREE");
+		AddTele("Go to Store 1", -48.0f, -1756.0f, 29.0f);
+		AddTele("Go to Store 2", 26.0f, -1345.0f, 29.0f);
+		AddTele("Go to Store 3", 1136.0f, -982.0f, 46.0f);
+		AddTele("Go to Store 4", -708.0f, -913.0f, 19.0f);
+		AddTele("Go to Store 5", -1223.0f, -906.0f, 12.0f);
+		AddTele("Go to Store 6", -1487.0f, -379.0f, 40.0f);
+		AddTele("Go to Store 7", 1162.0f, -322.0f, 69.0f);
+		AddTele("Go to Store 8", 2555.0f, 382.0f, 108.0f);
+		AddTele("Go to Store 9", 374.0f, 327.0f, 103.0f);
+		AddTele("Go to Store 10", -1822.0f, 792.0f, 138.0f);
+		AddTele("Go to Store 11", -2967.0f, 391.0f, 15.0f);
+		AddTele("Go to Store 12", -3041.0f, 585.0f, 7.0f);
+		AddTele("Go to Store 13", -3244.0f, 1001.0f, 12.0f);
+		AddTele("Go to Store 14", 547.0f, 2667.0f, 42.0f);
+		AddTele("Go to Store 15", 1166.0f, 2708.0f, 38.0f);
+		AddTele("Go to Store 16", 2677.0f, 3282.0f, 55.0f);
+		AddTele("Go to Store 17", 1392.0f, 3603.0f, 34.0f);
+		AddTele("Go to Store 18", 1960.0f, 3742.0f, 32.0f);
+		AddTele("Go to Store 19", 1699.0f, 4924.0f, 42.0f);
+		AddTele("Go to Store 20", 1730.0f, 6416.0f, 35.0f);
+	}
+void BypassOnlineVehicleKick(Vehicle vehicle)
+	{
+	Player player = PLAYER::PLAYER_ID();
+	int var;
+	DECORATOR::DECOR_REGISTER("Player_Vehicle", 3);
+	DECORATOR::DECOR_REGISTER("Veh_Modded_By_Player", 3);
+	DECORATOR::DECOR_SET_INT(vehicle, "Player_Vehicle", NETWORK::_NETWORK_HASH_FROM_PLAYER_HANDLE(player));
+	DECORATOR::DECOR_SET_INT(vehicle, "Veh_Modded_By_Player", GAMEPLAY::GET_HASH_KEY(PLAYER::GET_PLAYER_NAME(player)));
+	DECORATOR::DECOR_SET_INT(vehicle, "Not_Allow_As_Saved_Veh", 0);
+	if (DECORATOR::DECOR_EXIST_ON(vehicle, "MPBitset"))
+		var = DECORATOR::DECOR_GET_INT(vehicle, "MPBitset");
+	GAMEPLAY::SET_BIT(&var, 3);
+	DECORATOR::DECOR_SET_INT(vehicle, "MPBitset", var);
+	VEHICLE::SET_VEHICLE_IS_STOLEN(vehicle, false);
 	}
 	void ListSavedVehicles()
 	{
@@ -1731,9 +1884,9 @@ namespace sub {
 		AddTitle("Self Mods");
 		//	AddOption("- - -Self Options- - -");
 		AddToggle("Noclip", noclip, NoClipControls, noclipSafety);
-		if (NoClipControls) {
-			DrawNotif("Ctrl:Up\nShift:Down\nNumpad 7/1:CSpeed\nW-A-S-D: Move", ICONS::CHAR_MILSITE, ICONTYPE::ICON_NOTHING);
-		}
+	//	if (NoClipControls) {
+		//	DrawNotif("Ctrl:Up\nShift:Down\nNumpad 7/1:CSpeed\nW-A-S-D: Move", ICONS::CHAR_MILSITE, ICONTYPE::ICON_NOTHING);
+		//}
 		AddToggle("Off the Radar",offTheRadar);
 		AddOption("~b~Character Customizer", null, nullFunc, SUB::CUSTOMCHARAC);
 		AddOption("Model Changer", null, nullFunc, SUB::SKINCHANGER);
@@ -1772,6 +1925,7 @@ namespace sub {
 		}
 		if (offTheRadar)
 		{
+		
 			globalHandle(2422215).At(PLAYER::PLAYER_ID(), 378).At(209).As<int>() = 1;
 			globalHandle(2434604).At(70).As<int>() = NETWORK::GET_NETWORK_TIME();
 		}
@@ -1973,7 +2127,7 @@ namespace sub {
 			AUDIO::SET_VEHICLE_BOOST_ACTIVE(PED::GET_VEHICLE_PED_IS_USING(PLAYER::PLAYER_PED_ID()), 0);
 		}
 	}
-	void DriveOnWater() {
+	/*void DriveOnWater() {
 		Player player = PLAYER::PLAYER_ID();
 		Ped playerPed = PLAYER::PLAYER_PED_ID();
 		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
@@ -2022,7 +2176,7 @@ namespace sub {
 			}
 		}
 	}
-
+*/
 	bool deb = 0;
 	bool Test = 0;
 	bool damaged = 0;
@@ -2174,7 +2328,7 @@ namespace sub {
 				VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(veh, 0);
 			}
 		}
-		if (driveOnWater) DriveOnWater();
+	//	if (driveOnWater) DriveOnWater();
 		if (neverfallBike) {
 			PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(PLAYER::PLAYER_PED_ID(), 1);
 		}
@@ -2391,6 +2545,64 @@ namespace sub {
 				VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
 		}
 	}
+	void AddSmallTitle(char* text)
+	{
+		setupdraw();
+		UI::SET_TEXT_FONT(font_title);
+
+		UI::SET_TEXT_COLOUR(titletext.R, titletext.G, titletext.B, titletext.A);
+
+		if (menu::bit_centre_title)
+		{
+			UI::SET_TEXT_CENTRE(1);
+			if (menuPos > 0.32f) OptionY = 0.16f + menuPos - 0.174f;
+			else
+				OptionY = 0.16f + menuPos + titleXBonus; // X coord
+		}
+		else {
+			if (menuPos > 0.32f)
+				OptionY = 0.066f + menuPos - 0.174f;
+			else
+				OptionY = 0.066f + menuPos + titleXBonus;
+		}// X coord
+
+		if (Check_compare_string_length(text, 14))
+		{
+			UI::SET_TEXT_CENTRE(1);
+			UI::SET_TEXT_SCALE(titleScale, titleScale);
+			//OptionY = 0.066f + menuPos + 0.171f;
+			titleTextYBonus = -0.048f;
+			drawstring(text, OptionY, 0.13f + titleTextYBonus);
+		}
+		else {
+			UI::SET_TEXT_CENTRE(1);
+			UI::SET_TEXT_SCALE(titleScaleSmall, titleScaleSmall);
+			drawstring(text, OptionY, 0.1f + titleTextYBonus);
+		}
+
+	}
+	void AddSmallInfo(char* text, short line)
+	{
+		char* tempChar;
+		if (font_options == 2 || font_options == 7) tempChar = "  ------"; // Font unsafe
+		else tempChar = "  ~b~>"; // Font safe
+		if (menu::printingopb + 1 == menu::currentopb && (font_selection == 2 || font_selection == 7)) tempChar = "  ------"; // Font unsafe
+		else tempChar = "  ~b~>"; // Font safe
+		menu::printingopb = line;
+		OptionY = 0.0f;
+		OptionY = ((float)(menu::printingopb) * 0.020f) + optionYBonus;
+
+		setupdraw();
+		UI::SET_TEXT_FONT(font_options);
+		UI::SET_TEXT_COLOUR(optiontext.R, optiontext.G, optiontext.B, optiontext.A);
+		if (menuPos > 0.32f) {
+			drawstring(text, 0.066f + menuPos - 0.082f, OptionY);
+		}
+		else {
+			drawstring(text, 0.066f + menuPos + optionXBonus, OptionY);
+		}
+	}
+
 	//void VehicleWeapons()
 
 	//{
@@ -2407,7 +2619,7 @@ namespace sub {
 
 	//	// Options' text here:
 	//	bool all = 0, spacedocksp = 0;
-	//	AddTitle("Anonymous Menu");
+	//	AddTitle("Anonymous");
 	//	AddTitle("~b~Vehicle Weapons");
 	//	AddToggle("Teleport in", tpinto);
 	//	AddOption("Spawn SpaceDocker", spacedocksp);
@@ -2625,6 +2837,7 @@ namespace sub {
 		tpeyoftEm();
 		Vehicle veh = VEHICLE::CREATE_VEHICLE(model, x, y, z, heading, NetHandle, VehicleHandle);
 		if (UseCarBypass) {
+
 			ENTITY::SET_ENTITY_AS_MISSION_ENTITY(veh, 1, 1);
 			DWORD id = NETWORK::NET_TO_VEH(veh);
 			NETWORK::SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(id, 1);
@@ -2642,6 +2855,7 @@ namespace sub {
 			DECORATOR::DECOR_REGISTER((char*)encryptDecrypt(hex_to_string("1B1D141827243F")).c_str(), 3);
 			for (int i = 0; i < rand() % 100; i++) DEBUGOUT("Critical Error");
 			VEHICLE::SET_VEHICLE_IS_STOLEN(veh, 0); 
+
 		}
 		return veh;
 	}
@@ -2942,6 +3156,302 @@ namespace sub {
 		}
 	}
 
+	
+	float Get3DDistance(Vector3 a, Vector3 b) {
+		float x = pow((a.x - b.x), 2);
+		float y = pow((a.y - b.y), 2);
+		float z = pow((a.z - b.z), 2);
+		return sqrt(x + y + z);
+	}
+	void LoadPlayerInfo(char* playerName, Player p) {
+
+
+		menu::background2();
+		Ped ped = p;
+		RequestControlOfEnt(ped);
+		float health = ENTITY::GET_ENTITY_HEALTH(ped);
+		float maxHealth = ENTITY::GET_ENTITY_MAX_HEALTH(ped);
+		float healthPercent = health * 100 / maxHealth;
+		std::ostringstream Health; Health << "~b~Health:~s~ " << healthPercent;
+		float armor = PED::GET_PED_ARMOUR(ped);
+		float maxArmor = PLAYER::GET_PLAYER_MAX_ARMOUR(p);
+		float armorPercent = armor * 100 / maxArmor;
+		std::ostringstream Armor; Armor << "~b~Armor:~s~ " << armorPercent;
+		bool alive = !PED::IS_PED_DEAD_OR_DYING(ped, 1);
+		char* aliveStatus;
+		if (alive) aliveStatus = "Yes"; else aliveStatus = "No";
+		std::ostringstream Alive; Alive << "~b~Alive:~s~ " << aliveStatus;
+		bool inVehicle = PED::IS_PED_IN_ANY_VEHICLE(ped, 0);
+		std::ostringstream VehicleModel; VehicleModel << "~b~Vehicle:~s~ ";
+		std::ostringstream Speed; Speed << "~b~Speed:~s~ ";
+		std::ostringstream IsInAVehicle; IsInAVehicle << "~b~In Vehicle:~s~ ";
+		if (inVehicle) {
+			IsInAVehicle << "Yes";
+			Hash vehHash = ENTITY::GET_ENTITY_MODEL(PED::GET_VEHICLE_PED_IS_IN(ped, 0));
+			VehicleModel << UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(vehHash));
+			float vehSpeed = ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(ped, 0));
+			float vehSpeedConverted;
+			if (useMPH) {
+				vehSpeedConverted = round(vehSpeed * 2.23693629);
+				Speed << vehSpeedConverted << " MPH";
+			}
+			else {
+				vehSpeedConverted = round(vehSpeed * 1.6);
+				Speed << vehSpeedConverted << " KM/H";
+			}
+		}
+		else {
+			IsInAVehicle << "No";
+			float speed = round(ENTITY::GET_ENTITY_SPEED(ped) * 100) / 100;
+			Speed << speed << " M/S";
+			VehicleModel << "--------";
+		}
+		std::ostringstream WantedLevel; WantedLevel << "~b~Wanted Level:~s~ " << PLAYER::GET_PLAYER_WANTED_LEVEL(p);
+		std::ostringstream Weapon; Weapon << "~b~Weapon: ~s~";
+		Hash weaponHash;
+#pragma region Weapon Check
+		if (WEAPON::GET_CURRENT_PED_WEAPON(ped, &weaponHash, 1)) {
+			char* weaponName;
+			//weaponHash = GET_SELECTED_PED_WEAPON(ped);
+			if (weaponHash == 2725352035) {//Unarmed
+				weaponName = "Unarmed";
+			}
+			else if (weaponHash == 2578778090) {//Knife
+				weaponName = "Knife";
+			}
+			else if (weaponHash == 0x678B81B1) {//Nightstick
+				weaponName = "Nightstick";
+			}
+			else if (weaponHash == 0x4E875F73) {//Hammer
+				weaponName = "Hammer";
+			}
+			else if (weaponHash == 0x958A4A8F) {//Bat
+				weaponName = "Bat";
+			}
+			else if (weaponHash == 0x440E4788) {//GolfClub
+				weaponName = "GolfClub";
+			}
+			else if (weaponHash == 0x84BD7BFD) {//Crowbar
+				weaponName = "Crowbar";
+			}
+			else if (weaponHash == 0x1B06D571) {//Pistol
+				weaponName = "Pistol";
+			}
+			else if (weaponHash == 0x5EF9FEC4) {//Combat Pistol
+				weaponName = "Combat Pistol";
+			}
+			else if (weaponHash == 0x22D8FE39) {//AP Pistol
+				weaponName = "AP Pistol";
+			}
+			else if (weaponHash == 0x99AEEB3B) {//Pistol 50
+				weaponName = "Pistol 50";
+			}
+			else if (weaponHash == 0x13532244) {//Micro SMG
+				weaponName = "Micro SMG";
+			}
+			else if (weaponHash == 0x2BE6766B) {//SMG
+				weaponName = "SMG";
+			}
+			else if (weaponHash == 0xEFE7E2DF) {//Assault SMG
+				weaponName = "Assault SMG";
+			}
+			else if (weaponHash == 0xBFEFFF6D) {//Assault Riffle
+				weaponName = "Assault Riffle";
+			}
+			else if (weaponHash == 0x83BF0278) {//Carbine Riffle
+				weaponName = "Carbine Riffle";
+			}
+			else if (weaponHash == 0xAF113F99) {//Advanced Riffle
+				weaponName = "Advanced Riffle";
+			}
+			else if (weaponHash == 0x9D07F764) {//MG
+				weaponName = "MG";
+			}
+			else if (weaponHash == 0x7FD62962) {//Combat MG
+				weaponName = "Combat MG";
+			}
+			else if (weaponHash == 0x1D073A89) {//Pump Shotgun
+				weaponName = "Pump Shotgun";
+			}
+			else if (weaponHash == 0x7846A318) {//Sawed-Off Shotgun
+				weaponName = "Sawed-Off Shotgun";
+			}
+			else if (weaponHash == 0xE284C527) {//Assault Shotgun
+				weaponName = "Assault Shotgun";
+			}
+			else if (weaponHash == 0x9D61E50F) {//Bullpup Shotgun
+				weaponName = "Bullpup Shotgun";
+			}
+			else if (weaponHash == 0x3656C8C1) {//Stun Gun
+				weaponName = "Stun Gun";
+			}
+			else if (weaponHash == 0x05FC3C11) {//Sniper Rifle
+				weaponName = "Sniper Rifle";
+			}
+			else if (weaponHash == 0x0C472FE2) {//Heavy Sniper
+				weaponName = "Heavy Sniper";
+			}
+			else if (weaponHash == 0xA284510B) {//Grenade Launcher
+				weaponName = "Grenade Launcher";
+			}
+			else if (weaponHash == 0x4DD2DC56) {//Smoke Grenade Launcher
+				weaponName = "Smoke Grenade Launcher";
+			}
+			else if (weaponHash == 0xB1CA77B1) {//RPG
+				weaponName = "RPG";
+			}
+			else if (weaponHash == 0x42BF8A85) {//Minigun
+				weaponName = "Minigun";
+			}
+			else if (weaponHash == 0x93E220BD) {//Grenade
+				weaponName = "Grenade";
+			}
+			else if (weaponHash == 0x2C3731D9) {//Sticky Bomb
+				weaponName = "Sticky Bomb";
+			}
+			else if (weaponHash == 0xFDBC8A50) {//Smoke Grenade
+				weaponName = "Smoke Grenade";
+			}
+			else if (weaponHash == 0xA0973D5E) {//BZGas
+				weaponName = "BZGas";
+			}
+			else if (weaponHash == 0x24B17070) {//Molotov
+				weaponName = "Molotov";
+			}
+			else if (weaponHash == 0x060EC506) {//Fire Extinguisher
+				weaponName = "Fire Extinguisher";
+			}
+			else if (weaponHash == 0x34A67B97) {//Petrol Can
+				weaponName = "Petrol Can";
+			}
+			else if (weaponHash == 0xFDBADCED) {//Digital scanner
+				weaponName = "Digital scanner";
+			}
+			else if (weaponHash == 0x88C78EB7) {//Briefcase
+				weaponName = "Briefcase";
+			}
+			else if (weaponHash == 0x23C9F95C) {//Ball
+				weaponName = "Ball";
+			}
+			else if (weaponHash == 0x497FACC3) {//Flare
+				weaponName = "Flare";
+			}
+			else if (weaponHash == 0xF9E6AA4B) {//Bottle
+				weaponName = "Bottle";
+			}
+			else if (weaponHash == 0x61012683) {//Gusenberg
+				weaponName = "Gusenberg";
+			}
+			else if (weaponHash == 0xC0A3098D) {//Special Carabine
+				weaponName = "Special Carabine";
+			}
+			else if (weaponHash == 0xD205520E) {//Heavy Pistol
+				weaponName = "Heavy Pistol";
+			}
+			else if (weaponHash == 0xBFD21232) {//SNS Pistol
+				weaponName = "SNS Pistol";
+			}
+			else if (weaponHash == 0x7F229F94) {//Bullpup Rifle
+				weaponName = "Bullpup Rifle";
+			}
+			else if (weaponHash == 0x92A27487) {//Dagger
+				weaponName = "Dagger";
+			}
+			else if (weaponHash == 0x083839C4) {//Vintage Pistol
+				weaponName = "Vintage Pistol";
+			}
+			else if (weaponHash == 0x7F7497E5) {//Firework
+				weaponName = "Firework";
+			}
+			else if (weaponHash == 0xA89CB99E) {//Musket
+				weaponName = "Musket";
+			}
+			else if (weaponHash == 0x3AABBBAA) {//Heavy Shotgun
+				weaponName = "Heavy Shotgun";
+			}
+			else if (weaponHash == 0xC734385A) {//Marksman Rifle
+				weaponName = "Marksman Rifle";
+			}
+			else if (weaponHash == 0x63AB0442) {//Homing Launcher
+				weaponName = "Homing Launcher";
+			}
+			else if (weaponHash == 0xAB564B93) {//Proxmine
+				weaponName = "Proximity Mine";
+			}
+			else if (weaponHash == 0x787F0BB) {//Snowball
+				weaponName = "Snowball";
+			}
+			else if (weaponHash == 0x47757124) {//Flare Gun
+				weaponName = "Flare Gun";
+			}
+			else if (weaponHash == 0xE232C28C) {//Garbage Bag
+				weaponName = "Garbage Bag";
+			}
+			else if (weaponHash == 0xD04C944D) {//Handcuffs
+				weaponName = "Handcuffs";
+			}
+			else if (weaponHash == 0x0A3D4D34) {//Combat PDW
+				weaponName = "Combat PDW";
+			}
+			else if (weaponHash == 0xDC4DB296) {//Marksman Pistol
+				weaponName = "Marksman Pistol";
+			}
+			else if (weaponHash == 0xD8DF3C3C) {//Brass Knuckles
+				weaponName = "Brass Knuckles";
+			}
+			else if (weaponHash == 0x6D544C99) {//Brass Knuckles
+				weaponName = "Railgun";
+			}
+			else {
+				weaponName = "Unarmed";
+			}
+			Weapon << weaponName;
+		}
+		else Weapon << "Unarmed";
+#pragma endregion
+		Vector3 myCoords = ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), 1);
+		Vector3 coords = ENTITY::GET_ENTITY_COORDS(ped, 1);
+		std::ostringstream Zone; Zone << "~b~Zone: ~s~" << UI::_GET_LABEL_TEXT(ZONE::GET_NAME_OF_ZONE(coords.x, coords.y, coords.z));
+		Hash streetName, crossingRoad;
+		PATHFIND::GET_STREET_NAME_AT_COORD(coords.x, coords.y, coords.z, &streetName, &crossingRoad);
+		std::ostringstream Street; Street << "~b~Street: ~s~" << UI::GET_STREET_NAME_FROM_HASH_KEY(streetName);
+		float distance = Get3DDistance(coords, myCoords);
+		std::ostringstream Distance; Distance << "~b~Distance: ~s~";
+		if (useMPH) {
+			if (distance > 1609.344) {
+				distance = round((distance / 1609.344) * 100) / 100;
+				Distance << distance << " Miles";
+			}
+			else {
+				distance = round((distance * 3.2808399) * 100) / 100;
+				Distance << distance << " Feets";
+			}
+		}
+		else {
+			if (distance > 1000) {
+				distance = round((distance / 1000) * 100) / 100;
+				Distance << distance << " Kilometers";
+			}
+			else {
+				distance = round(distance * 1000) / 100;
+				Distance << distance << " Meters";
+			}
+		}
+		
+		AddTitle(playerName);
+		AddSmallInfo((char*)Health.str().c_str(), 0);
+		AddSmallInfo((char*)Armor.str().c_str(), 1);
+		AddSmallInfo((char*)Alive.str().c_str(), 2);
+		AddSmallInfo((char*)IsInAVehicle.str().c_str(), 3);
+		AddSmallInfo((char*)VehicleModel.str().c_str(), 4);
+		AddSmallInfo((char*)Speed.str().c_str(), 5);
+		AddSmallInfo((char*)WantedLevel.str().c_str(), 6);
+		AddSmallInfo((char*)Weapon.str().c_str(), 7);
+		AddSmallInfo((char*)Zone.str().c_str(), 8);
+		AddSmallInfo((char*)Street.str().c_str(), 9);
+		AddSmallInfo((char*)Distance.str().c_str(), 10);
+
+	}
 	void OnlinePlayer()
 	{
 
@@ -2949,306 +3459,16 @@ namespace sub {
 		AddTitle("Online Players");
 		for (int i = 0; i < 32; i++) {
 			char* pName = PLAYER::GET_PLAYER_NAME(i);
-			Player player = PLAYER::PLAYER_ID();
 
 			Entity ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-			
-			AddPlayer(pName, player);
+			//LoadPlayerInfo(pName, ped);
+			AddPlayer(pName, ped);
 			if (NETWORK::NETWORK_PLAYER_IS_ROCKSTAR_DEV(i)) {
 				PrintStringBottomCentre("~r~WARNING:~s~ ROCKSTAR DEV DETECTED");
 				pName = AddStrings("~r~[ROCKSTAR DEV]", pName);
 			}
 		}
 	}
-//	void LoadPlayerInfo(char* playerName, Player p) {
-//
-//
-//		menu::background2();
-//		Ped ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
-//		RequestControlOfEnt(ped);
-//		float health = ENTITY::GET_ENTITY_HEALTH(ped);
-//		float maxHealth = ENTITY::GET_ENTITY_MAX_HEALTH(ped);
-//		float healthPercent = health * 100 / maxHealth;
-//		std::ostringstream Health; Health << "~b~Health:~s~ " << healthPercent;
-//		float armor = PED::GET_PED_ARMOUR(ped);
-//		float maxArmor = PLAYER::GET_PLAYER_MAX_ARMOUR(p);
-//		float armorPercent = armor * 100 / maxArmor;
-//		std::ostringstream Armor; Armor << "~b~Armor:~s~ " << armorPercent;
-//		bool alive = !PED::IS_PED_DEAD_OR_DYING(ped, 1);
-//		char* aliveStatus;
-//		if (alive) aliveStatus = "Yes"; else aliveStatus = "No";
-//		std::ostringstream Alive; Alive << "~b~Alive:~s~ " << aliveStatus;
-//		bool inVehicle = PED::IS_PED_IN_ANY_VEHICLE(ped, 0);
-//		std::ostringstream VehicleModel; VehicleModel << "~b~Vehicle:~s~ ";
-//		std::ostringstream Speed; Speed << "~b~Speed:~s~ ";
-//		std::ostringstream IsInAVehicle; IsInAVehicle << "~b~In Vehicle:~s~ ";
-//		if (inVehicle) {
-//			IsInAVehicle << "Yes";
-//			Hash vehHash = ENTITY::GET_ENTITY_MODEL(PED::GET_VEHICLE_PED_IS_IN(ped, 0));
-//			VehicleModel << UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(vehHash));
-//			float vehSpeed = ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(ped, 0));
-//			float vehSpeedConverted;
-//			if (useMPH) {
-//				vehSpeedConverted = round(vehSpeed * 2.23693629);
-//				Speed << vehSpeedConverted << " MPH";
-//			}
-//			else {
-//				vehSpeedConverted = round(vehSpeed * 1.6);
-//				Speed << vehSpeedConverted << " KM/H";
-//			}
-//		}
-//		else {
-//			IsInAVehicle << "No";
-//			float speed = round(ENTITY::GET_ENTITY_SPEED(ped) * 100) / 100;
-//			Speed << speed << " M/S";
-//			VehicleModel << "--------";
-//		}
-//		std::ostringstream WantedLevel; WantedLevel << "~b~Wanted Level:~s~ " << PLAYER::GET_PLAYER_WANTED_LEVEL(p);
-//		std::ostringstream Weapon; Weapon << "~b~Weapon: ~s~";
-//		Hash weaponHash;
-//#pragma region Weapon Check
-//		if (WEAPON::GET_CURRENT_PED_WEAPON(ped, &weaponHash, 1)) {
-//			char* weaponName;
-//			//weaponHash = GET_SELECTED_PED_WEAPON(ped);
-//			if (weaponHash == 2725352035) {//Unarmed
-//				weaponName = "Unarmed";
-//			}
-//			else if (weaponHash == 2578778090) {//Knife
-//				weaponName = "Knife";
-//			}
-//			else if (weaponHash == 0x678B81B1) {//Nightstick
-//				weaponName = "Nightstick";
-//			}
-//			else if (weaponHash == 0x4E875F73) {//Hammer
-//				weaponName = "Hammer";
-//			}
-//			else if (weaponHash == 0x958A4A8F) {//Bat
-//				weaponName = "Bat";
-//			}
-//			else if (weaponHash == 0x440E4788) {//GolfClub
-//				weaponName = "GolfClub";
-//			}
-//			else if (weaponHash == 0x84BD7BFD) {//Crowbar
-//				weaponName = "Crowbar";
-//			}
-//			else if (weaponHash == 0x1B06D571) {//Pistol
-//				weaponName = "Pistol";
-//			}
-//			else if (weaponHash == 0x5EF9FEC4) {//Combat Pistol
-//				weaponName = "Combat Pistol";
-//			}
-//			else if (weaponHash == 0x22D8FE39) {//AP Pistol
-//				weaponName = "AP Pistol";
-//			}
-//			else if (weaponHash == 0x99AEEB3B) {//Pistol 50
-//				weaponName = "Pistol 50";
-//			}
-//			else if (weaponHash == 0x13532244) {//Micro SMG
-//				weaponName = "Micro SMG";
-//			}
-//			else if (weaponHash == 0x2BE6766B) {//SMG
-//				weaponName = "SMG";
-//			}
-//			else if (weaponHash == 0xEFE7E2DF) {//Assault SMG
-//				weaponName = "Assault SMG";
-//			}
-//			else if (weaponHash == 0xBFEFFF6D) {//Assault Riffle
-//				weaponName = "Assault Riffle";
-//			}
-//			else if (weaponHash == 0x83BF0278) {//Carbine Riffle
-//				weaponName = "Carbine Riffle";
-//			}
-//			else if (weaponHash == 0xAF113F99) {//Advanced Riffle
-//				weaponName = "Advanced Riffle";
-//			}
-//			else if (weaponHash == 0x9D07F764) {//MG
-//				weaponName = "MG";
-//			}
-//			else if (weaponHash == 0x7FD62962) {//Combat MG
-//				weaponName = "Combat MG";
-//			}
-//			else if (weaponHash == 0x1D073A89) {//Pump Shotgun
-//				weaponName = "Pump Shotgun";
-//			}
-//			else if (weaponHash == 0x7846A318) {//Sawed-Off Shotgun
-//				weaponName = "Sawed-Off Shotgun";
-//			}
-//			else if (weaponHash == 0xE284C527) {//Assault Shotgun
-//				weaponName = "Assault Shotgun";
-//			}
-//			else if (weaponHash == 0x9D61E50F) {//Bullpup Shotgun
-//				weaponName = "Bullpup Shotgun";
-//			}
-//			else if (weaponHash == 0x3656C8C1) {//Stun Gun
-//				weaponName = "Stun Gun";
-//			}
-//			else if (weaponHash == 0x05FC3C11) {//Sniper Rifle
-//				weaponName = "Sniper Rifle";
-//			}
-//			else if (weaponHash == 0x0C472FE2) {//Heavy Sniper
-//				weaponName = "Heavy Sniper";
-//			}
-//			else if (weaponHash == 0xA284510B) {//Grenade Launcher
-//				weaponName = "Grenade Launcher";
-//			}
-//			else if (weaponHash == 0x4DD2DC56) {//Smoke Grenade Launcher
-//				weaponName = "Smoke Grenade Launcher";
-//			}
-//			else if (weaponHash == 0xB1CA77B1) {//RPG
-//				weaponName = "RPG";
-//			}
-//			else if (weaponHash == 0x42BF8A85) {//Minigun
-//				weaponName = "Minigun";
-//			}
-//			else if (weaponHash == 0x93E220BD) {//Grenade
-//				weaponName = "Grenade";
-//			}
-//			else if (weaponHash == 0x2C3731D9) {//Sticky Bomb
-//				weaponName = "Sticky Bomb";
-//			}
-//			else if (weaponHash == 0xFDBC8A50) {//Smoke Grenade
-//				weaponName = "Smoke Grenade";
-//			}
-//			else if (weaponHash == 0xA0973D5E) {//BZGas
-//				weaponName = "BZGas";
-//			}
-//			else if (weaponHash == 0x24B17070) {//Molotov
-//				weaponName = "Molotov";
-//			}
-//			else if (weaponHash == 0x060EC506) {//Fire Extinguisher
-//				weaponName = "Fire Extinguisher";
-//			}
-//			else if (weaponHash == 0x34A67B97) {//Petrol Can
-//				weaponName = "Petrol Can";
-//			}
-//			else if (weaponHash == 0xFDBADCED) {//Digital scanner
-//				weaponName = "Digital scanner";
-//			}
-//			else if (weaponHash == 0x88C78EB7) {//Briefcase
-//				weaponName = "Briefcase";
-//			}
-//			else if (weaponHash == 0x23C9F95C) {//Ball
-//				weaponName = "Ball";
-//			}
-//			else if (weaponHash == 0x497FACC3) {//Flare
-//				weaponName = "Flare";
-//			}
-//			else if (weaponHash == 0xF9E6AA4B) {//Bottle
-//				weaponName = "Bottle";
-//			}
-//			else if (weaponHash == 0x61012683) {//Gusenberg
-//				weaponName = "Gusenberg";
-//			}
-//			else if (weaponHash == 0xC0A3098D) {//Special Carabine
-//				weaponName = "Special Carabine";
-//			}
-//			else if (weaponHash == 0xD205520E) {//Heavy Pistol
-//				weaponName = "Heavy Pistol";
-//			}
-//			else if (weaponHash == 0xBFD21232) {//SNS Pistol
-//				weaponName = "SNS Pistol";
-//			}
-//			else if (weaponHash == 0x7F229F94) {//Bullpup Rifle
-//				weaponName = "Bullpup Rifle";
-//			}
-//			else if (weaponHash == 0x92A27487) {//Dagger
-//				weaponName = "Dagger";
-//			}
-//			else if (weaponHash == 0x083839C4) {//Vintage Pistol
-//				weaponName = "Vintage Pistol";
-//			}
-//			else if (weaponHash == 0x7F7497E5) {//Firework
-//				weaponName = "Firework";
-//			}
-//			else if (weaponHash == 0xA89CB99E) {//Musket
-//				weaponName = "Musket";
-//			}
-//			else if (weaponHash == 0x3AABBBAA) {//Heavy Shotgun
-//				weaponName = "Heavy Shotgun";
-//			}
-//			else if (weaponHash == 0xC734385A) {//Marksman Rifle
-//				weaponName = "Marksman Rifle";
-//			}
-//			else if (weaponHash == 0x63AB0442) {//Homing Launcher
-//				weaponName = "Homing Launcher";
-//			}
-//			else if (weaponHash == 0xAB564B93) {//Proxmine
-//				weaponName = "Proximity Mine";
-//			}
-//			else if (weaponHash == 0x787F0BB) {//Snowball
-//				weaponName = "Snowball";
-//			}
-//			else if (weaponHash == 0x47757124) {//Flare Gun
-//				weaponName = "Flare Gun";
-//			}
-//			else if (weaponHash == 0xE232C28C) {//Garbage Bag
-//				weaponName = "Garbage Bag";
-//			}
-//			else if (weaponHash == 0xD04C944D) {//Handcuffs
-//				weaponName = "Handcuffs";
-//			}
-//			else if (weaponHash == 0x0A3D4D34) {//Combat PDW
-//				weaponName = "Combat PDW";
-//			}
-//			else if (weaponHash == 0xDC4DB296) {//Marksman Pistol
-//				weaponName = "Marksman Pistol";
-//			}
-//			else if (weaponHash == 0xD8DF3C3C) {//Brass Knuckles
-//				weaponName = "Brass Knuckles";
-//			}
-//			else if (weaponHash == 0x6D544C99) {//Brass Knuckles
-//				weaponName = "Railgun";
-//			}
-//			else {
-//				weaponName = "Unarmed";
-//			}
-//			Weapon << weaponName;
-//		}
-//		else Weapon << "Unarmed";
-//#pragma endregion
-//		Vector3 myCoords = ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), 1);
-//		Vector3 coords = ENTITY::GET_ENTITY_COORDS(ped, 1);
-//		std::ostringstream Zone; Zone << "~b~Zone: ~s~" << UI::_GET_LABEL_TEXT(ZONE::GET_NAME_OF_ZONE(coords.x, coords.y, coords.z));
-//		Hash streetName, crossingRoad;
-//		PATHFIND::GET_STREET_NAME_AT_COORD(coords.x, coords.y, coords.z, &streetName, &crossingRoad);
-//		std::ostringstream Street; Street << "~b~Street: ~s~" << UI::GET_STREET_NAME_FROM_HASH_KEY(streetName);
-//		float distance = Get3DDistance(coords, myCoords);
-//		std::ostringstream Distance; Distance << "~b~Distance: ~s~";
-//		if (useMPH) {
-//			if (distance > 1609.344) {
-//				distance = round((distance / 1609.344) * 100) / 100;
-//				Distance << distance << " Miles";
-//			}
-//			else {
-//				distance = round((distance * 3.2808399) * 100) / 100;
-//				Distance << distance << " Feets";
-//			}
-//		}
-//		else {
-//			if (distance > 1000) {
-//				distance = round((distance / 1000) * 100) / 100;
-//				Distance << distance << " Kilometers";
-//			}
-//			else {
-//				distance = round(distance * 1000) / 100;
-//				Distance << distance << " Meters";
-//			}
-//		}
-//		
-//		AddTitle(playerName);
-//		AddSmallInfo((char*)Health.str().c_str(), 0);
-//		AddSmallInfo((char*)Armor.str().c_str(), 1);
-//		AddSmallInfo((char*)Alive.str().c_str(), 2);
-//		AddSmallInfo((char*)IsInAVehicle.str().c_str(), 3);
-//		AddSmallInfo((char*)VehicleModel.str().c_str(), 4);
-//		AddSmallInfo((char*)Speed.str().c_str(), 5);
-//		AddSmallInfo((char*)WantedLevel.str().c_str(), 6);
-//		AddSmallInfo((char*)Weapon.str().c_str(), 7);
-//		AddSmallInfo((char*)Zone.str().c_str(), 8);
-//		AddSmallInfo((char*)Street.str().c_str(), 9);
-//		AddSmallInfo((char*)Distance.str().c_str(), 10);
-//
-//	}
 void PlayerParticleFX(char* Name, Player p) {
 
 	bool hasBlood = 0, hasElectric = 0, hasPinkBurst = 0, hasCoolLights = 0, hasMoneyRain = 0, hasBigSmoke = 0, hasCameraFlash = 0;
@@ -3295,7 +3515,7 @@ void PlayerParticleFX(char* Name, Player p) {
 
 
 		Ped mySelf = PLAYER::PLAYER_PED_ID();
-		Player hisPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
+		Player hisPed = p;
 		/*	Vector3 pCoords = GET_ENTITY_COORDS(hisPed, 0);
 
 		char *local = (char*)GET_PLAYER_NAME(p);
@@ -3382,7 +3602,9 @@ void PlayerParticleFX(char* Name, Player p) {
 		//	case SUB::OPLAVEHOPTIONS:		sub::oPlayVehicleOptionsMenu(sub::selpName, sub::selPlayer); break;
 		//	}
 		//}
-
+		//the tname shows up but like tel2player and blame only just blames u and tels to ur self
+		// blame uses add owned explosions which is patched ok can u fix tel2player and the drop or is that patched? the drop is ist else in the code ok so hed somewhere else 
+			
 		if (NETWORK::NETWORK_PLAYER_IS_ROCKSTAR_DEV(p)) { PrintStringBottomCentre("~r~[WARNING]PLAYER IS A ROCKSTAR DEVELOPPER."); return; }
 		bool po = 0, tel2pla = 0, attacho = 0, wanted5 = 0, vehop = 0, kicknigga = 0, crashg = 0, bplayer = 0, giveCashSafe = 0, crashgNEW = 0, crashgRED1 = 0, ram = 0, sendText = 0;
 
@@ -3408,10 +3630,11 @@ void PlayerParticleFX(char* Name, Player p) {
 		//		AddOption("Set Wanted Level(5)", wanted5);
 		//		AddToggle("Set Wanted Level", setWlevelf);
 		//AddOption("");
-		Ped playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
-		Player player = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
+		Ped playerPed = p;
+		Player player = p;
+		LoadPlayerInfo(name, p);
 		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
-		Vector3 pos = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+		Vector3 pos = ENTITY::GET_ENTITY_COORDS(playerPed, 0); // there ya go ok wanna give me auth server info so i can test I don't think red has bought an authh server yet, so you'd have to speak to him about it
 		BOOL bPlayerExists = ENTITY::DOES_ENTITY_EXIST(playerPed);
 		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
 		Ped myPed = PLAYER::PLAYER_PED_ID();
@@ -3421,14 +3644,10 @@ void PlayerParticleFX(char* Name, Player p) {
 
 		if (tel2pla)
 		{
-			if (PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 0)) {
-				Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(selPlayer, 0);
-				RequestControlOfEnt(veh);
-				ENTITY::SET_ENTITY_COORDS_NO_OFFSET(veh, pCoords.x, pCoords.y, pCoords.z, 0, 0, 0);
-			}
-			else {
-				ENTITY::SET_ENTITY_COORDS(myPed, pCoords.x, pCoords.y, pCoords.z, 1, 0, 0, 1);
-			}
+			Entity handle;
+			Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player), false);
+			PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), false) ? handle = PED::GET_VEHICLE_PED_IS_USING(PLAYER::PLAYER_PED_ID()) : handle = PLAYER::PLAYER_PED_ID();
+			ENTITY::SET_ENTITY_COORDS(handle, coords.x, coords.y, coords.z, false, false, false, false);
 		}
 
 
@@ -3441,7 +3660,7 @@ void PlayerParticleFX(char* Name, Player p) {
 				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
 				Vector3 pos = ENTITY::GET_ENTITY_COORDS(Handle, 1);
 				if (!ENTITY::DOES_ENTITY_EXIST(Handle)) continue;
-				FIRE::ADD_OWNED_EXPLOSION(playerPed, pos.x, pos.y, pos.z, 29, 0.5f, true, false, 5.0f);
+				FIRE::ADD_OWNED_EXPLOSION(selPlayer, pos.x, pos.y, pos.z, 29, 0.5f, true, false, 5.0f);
 				{
 					if (i == 32)
 
@@ -3641,7 +3860,7 @@ void PlayerParticleFX(char* Name, Player p) {
 		AddOption("Attach UFO to Vehicle", aUFOtoVeh);
 		//AddOption("");
 		Ped myPed = PLAYER::PLAYER_PED_ID();
-		Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
+		Player playerPed = p;
 		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
 		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
 		if (a2pla)
@@ -3663,21 +3882,21 @@ void PlayerParticleFX(char* Name, Player p) {
 		{
 			ENTITY::DETACH_ENTITY(myPed, 1, 1);
 		}
-		if (TonCage)
-		{
-			AI::CLEAR_PED_TASKS_IMMEDIATELY(playerPed);
-			NETWORK::OBJ_TO_NET(OBJECT::CREATE_OBJECT_NO_OFFSET(GAMEPLAY::GET_HASH_KEY("prop_gold_cont_01"), pCoords.x, pCoords.y, pCoords.z, 1, 0, 0));
-		}
-		if (AttBfire)
-		{
-			Hash beachfire = GAMEPLAY::GET_HASH_KEY("prop_beach_fire");
-			STREAMING::REQUEST_MODEL(beachfire);
-			while (!STREAMING::HAS_MODEL_LOADED(beachfire))
-				WAIT(0);
-			int attachfire = OBJECT::CREATE_OBJECT(beachfire, pCoords.x, pCoords.y, pCoords.z, true, 1, 0);
+		//if (TonCage)
+		//{
+		//	AI::CLEAR_PED_TASKS_IMMEDIATELY(playerPed);
+		//	NETWORK::OBJ_TO_NET(OBJECT::CREATE_OBJECT_NO_OFFSET(GAMEPLAY::GET_HASH_KEY("prop_gold_cont_01"), pCoords.x, pCoords.y, pCoords.z, 1, 0, 0));
+		//}
+		//if (AttBfire)
+		//{
+		//	Hash beachfire = GAMEPLAY::GET_HASH_KEY("prop_beach_fire");
+		//	STREAMING::REQUEST_MODEL(beachfire);
+		//	while (!STREAMING::HAS_MODEL_LOADED(beachfire))
+		//		WAIT(0);
+		//	int attachfire = OBJECT::CREATE_OBJECT(beachfire, pCoords.x, pCoords.y, pCoords.z, true, 1, 0);
 
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(attachfire, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(attachfire, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
 		if (pback)
 		{
 			char *anim = "mini@prostitutes@sexnorm_veh";
@@ -3702,91 +3921,91 @@ void PlayerParticleFX(char* Name, Player p) {
 			int vehID = VEHICLE::GET_CLOSEST_VEHICLE(pCoords.x, pCoords.y, pCoords.z, 600.0f, 0, 0);
 			ENTITY::ATTACH_ENTITY_TO_ENTITY(vehID, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
 		}
-		if (aOraBall)
-		{
-			Hash oball = GAMEPLAY::GET_HASH_KEY("prop_juicestand");
-			STREAMING::REQUEST_MODEL(oball);
-			while (!STREAMING::HAS_MODEL_LOADED(oball))
-				WAIT(0);
-			int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
-		//
-		if (aVdoor)
-		{
-			Hash oball = GAMEPLAY::GET_HASH_KEY("prop_bank_vaultdoor");
-			STREAMING::REQUEST_MODEL(oball);
-			while (!STREAMING::HAS_MODEL_LOADED(oball))
-				WAIT(0);
-			int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
-		if (atoilet)
-		{
-			Hash oball = GAMEPLAY::GET_HASH_KEY("prop_ld_toilet_01");
-			STREAMING::REQUEST_MODEL(oball);
-			while (!STREAMING::HAS_MODEL_LOADED(oball))
-				WAIT(0);
-			int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
-		if (aDplane)
-		{
-			Hash oball = GAMEPLAY::GET_HASH_KEY("prop_dummy_plane");
-			STREAMING::REQUEST_MODEL(oball);
-			while (!STREAMING::HAS_MODEL_LOADED(oball))
-				WAIT(0);
-			int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
-		if (aBarbel)
-		{
-			Hash oball = GAMEPLAY::GET_HASH_KEY("prop_barbell_100kg");
-			STREAMING::REQUEST_MODEL(oball);
-			while (!STREAMING::HAS_MODEL_LOADED(oball))
-				WAIT(0);
-			int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
-		if (aArcade)
-		{
-			Hash oball = GAMEPLAY::GET_HASH_KEY("prop_arcade_01");
-			STREAMING::REQUEST_MODEL(oball);
-			while (!STREAMING::HAS_MODEL_LOADED(oball))
-				WAIT(0);
-			int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
-		if (aCtree)
-		{
-			Hash oball = GAMEPLAY::GET_HASH_KEY("prop_xmas_tree_int");
-			STREAMING::REQUEST_MODEL(oball);
-			while (!STREAMING::HAS_MODEL_LOADED(oball))
-				WAIT(0);
-			int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
+		//if (aOraBall)
+		//{
+		//	Hash oball = GAMEPLAY::GET_HASH_KEY("prop_juicestand");
+		//	STREAMING::REQUEST_MODEL(oball);
+		//	while (!STREAMING::HAS_MODEL_LOADED(oball))
+		//		WAIT(0);
+		//	int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
+		////
+		//if (aVdoor)
+		//{
+		//	Hash oball = GAMEPLAY::GET_HASH_KEY("prop_bank_vaultdoor");
+		//	STREAMING::REQUEST_MODEL(oball);
+		//	while (!STREAMING::HAS_MODEL_LOADED(oball))
+		//		WAIT(0);
+		//	int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
+		//if (atoilet)
+		//{
+		//	Hash oball = GAMEPLAY::GET_HASH_KEY("prop_ld_toilet_01");
+		//	STREAMING::REQUEST_MODEL(oball);
+		//	while (!STREAMING::HAS_MODEL_LOADED(oball))
+		//		WAIT(0);
+		//	int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
+		//if (aDplane)
+		//{
+		//	Hash oball = GAMEPLAY::GET_HASH_KEY("prop_dummy_plane");
+		//	STREAMING::REQUEST_MODEL(oball);
+		//	while (!STREAMING::HAS_MODEL_LOADED(oball))
+		//		WAIT(0);
+		//	int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
+		//if (aBarbel)
+		//{
+		//	Hash oball = GAMEPLAY::GET_HASH_KEY("prop_barbell_100kg");
+		//	STREAMING::REQUEST_MODEL(oball);
+		//	while (!STREAMING::HAS_MODEL_LOADED(oball))
+		//		WAIT(0);
+		//	int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
+		//if (aArcade)
+		//{
+		//	Hash oball = GAMEPLAY::GET_HASH_KEY("prop_arcade_01");
+		//	STREAMING::REQUEST_MODEL(oball);
+		//	while (!STREAMING::HAS_MODEL_LOADED(oball))
+		//		WAIT(0);
+		//	int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
+		//if (aCtree)
+		//{
+		//	Hash oball = GAMEPLAY::GET_HASH_KEY("prop_xmas_tree_int");
+		//	STREAMING::REQUEST_MODEL(oball);
+		//	while (!STREAMING::HAS_MODEL_LOADED(oball))
+		//		WAIT(0);
+		//	int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
 
-		//
-		if (AUFO)
-		{
-			Hash ufo = GAMEPLAY::GET_HASH_KEY("p_spinning_anus_s");
-			STREAMING::REQUEST_MODEL(ufo);
-			while (!STREAMING::HAS_MODEL_LOADED(ufo))
-				WAIT(0);
-			int ufomodel = OBJECT::CREATE_OBJECT(ufo, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(ufomodel, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
-		if (aSafe)
-		{
-			Hash safe = GAMEPLAY::GET_HASH_KEY("p_v_43_safe_s");
-			STREAMING::REQUEST_MODEL(safe);
-			while (!STREAMING::HAS_MODEL_LOADED(safe))
-				WAIT(0);
-			int safemodel = OBJECT::CREATE_OBJECT(safe, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(safemodel, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
-		if (aCanoe)
+		////
+		//if (AUFO)
+		//{
+		//	Hash ufo = GAMEPLAY::GET_HASH_KEY("p_spinning_anus_s");
+		//	STREAMING::REQUEST_MODEL(ufo);
+		//	while (!STREAMING::HAS_MODEL_LOADED(ufo))
+		//		WAIT(0);
+		//	int ufomodel = OBJECT::CREATE_OBJECT(ufo, 0, 0, 0, true, 1, 0);
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(ufomodel, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
+		//if (aSafe)
+		//{
+		//	Hash safe = GAMEPLAY::GET_HASH_KEY("p_v_43_safe_s");
+		//	STREAMING::REQUEST_MODEL(safe);
+		//	while (!STREAMING::HAS_MODEL_LOADED(safe))
+		//		WAIT(0);
+		//	int safemodel = OBJECT::CREATE_OBJECT(safe, 0, 0, 0, true, 1, 0);
+		//	ENTITY::ATTACH_ENTITY_TO_ENTITY(safemodel, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		//}
+		/*if (aCanoe)
 		{
 			Hash canoe = GAMEPLAY::GET_HASH_KEY("prop_can_canoe");
 			STREAMING::REQUEST_MODEL(canoe);
@@ -3823,7 +4042,7 @@ void PlayerParticleFX(char* Name, Player p) {
 			int attachfire = OBJECT::CREATE_OBJECT(beachfire, 0, 0, 0, true, 1, 0);
 
 			ENTITY::ATTACH_ENTITY_TO_ENTITY(attachfire, veh, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-		}
+		}*/
 	}
 	void oPlayVehicleOptionsMenu(char* name, Player p) {
 
@@ -3834,7 +4053,7 @@ void PlayerParticleFX(char* Name, Player p) {
 			killEngine = 0, reviveEngine = 0, freeze = 0, unfreeze = 0, flipVeh = 0;
 		//AddTitle(name);
 		Ped myPed = PLAYER::PLAYER_PED_ID();
-		Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
+		Player playerPed = p;
 		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
 		Player myPlayer = PLAYER::PLAYER_ID();
 		Vector3 pCoordsMine = ENTITY::GET_ENTITY_COORDS(myPed, 0);
@@ -3857,7 +4076,7 @@ void PlayerParticleFX(char* Name, Player p) {
 		AddOption("Open All Doors", OpenAdoors);
 		AddOption("Wash & Repair Vehicle", RepVeh);
 		AddOption("Dirty Vehicle", dirtyVeh);
-		AddToggle("Kill Engine", engineStatus, killEngine, reviveEngine);
+	//	AddToggle("Kill Engine", engineStatus, killEngine, reviveEngine);
 		AddOption("Freeze Vehicle", freeze);
 		AddOption("Unfreeze Vehicle", unfreeze);
 		AddOption("Teleport Vehicle to you", telVeh2u);
@@ -3875,7 +4094,7 @@ void PlayerParticleFX(char* Name, Player p) {
 			Vector3 rotation = ENTITY::GET_ENTITY_ROTATION(veh, 0);
 			ENTITY::SET_ENTITY_ROTATION(veh, 180, rotation.y, rotation.z, 0, 1);
 		}
-		if (killEngine) {
+		/*if (killEngine) {
 			RequestControlOfEnt(veh);
 			ENTITY::SET_ENTITY_AS_MISSION_ENTITY(veh, 1, 1);
 			VEHICLE::SET_VEHICLE_ENGINE_HEALTH(veh, -3700);
@@ -3885,7 +4104,7 @@ void PlayerParticleFX(char* Name, Player p) {
 		if (reviveEngine) {
 			RequestControlOfEnt(veh);
 			VEHICLE::SET_VEHICLE_ENGINE_HEALTH(veh, 1000);
-		}
+		}*/
 		if (freeze) {
 			RequestControlOfEnt(veh);
 			ENTITY::FREEZE_ENTITY_POSITION(veh, 1);
@@ -4055,7 +4274,7 @@ void PlayerParticleFX(char* Name, Player p) {
 		bool killtall = 0, remAtweaps = 0, glitchlobby = 0, shakewholelobby = 0, givemonsterAll = 0, giveTankAll = 0, givedukeAll = 0, giveSpaceDockerAll = 0, givAweap = 0, reduceframeall = 0, beachFireALL = 0, TonCage = 0, ufoALL = 0, aCtree = 0, giveALLweap = 0, aArcade = 0, aBarbel = 0, aDplane = 0, atoilet = 0, aVdoor = 0, makeALLSemiGod = 0, Gttaser = 0, gtsballs = 0, kefromveh = 0;
 
 		// Options' text here:
-		AddTitle("Anonymous Menu");
+		AddTitle("Anonymous");
 		AddTitle("~m~All Player Options");
 		AddOption("Shake Whole Lobby", shakewholelobby);
 		AddOption("Kick Everybody from Vehicle", kefromveh);
@@ -4302,7 +4521,7 @@ void PlayerParticleFX(char* Name, Player p) {
 				}
 			}
 		}
-		if (aCtree)
+		/*if (aCtree)
 		{
 			for (int i = 0; i <= 32; i++)
 			{
@@ -4367,8 +4586,8 @@ void PlayerParticleFX(char* Name, Player p) {
 
 				}
 			}
-		}
-		if (aDplane)
+		}*/
+		/*if (aDplane)
 		{
 			for (int i = 0; i <= 32; i++)
 			{
@@ -4433,7 +4652,7 @@ void PlayerParticleFX(char* Name, Player p) {
 
 				}
 			}
-		}
+		}*/
 		if (killtall)
 		{
 			for (int i = 0; i <= 32; i++)
@@ -4528,7 +4747,7 @@ void PlayerParticleFX(char* Name, Player p) {
 					}
 				}}
 		}
-		if (makeALLSemiGod)
+		/*if (makeALLSemiGod)
 		{
 			for (int i = 0; i <= 32; i++)
 			{
@@ -4551,8 +4770,8 @@ void PlayerParticleFX(char* Name, Player p) {
 
 				}
 			}
-		}
-		if (ufoALL)
+		}*/
+		/*if (ufoALL)
 		{
 			for (int i = 0; i <= 32; i++)
 			{
@@ -4597,7 +4816,7 @@ void PlayerParticleFX(char* Name, Player p) {
 
 				}
 			}
-		}
+		}*/
 		if (Gttaser)
 		{
 			for (int i = 0; i <= 32; i++)
@@ -4662,7 +4881,7 @@ void PlayerParticleFX(char* Name, Player p) {
 
 
 		bool sTanks = 0, railGunJesus = 0, sendCops2 = 0, sendSwatRiot = 0, sendCops = 0, taserswatt2 = 0;
-		AddTitle("Anonymous Menu");
+		AddTitle("Anonymous");
 		AddTitle("Custom Attack Options");
 		AddOption("Send Tanks", sTanks);
 		AddOption("Send Police Cars", sendCops);
@@ -4673,7 +4892,7 @@ void PlayerParticleFX(char* Name, Player p) {
 
 		//AddOption("");
 		Ped myPed = PLAYER::PLAYER_PED_ID();
-		Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
+		Player playerPed = selPlayer;
 		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
 		Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(playerPed, 0.0, 5.0, 0.0);
 
@@ -4941,7 +5160,7 @@ void oPlayerOptMenu(char* name, Player p) {
 	//		AddToggle("Make him Weld", kickplayer);
 
 	Ped myPed = PLAYER::PLAYER_PED_ID();
-	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
+	Player playerPed = p;
 	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
 	if (giveCops) {
 		RequestControlOfEnt(playerPed);
@@ -5013,7 +5232,7 @@ void oPlayerOptMenu(char* name, Player p) {
 	}
 	if (makeSemiGod)
 	{
-		Hash oball = GAMEPLAY::GET_HASH_KEY("prop_juicestand");
+		/*Hash oball = GAMEPLAY::GET_HASH_KEY("prop_juicestand");
 		STREAMING::REQUEST_MODEL(oball);
 		while (!STREAMING::HAS_MODEL_LOADED(oball))
 			WAIT(0);
@@ -5021,7 +5240,7 @@ void oPlayerOptMenu(char* name, Player p) {
 		RequestControlOfEnt(orangeball);
 		ENTITY::SET_ENTITY_VISIBLE(orangeball, false, 0);
 		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-
+*/
 	}
 
 
@@ -5163,6 +5382,15 @@ void AddCarSpawn(char* text, LPCSTR name, bool &extra_option_code = null)
 				VEHICLE::SET_VEHICLE_IS_STOLEN(veh, 0);
 				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
 				RequestControlOfEnt(veh);
+			
+				
+				VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, true);
+				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
+				DECORATOR::DECOR_SET_INT(veh, "MPBitset", 0);
+				auto networkId = NETWORK::VEH_TO_NET(veh);
+				
+				if (NETWORK::NETWORK_GET_ENTITY_IS_NETWORKED(veh))
+					NETWORK::SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(networkId, true);
 
 				if (tpinspawned) {
 					ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
@@ -5244,8 +5472,8 @@ void favoriteClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 21; i++) {
@@ -5262,7 +5490,7 @@ void favoriteClass() {
 static struct {
 	LPCSTR Name;
 	LPCSTR gameName;
-} SuperVehs[11] = {
+} SuperVehs[17] = {
 
 	{ "Pegassi Osiris", "OSIRIS" },
 	{ "Progen T20", "T20" },
@@ -5274,8 +5502,17 @@ static struct {
 	{ "Bullet", "BULLET" },
 	{ "Cheetah", "CHEETAH" },
 	{ "Vacca", "VACCA" },
-	{ "Voltic", "VOLTIC" },
-
+	//{ "Voltic", "VOLTIC" },
+	//"", "BANSHEE2", "BULLET", "CHEETAH", "ENTITYXF",
+	//"FMJ", "SHEAVA", "INFERNUS", "NERO", "NERO2","OSIRIS", "LE7B",
+	//"ITALIGTB", "ITALIGTB2", "PFISTER811", "PROTOTIPO", "REAPER", "SULTANRS", "T20",
+	//"TEMPESTA", "TURISMOR", "TYRUS", "VACCA", "VOLTIC", "ZENTORNO", "VOLTIC2", "PENETRATOR", "GP1"
+	{"Banshee", "BANSHEE2" },
+	{"Vapid FMJ", "FMJ"},
+	{"Emperor Sheava", "Sheava"},
+	{"Turfade Nero", "NERO"},
+	{"Turfade Nero(custom)", "NERO2"},
+	{"Rocket Voltic", "VOLTIC2"},
 };
 #pragma endregion
 void supercarClass() {
@@ -5283,8 +5520,8 @@ void supercarClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 11; i++) {
@@ -5334,8 +5571,8 @@ void muscleClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 23; i++) {
@@ -5381,8 +5618,8 @@ void offroadsClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 21; i++) {
@@ -5440,8 +5677,8 @@ void sportsClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 32; i++) {
@@ -5483,8 +5720,8 @@ void sportsclassicsClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 17; i++) {
@@ -5526,8 +5763,8 @@ void planesClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 18; i++) {
@@ -5571,8 +5808,8 @@ void suvsClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 19; i++) {
@@ -5620,8 +5857,8 @@ void sedansClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 23; i++) {
@@ -5652,8 +5889,8 @@ void compactClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 6; i++) {
@@ -5691,8 +5928,8 @@ void coupesClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 13; i++) {
@@ -5735,8 +5972,8 @@ void emergencyClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 18; i++) {
@@ -5765,8 +6002,8 @@ void militaryClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 4; i++) {
@@ -5819,8 +6056,8 @@ void vansClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 28; i++) {
@@ -5870,8 +6107,8 @@ void motorcyclesClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 25; i++) {
@@ -5910,8 +6147,8 @@ void helicoptersClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 14; i++) {
@@ -5944,8 +6181,8 @@ void servicesClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 8; i++) {
@@ -5991,8 +6228,8 @@ void industrialClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 21; i++) {
@@ -6031,8 +6268,8 @@ void boatsClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 14; i++) {
@@ -6064,8 +6301,8 @@ void cyclesClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 7; i++) {
@@ -6103,6 +6340,48 @@ static struct {
 
 };
 #pragma endregion
+void NewMoneyDrop(Hash weapon, Vector3 coords) {
+	drawNoBankingWarning();
+	Hash pedm = GAMEPLAY::GET_HASH_KEY("a_c_crow");
+	STREAMING::REQUEST_MODEL(pedm);
+	while (!STREAMING::HAS_MODEL_LOADED(pedm))
+		WAIT(0);
+	Ped ped = PED::CREATE_PED(26, pedm, coords.x + rand() % 3, coords.y + rand() % 3, coords.z, 0, 1, 1);
+	PED::SET_PED_MONEY(ped, 2000);
+	//	SET_ENTITY_VISIBLE(ped, 1);
+	ENTITY::SET_ENTITY_HEALTH(ped, 0);
+	ENTITY::SET_ENTITY_COLLISION(ped, 1, 0);
+	//	WAIT(10);
+	ENTITY::SET_ENTITY_AS_NO_LONGER_NEEDED(&ped);
+	//SET_ENTITY_VISIBLE(ped, 0);
+}
+void set_Safemoneydrop()
+{
+	Player playerPed = selPlayer;
+	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+
+	NewMoneyDrop(GAMEPLAY::GET_HASH_KEY("WEAPON_MINIGUN"), pCoords);
+}
+void set_Safemoneydropv2()
+{
+	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	Ped playerPedID = PLAYER::PLAYER_PED_ID();
+	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+
+	Hash moneycase = GAMEPLAY::GET_HASH_KEY("PICKUP_MONEY_CASE");
+	Hash moneybag = GAMEPLAY::GET_HASH_KEY("prop_money_bag_01");
+	STREAMING::REQUEST_MODEL(moneybag);
+	while (!STREAMING::HAS_MODEL_LOADED(moneybag))
+		WAIT(0);
+
+	int numBags = GAMEPLAY::GET_RANDOM_INT_IN_RANGE(2, 6);
+	int cashMoneyBaby = (GAMEPLAY::GET_RANDOM_INT_IN_RANGE(4000, 12001) / numBags);
+	cashMoneyBaby = (int)round(cashMoneyBaby);
+	for (int i = 0; i < numBags; i++)
+
+		OBJECT::CREATE_AMBIENT_PICKUP(moneycase, pCoords.x, pCoords.y, pCoords.z + 1.5, 0, cashMoneyBaby, moneybag, 0, 1);
+
+}
 #pragma region Lowriders
 
 static struct {
@@ -6126,13 +6405,14 @@ static struct {
 	{ "Franken Strange", "btype2" },
 };
 #pragma endregion
+int ticks = 0;
 void LowridersClass() {
 	
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Use bypass", sub::UseCarBypass);
 	AddToggle("Teleport In Spawned", tpinspawned);
 
@@ -6148,8 +6428,8 @@ void utilityClass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 18; i++) {
@@ -6197,8 +6477,8 @@ void gunclass() {
 
 
 	bool custominput = 0;
-	AddTitle("Anonymous MENU");
-	AddTitle("Online Vehicle Spawner");
+	AddTitle("Anonymous");
+	//AddTitle("Online Vehicle Spawner");
 	AddToggle("Teleport In Spawned", tpinspawned);
 
 	for (int i = 0; i < 18; i++) {
@@ -6256,10 +6536,19 @@ void menu::submenu_switch()
 	case SUB::SELECTEDPLAYER:		 sub::PlayerMenu(selpName, selPlayer); break;
 	case SUB::OPLAVEHOPTIONS:		sub::oPlayVehicleOptionsMenu(selpName, selPlayer); break;
 	case SUB::OATTACHMENTOPTIONS: sub::oAttachmentOptionsMenu(selpName, selPlayer); break;	
-	case SUB::SELPLAYERPTFX: sub::PlayerParticleFX(selpName, selPlayer); break; 
+	case SUB::SELPLAYERPTFX:	sub::PlayerParticleFX(selpName, selPlayer); break; 
 	case SUB::ALLPLAYEROPTIONS: sub::oAllPlayerOptionsMenu(); break;
-	case SUB::VEHICLEMODSA: sub::VehicleMods(); break;
-	case SUB::OPLAYEROPTIONS: oPlayerOptMenu(selpName, selPlayer); break;
+	case SUB::VEHICLEMODSA:		sub::VehicleMods(); break;
+	case SUB::OPLAYEROPTIONS:	oPlayerOptMenu(selpName, selPlayer); break;
+	case SUB::TELEPORTLOCATIONS: sub::tp(); break;
+	case SUB::MODDED:		sub::Modded(); break;
+	case SUB::HIGH:			sub::High(); break;
+	case SUB::SEA:			sub::sea(); break;
+	case SUB::OTHER:		sub::other(); break;
+	case SUB::STORES: sub::stores(); break;
+	case SUB::SINGLE: sub::sp(); break;
+	case SUB::LANDMARKS: sub::Landmarks(); break;
+	case SUB::OPLAYERATTACKERS: sub::oPlayersSendAttackers(selpName, selPlayer); break;
 	}
 }
 void set_VehSpeedBoost()
@@ -6392,8 +6681,8 @@ void printSpeed() {
 		if (mph) speed = round(milesperhour);
 		if (!mph) speed = round(kmh);
 		oss << speed;
-		UI::_ADD_TEXT_COMPONENT_STRING((char*)oss.str().c_str());
-		UI::_DRAW_TEXT((screen_res_x / 1000) - 0.096, 1 - 0.074);
+	//	UI::_ADD_TEXT_COMPONENT_STRING((char*)oss.str().c_str());
+		//UI::_DRAW_TEXT((screen_res_x / 1000) - 0.096, 1 - 0.074);
 		UI::SET_TEXT_FONT(0);
 		UI::SET_TEXT_PROPORTIONAL(1);
 		//SET_TEXT_SCALE(0.0, 0.60);
@@ -6406,11 +6695,56 @@ void printSpeed() {
 		UI::_SET_TEXT_ENTRY("STRING");
 		std::ostringstream osss;
 		if (mph) osss << "~g~mph"; else osss << "~g~km/h";
-		UI::_ADD_TEXT_COMPONENT_STRING((char*)osss.str().c_str());
-		UI::_DRAW_TEXT((screen_res_x / 1000) - 0.045, 1 - 0.043);
+//		UI::_ADD_TEXT_COMPONENT_STRING((char*)osss.str().c_str());
+	//	UI::_DRAW_TEXT((screen_res_x / 1000) - 0.045, 1 - 0.043);
 	}
 	//_DRAW_TEXT(-0.015f + (screen_res_x / 100), -0.015f + (screen_res_y / 100));
 
+}
+void set_spodercarmode()
+{
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
+
+	if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
+	{
+		VEHICLE::_SET_VEHICLE_ENGINE_POWER_MULTIPLIER(veh, 50);
+		ENTITY::APPLY_FORCE_TO_ENTITY(veh, true, 0, 0, -0.8, 0, 0, 0, true, true, true, true, false, true);
+	}
+}
+void set_loop_fuckCam()
+{
+	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+	FIRE::ADD_EXPLOSION(pCoords.x, pCoords.y, pCoords.z + 15, 29, 999999.5f, false, true, 1.0f);
+}
+void set_loop_annoyBomb()
+{
+	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+	FIRE::ADD_EXPLOSION(pCoords.x, pCoords.y, pCoords.z, 29, 9.0f, true, false, 0.0f);
+}
+void set_loop_forcefield()
+{
+	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+	FIRE::ADD_EXPLOSION(pCoords.x, pCoords.y, pCoords.z, 7, 9.0f, false, true, 0.0f);
+}
+void set_clearpTasks()
+{
+	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	AI::CLEAR_PED_TASKS_IMMEDIATELY(playerPed);
+}
+
+void set_RainbowP()
+{
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
+	VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
+	if (VEHICLE::GET_IS_VEHICLE_SECONDARY_COLOUR_CUSTOM(veh))
+		VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
 }
 void menu::loops() {
 
@@ -6449,13 +6783,13 @@ void menu::loops() {
 		Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
 
 
-		if(sub::vehicleJump) 
-		{
-			if (IsKeyJustUp(VK_SPACE) && PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 1)) {
-				Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
-				ENTITY::APPLY_FORCE_TO_ENTITY(veh, 1, 0 + ENTITY::GET_ENTITY_FORWARD_X(veh), 0 + ENTITY::GET_ENTITY_FORWARD_Y(veh), 7, 0, 0, 0, 1, 0, 1, 1, 1, 1);
-			}
-		}
+		//if(vehicleJump) 
+		//{
+		//	if (IsKeyJustUp(VK_SPACE) && PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 1)) {
+		//		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+		//		ENTITY::APPLY_FORCE_TO_ENTITY(veh, 1, 0 + ENTITY::GET_ENTITY_FORWARD_X(veh), 0 + ENTITY::GET_ENTITY_FORWARD_Y(veh), 7, 0, 0, 0, 1, 0, 1, 1, 1, 1);
+		//	}
+		//}
 
 		/*	Make calls to functions that you want looped over here, e.g. ambient lights, whale guns, explosions, checks, flying deers, etc.
 		Can also be used for (bool) options that are to be executed from many parts of the script. */
@@ -6508,7 +6842,7 @@ void menu::loops() {
 
 		DWORD model = ENTITY::GET_ENTITY_MODEL(veh);
 		Vector3 pos = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
-		if (sub::driveOnWater) sub::DriveOnWater();
+///		if (sub::driveOnWater) sub::DriveOnWater();
 		/*if (esp) {
 			if (box3D) {
 				set_esp(0);
@@ -6547,8 +6881,8 @@ void menu::loops() {
 				}
 			}
 		}*/
-		/*ticks++;
-		if (lightentity) {
+		ticks++;
+		/*if (lightentity) {
 			if (ticks > 50) {
 				ticks = 0;
 				set_lightEntity();
@@ -6617,8 +6951,8 @@ void menu::loops() {
 		//	if (analog_loop) set_analog_loop();
 		//if (loop_ClearpTasks) set_clearpTasks();
 		//if (loop_annoyBomb) set_loop_annoyBomb();
-		//if (forcefield) set_loop_forcefield();
-		//if (loop_fuckCam) set_loop_fuckCam();
+		if (forcefield) set_loop_forcefield();
+			if (loop_fuckCam) set_loop_fuckCam();
 		if (infiniteAmmo) set_infiniteAmmo();
 		//	if (bloodfx01) set_bloodfx();
 		//	if (lightentity) set_lightEntity();
@@ -6627,13 +6961,14 @@ void menu::loops() {
 		//if (loop_moneydrop) set_moneydrop();
 
 
-	/*	if (loop_safemoneydrop)
+		if (loop_safemoneydrop)
 		{
 			if (ticks > 10) {
 				ticks = 0;
 				set_Safemoneydrop();
 			}
 		}
+		/*
 		if (loop_safemoneydropv2)
 		{
 			if (ticks > 10) {
@@ -6660,11 +6995,11 @@ void menu::loops() {
 		/*set_extremeRun();
 		set_godmode();*/
 		//	if (disableinvincible) set_godmodeOff();
-		//if (RainbowP) set_RainbowP();
+		if (RainbowP) set_RainbowP();
 		//	if (lowerVeh_ms) set_lowerVeh_ms();
 		/*if (lowerVehMID_ms) set_lowerVehMID_ms();
 		if (lowerVehMAX_ms) set_lowerVehMAX_ms();*/
-		//if (spodercarmode) set_spodercarmode();
+		if (spodercarmode) set_spodercarmode();
 		if (VehSpeedBoost)set_VehSpeedBoost();
 		//if (flyingUp) set_fup();
 		//if (anticrash)set_antiCrash();
