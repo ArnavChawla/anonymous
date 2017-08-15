@@ -64,6 +64,7 @@ namespace SUB
 		SETTINGS_FONTS,
 		SETTINGS_FONTS2,
 		// Others:
+		VEHICLE_LSC2,
 		OTHER,//done
 		HIGH,//done
 		SINGLE,
@@ -501,92 +502,92 @@ void set_msNeverWanted()
 	PLAYER::CLEAR_PLAYER_WANTED_LEVEL(player);
 
 }
-	int *settings_font, inull;
-	RGBA *settings_rgba;
-	RGBA titlebox = { 0, 0, 0, 255 };
-	RGBA BG = { 20, 20, 20, 200 };
-	RGBA titletext = { 255, 255, 255, 255 };
-	RGBA optiontext = { 128, 128, 128, 255 };
-	RGBA optioncount = { 255, 255, 255, 255 };
-	RGBA selectedtext = { 255, 255, 255, 255 };
-	RGBA optionbreaks = { 255, 255, 255, 240 };
-	RGBA selectionhi = { 255, 255, 255, 140 };
-	int font_title = 7, font_options = 4, font_selection = 4, font_breaks = 1;
-	float menuPos = 0, OptionY;
-	int screen_res_x, screen_res_y;
-	DWORD myVeh, cam_gta2;
-	float current_timescale = 1.0f;
-	bool DrawnWarningOnce = 1;
-	int WakeAt1 = 0;
-	void drawNoBankingWarning() {
+int *settings_font, inull;
+RGBA *settings_rgba;
+RGBA titlebox = { 0, 0, 0, 255 };
+RGBA BG = { 20, 20, 20, 200 };
+RGBA titletext = { 255, 255, 255, 255 };
+RGBA optiontext = { 128, 128, 128, 255 };
+RGBA optioncount = { 255, 255, 255, 255 };
+RGBA selectedtext = { 255, 255, 255, 255 };
+RGBA optionbreaks = { 255, 255, 255, 240 };
+RGBA selectionhi = { 255, 255, 255, 140 };
+int font_title = 7, font_options = 4, font_selection = 4, font_breaks = 1;
+float menuPos = 0, OptionY;
+int screen_res_x, screen_res_y;
+DWORD myVeh, cam_gta2;
+float current_timescale = 1.0f;
+bool DrawnWarningOnce = 1;
+int WakeAt1 = 0;
+void drawNoBankingWarning() {
 
 
-		if (DrawnWarningOnce) {
-			if (WakeAt1 == 0) WakeAt1 = timeGetTime() + 2000;
-			/*if (timeGetTime() <= WakeAt1) {
-				UI::SET_TEXT_FONT(0);
-				UI::SET_TEXT_SCALE(0.50, 0.50);
-				UI::SET_TEXT_COLOUR(255, 255, 255, 255);
-				UI::SET_TEXT_WRAP(0.0, 1.0);
-				UI::SET_TEXT_CENTRE(1);
-				UI::SET_TEXT_DROPSHADOW(0, 0, 0, 0, 0);
-				UI::SET_TEXT_EDGE(1, 0, 0, 0, 205);
-				UI::_SET_TEXT_ENTRY("STRING");
-				UI::_ADD_TEXT_COMPONENT_STRING("~r~IF YOU BANK THE CASH GET FUCKED BY TRUMP :)");
-				UI::_DRAW_TEXT(0.5, 0.15);
-			}*/
-			else DrawnWarningOnce = 0;
-		}
+	if (DrawnWarningOnce) {
+		if (WakeAt1 == 0) WakeAt1 = timeGetTime() + 2000;
+		/*if (timeGetTime() <= WakeAt1) {
+		UI::SET_TEXT_FONT(0);
+		UI::SET_TEXT_SCALE(0.50, 0.50);
+		UI::SET_TEXT_COLOUR(255, 255, 255, 255);
+		UI::SET_TEXT_WRAP(0.0, 1.0);
+		UI::SET_TEXT_CENTRE(1);
+		UI::SET_TEXT_DROPSHADOW(0, 0, 0, 0, 0);
+		UI::SET_TEXT_EDGE(1, 0, 0, 0, 205);
+		UI::_SET_TEXT_ENTRY("STRING");
+		UI::_ADD_TEXT_COMPONENT_STRING("~r~IF YOU BANK THE CASH GET FUCKED BY TRUMP :)");
+		UI::_DRAW_TEXT(0.5, 0.15);
+		}*/
+		else DrawnWarningOnce = 0;
 	}
+}
 
 
 
-	// Booleans for loops go here:
-	DWORD VehicleShootLastTime = 0;
-	bool loop_massacre_mode = 0, showfps = 0, loop_gravity_gun = 0, xmasgs = 0, coollights01 = 0, moneyrain01 = 0, bigsmoke01 = 0, cameraflash01 = 0,
-		automax = 0, noclip = 0, laghimout = 0, theleecher = 0, rapidfire = 0, speedLimiter = 0, analog_loop = 0, loop_SuperGrip = 0, msCAR_invisible = 0,
-		theForceA = 0, awhostalking = 1, amiHOSTl = 0, anticrash3 = 0, vehrpm = 0, crashLobby = 0, loop_RainbowBoxes = 0, oneshotkillv2 = 0, invincible = 0,
-		customComponentA = 0, invisible = 0, opmult = 0, espectateP = 0, setWlevelf = 0, featureVehtaser = 0, mobileRadio = 0, featureVehLight = 0, pinkburstfx01 = 0,
-		ffield = 0, fastrun = 0, loop_fuckCam = 0, fastswim = 0, electricfx01 = 0, lightentity = 0, forcefield = 0, bypassduke = 0, bloodfx01 = 0, featureVehballs = 0,
-		loop_annoyBomb = 0, infiniteAmmo = 0, loop_gta2cam = 0, earthquake = 0, test2 = 0, tpinspawned = 0, featureVehsnowball = 0, loop_safemoneydrop = 0, loop_safemoneydropv2 = 0, loop_moneydrop = 0,
-		loop_ClearpTasks = 0, ms_invisible = 0, featureVehprocked = 0, anticrash2 = 0, anticrash = 0, featureMiscHeatVision = 0, runspeed = 0,
-		featureVehtrounds = 0, flyingUp = 0, featureMiscHideHud = 0, showWhosTalking = 0, featureVehlaser1 = 0, spritetest2 = 0, featureVehlaser2 = 0,
-		VehSpeedBoost = 0, featureMoneyDropSelfLoop = 0, featureVehFireworks = 0, spodercarmode = 0, lowerVehMID_ms = 0, lowerVehMAX_ms = 0, featureRagdoll = 0,
-		lowerVeh_ms = 0, featureVehRockets = 0, RainbowP = 0, customsecondary = 0, customprimary = 0, loop_rainbowcar = 0, shootrhino = 0, ExplosiveAmmo = 0,
-		disableinvincible = 0, shootdummp = 0, nearbypeds = 0, shootcutter = 0, shootstrippers = 0, shootlbrtr = 0, PlayerSuperJump = 0, shootbzrd = 0, shoothydras = 0,
-		shootbmxs = 0, ExplosiveMelee = 0, ms_rpIncreaser = 0, ms_neverWanted = 0, vehTorque = 0;
-	bool selltime = 0;
-	bool planesmoke = 0;
-	bool speedometer = 0;
-	bool explodetalker = 0, loop_noreload = 0, onehit = 0, loop_fireammo = 0, loop_explosiveammo = 0,
-		loop_explosiveMelee = 0, loop_vehicleRockets = 0, loop_rainbowneon = 0, loop_locktime = 0, custombullet = 0, fixAndWashLoop = 0, riskMode = 0,
-		carspawnlimit = 0, antiParticleFXCrash = 0, aimbot = 0;
-	Player selPlayer;
-	char* selpName;
-	Object mapMods[250];
-	int mapModsIndex = 0; 
-	bool ExtremeRun = 0;
-	bool stealth = 0;
-	RGBA boxColor = { 255, 0, 0, 255 };
-	float optionYBonus = 0.123f;
-	float optionXBonus = 0.264f;
-	float backXBonus = 0.331f;
-	float titleYBonus = -0.019f;
-	float backgroundYBonus = -0.135f;
-	float backgroundLengthBonus = -0.193f;
-	float titleBoxBonus = 0.045f;
-	float bwidth = 0.135f;
-	float titleXBonus = 0.171f;
-	float titleTextYBonus = -0.016f;
-	float titleScale = 0.590f;
-	float titleScaleSmall = 0.472f;
-	bool useMPH = 1;
-	bool bulletBlame = 0;
-	bool controllerMode = 0;
-	Ped shootAs = -1;
-	float damageMultiplier = 1;
-	
-	
+// Booleans for loops go here:
+DWORD VehicleShootLastTime = 0;
+bool loop_massacre_mode = 0, showfps = 0, loop_gravity_gun = 0, xmasgs = 0, coollights01 = 0, moneyrain01 = 0, bigsmoke01 = 0, cameraflash01 = 0,
+automax = 0, noclip = 0, laghimout = 0, theleecher = 0, rapidfire = 0, speedLimiter = 0, analog_loop = 0, loop_SuperGrip = 0, msCAR_invisible = 0,
+theForceA = 0, awhostalking = 1, amiHOSTl = 0, anticrash3 = 0, vehrpm = 0, crashLobby = 0, loop_RainbowBoxes = 0, oneshotkillv2 = 0, invincible = 0,
+customComponentA = 0, invisible = 0, opmult = 0, espectateP = 0, setWlevelf = 0, featureVehtaser = 0, mobileRadio = 0, featureVehLight = 0, pinkburstfx01 = 0,
+ffield = 0, fastrun = 0, loop_fuckCam = 0, fastswim = 0, electricfx01 = 0, lightentity = 0, forcefield = 0, bypassduke = 0, bloodfx01 = 0, featureVehballs = 0,
+loop_annoyBomb = 0, infiniteAmmo = 0, loop_gta2cam = 0, earthquake = 0, test2 = 0, tpinspawned = 0, featureVehsnowball = 0, loop_safemoneydrop = 0, loop_safemoneydropv2 = 0, loop_moneydrop = 0,
+loop_ClearpTasks = 0, ms_invisible = 0, featureVehprocked = 0, anticrash2 = 0, anticrash = 0, featureMiscHeatVision = 0, runspeed = 0,
+featureVehtrounds = 0, flyingUp = 0, featureMiscHideHud = 0, showWhosTalking = 0, featureVehlaser1 = 0, spritetest2 = 0, featureVehlaser2 = 0,
+VehSpeedBoost = 0, featureMoneyDropSelfLoop = 0, featureVehFireworks = 0, spodercarmode = 0, lowerVehMID_ms = 0, lowerVehMAX_ms = 0, featureRagdoll = 0,
+lowerVeh_ms = 0, featureVehRockets = 0, RainbowP = 0, customsecondary = 0, customprimary = 0, loop_rainbowcar = 0, shootrhino = 0, ExplosiveAmmo = 0,
+disableinvincible = 0, shootdummp = 0, nearbypeds = 0, shootcutter = 0, shootstrippers = 0, shootlbrtr = 0, PlayerSuperJump = 0, shootbzrd = 0, shoothydras = 0,
+shootbmxs = 0, ExplosiveMelee = 0, ms_rpIncreaser = 0, ms_neverWanted = 0, vehTorque = 0;
+bool selltime = 0;
+bool planesmoke = 0;
+bool speedometer = 0;
+bool explodetalker = 0, loop_noreload = 0, onehit = 0, loop_fireammo = 0, loop_explosiveammo = 0,
+loop_explosiveMelee = 0, loop_vehicleRockets = 0, loop_rainbowneon = 0, loop_locktime = 0, custombullet = 0, fixAndWashLoop = 0, riskMode = 0,
+carspawnlimit = 0, antiParticleFXCrash = 0, aimbot = 0;
+Player selPlayer;
+char* selpName;
+Object mapMods[250];
+int mapModsIndex = 0;
+bool ExtremeRun = 0;
+bool stealth = 0;
+RGBA boxColor = { 255, 0, 0, 255 };
+float optionYBonus = 0.123f;
+float optionXBonus = 0.264f;
+float backXBonus = 0.331f;
+float titleYBonus = -0.019f;
+float backgroundYBonus = -0.135f;
+float backgroundLengthBonus = -0.193f;
+float titleBoxBonus = 0.045f;
+float bwidth = 0.135f;
+float titleXBonus = 0.171f;
+float titleTextYBonus = -0.016f;
+float titleScale = 0.590f;
+float titleScaleSmall = 0.472f;
+bool useMPH = 1;
+bool bulletBlame = 0;
+bool controllerMode = 0;
+Ped shootAs = -1;
+float damageMultiplier = 1;
+
+
 // Declare subroutines here.
 namespace
 {
@@ -676,22 +677,22 @@ namespace
 	//			}
 	//			MemoryBuff = MemoryBuff - 4096;
 	//		}
-		
+
 
 
 	const int PED_FLAG_CAN_FLY_THRU_WINDSCREEN = 32;
 
 	/*int PlaceObject(DWORD Hash, float X, float Y, float Z, float Pitch, float Roll, float Yaw)
 	{
-		RequestModel(Hash);
-		int object = OBJECT::CREATE_OBJECT(Hash, X, Y, Z, 1, 1, 0);
-		ENTITY::SET_ENTITY_ROTATION(object, Pitch, Roll, Yaw, 2, 1);
-		ENTITY::FREEZE_ENTITY_POSITION(object, 1);
-		ENTITY::SET_ENTITY_LOD_DIST(object, 696969);
-		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(Hash);
-		ENTITY::SET_OBJECT_AS_NO_LONGER_NEEDED(&object);
+	RequestModel(Hash);
+	int object = OBJECT::CREATE_OBJECT(Hash, X, Y, Z, 1, 1, 0);
+	ENTITY::SET_ENTITY_ROTATION(object, Pitch, Roll, Yaw, 2, 1);
+	ENTITY::FREEZE_ENTITY_POSITION(object, 1);
+	ENTITY::SET_ENTITY_LOD_DIST(object, 696969);
+	STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(Hash);
+	ENTITY::SET_OBJECT_AS_NO_LONGER_NEEDED(&object);
 
-		return object;
+	return object;
 	}*/
 	void setupdraw()
 	{
@@ -930,9 +931,9 @@ namespace
 	}
 	void PrintFloatBottomCentre(float text, __int8 decimal_places)
 	{/*
-		UI::_SET_TEXT_ENTRY_2("NUMBER");
-		UI::ADD_TEXT_COMPONENT_FLOAT(text, (DWORD)decimal_places);
-		UI::_DRAW_SUBTITLE_TIMED(2000, 1);*/
+	 UI::_SET_TEXT_ENTRY_2("NUMBER");
+	 UI::ADD_TEXT_COMPONENT_FLOAT(text, (DWORD)decimal_places);
+	 UI::_DRAW_SUBTITLE_TIMED(2000, 1);*/
 	}
 	//void PrintBottomLeft(char* text)
 	//{
@@ -957,33 +958,33 @@ namespace
 		PrintStringBottomCentre("~r~Error:~s~ Invalid Model.");
 	}
 	/*Vector3 RotationToDirection(Vector3 rot) {
-		double num = DegreeToRadian(rot.z);
-		double num2 = DegreeToRadian(rot.x);
-		double val = cos(num2);
-		double num3 = abs(val);
-		rot.x = (float)(-(float)sin(num) * num3);
-		rot.y = (float)(cos(num) * num3);
-		rot.z = (float)sin(num2);
-		return rot;
+	double num = DegreeToRadian(rot.z);
+	double num2 = DegreeToRadian(rot.x);
+	double val = cos(num2);
+	double num3 = abs(val);
+	rot.x = (float)(-(float)sin(num) * num3);
+	rot.y = (float)(cos(num) * num3);
+	rot.z = (float)sin(num2);
+	return rot;
 
 	}
 	Vector3 multiplyVector(Vector3 vector, float inc) {
-		vector.x *= inc;
-		vector.y *= inc;
-		vector.z *= inc;
-		vector._paddingx *= inc;
-		vector._paddingy *= inc;
-		vector._paddingz *= inc;
-		return vector;
+	vector.x *= inc;
+	vector.y *= inc;
+	vector.z *= inc;
+	vector._paddingx *= inc;
+	vector._paddingy *= inc;
+	vector._paddingz *= inc;
+	return vector;
 	}
 	Vector3 addVector(Vector3 vector, Vector3 vector2) {
-		vector.x += vector2.x;
-		vector.y += vector2.y;
-		vector.z += vector2.z;
-		vector._paddingx += vector2._paddingx;
-		vector._paddingy += vector2._paddingy;
-		vector._paddingz += vector2._paddingz;
-		return vector;
+	vector.x += vector2.x;
+	vector.y += vector2.y;
+	vector.z += vector2.z;
+	vector._paddingx += vector2._paddingx;
+	vector._paddingy += vector2._paddingy;
+	vector._paddingz += vector2._paddingz;
+	return vector;
 	}*/
 
 	class menu
@@ -1109,7 +1110,7 @@ namespace
 				optionhi();
 			}
 		}
-		
+
 		static void background()
 		{
 			float temp;
@@ -1173,7 +1174,7 @@ namespace
 			UI::ADD_TEXT_COMPONENT_INTEGER(totalop); // ! totalop - totalbreaks
 			UI::_DRAW_TEXT(0.2205f + menuPos, temp);
 		}
-		
+
 		static void optionhi()
 		{
 			float Y_coord;
@@ -1210,7 +1211,7 @@ namespace
 			MOBILE::SET_MOBILE_PHONE_POSITION(0, 0, 0);
 
 			DisableControls();
-				
+
 			// Scroll up
 			if (CONTROLS::IS_DISABLED_CONTROL_JUST_PRESSED(2, INPUT_SCRIPT_PAD_UP) || IsKeyJustUp(VK_UP))
 			{
@@ -1570,7 +1571,7 @@ namespace
 
 	}
 	// Hax functions:
-	
+
 
 	int grav_partfx, grav_entity; bool grav_toggled = 0, grav_target_locked = 0;
 	Vector3 get_coords_from_cam(float distance)
@@ -1599,7 +1600,7 @@ namespace
 
 }
 namespace sub {
-	
+
 	bool Shrink = 0;
 	// Define submenus here.
 	void MainMenu()
@@ -1607,7 +1608,7 @@ namespace sub {
 		//Add To Auth Premium/ VIP
 		bool ShrinkE = 0, ShrinkD = 0;
 		AddTitle("Anonymous");
-		
+
 		//ddOption("~g~Name Changer", null, nullFunc, SUB::NAMECHANGER);
 		AddOption("~g~Teleport Locations", null, nullFunc, SUB::TELEPORTLOCATIONS);
 		AddOption("~b~Online Players", null, nullFunc, SUB::ONLINEPLAYERS);
@@ -1617,7 +1618,7 @@ namespace sub {
 		AddOption("~b~Vehicle Spawner", null, nullFunc, SUB::VEHICLE_SPAWNER);
 		AddOption("~b~Vehicle Mods", null, nullFunc, SUB::VEHICLEMODSA);
 		//AddOption("~y~Obj/Ped/Bodyguard Spawner", null, nullFunc, SUB::FORCESPAWNER);
-	//	AddOption("~y~Particle Effects", null, nullFunc, SUB::PARTICLEFX);
+		//	AddOption("~y~Particle Effects", null, nullFunc, SUB::PARTICLEFX);
 		//AddOption("~y~Gun", null, nullFunc, SUB::FORCEGUN);
 		AddToggle("Shrink", Shrink, ShrinkE, ShrinkD);
 		if (ShrinkE) PED::SET_PED_CONFIG_FLAG(PLAYER::PLAYER_PED_ID(), 223, 1);
@@ -1638,38 +1639,38 @@ namespace sub {
 	void other()
 	{
 		AddTele("Beeker's Garage", 139.67, 6595.94f, 33.00f);
-	AddTele("400k/500k Apartment", -793.36, 296.86f, 87.84f);
-	AddTele("Appartment", -778.34, 339.97f, 208.62f);
-	AddTele("Mors Mutual Insurance", -232.74, -1163.556f, 24.95f);
-	AddTele("Impound Lot", 408.923, -1633.860f, 30.29f);
-	AddTele("Inside 10 Car Garage", 228.71, -989.98f, -96.00f);
-	AddTele("Under The Map", 132.1470, -739.5430f, 39.00f);
-	AddTele("Strip Club", 125.428, -1290.40f, 30.00f);
-	AddTele("Prison", 1696.3642, 2561.377f, 47.56f);
-	AddTele("Maze", -2311.01, 234.33f, 170.63f);
-	AddTele("Ammunation", 233.3912, -41.08f, 69.67f);
-	AddTele("Race Track", 1201.36, 95.65f, 82.03f);
+		AddTele("400k/500k Apartment", -793.36, 296.86f, 87.84f);
+		AddTele("Appartment", -778.34, 339.97f, 208.62f);
+		AddTele("Mors Mutual Insurance", -232.74, -1163.556f, 24.95f);
+		AddTele("Impound Lot", 408.923, -1633.860f, 30.29f);
+		AddTele("Inside 10 Car Garage", 228.71, -989.98f, -96.00f);
+		AddTele("Under The Map", 132.1470, -739.5430f, 39.00f);
+		AddTele("Strip Club", 125.428, -1290.40f, 30.00f);
+		AddTele("Prison", 1696.3642, 2561.377f, 47.56f);
+		AddTele("Maze", -2311.01, 234.33f, 170.63f);
+		AddTele("Ammunation", 233.3912, -41.08f, 69.67f);
+		AddTele("Race Track", 1201.36, 95.65f, 82.03f);
 
 
-	AddTele("LS Customs", -363.9027, -132.71f, 39.00f);
-	AddTele("Random", 2861.426, 5927.89, 361.29f);
+		AddTele("LS Customs", -363.9027, -132.71f, 39.00f);
+		AddTele("Random", 2861.426, 5927.89, 361.29f);
 
-	AddTele("Cave", -1911.3, 1389.29f, 219.00f);
-	AddTele("Farest Island North", 32.51, 7688.99f, 4.00f);
-	AddTele("Farest Island South", 1799.90, -2823.90, 5.00f);
-	AddTele("Flight School", -1153.10, -2713.39f, 20.00f);
-	AddTele("Tram Station", 104.50, -1718.30f, 31.00f);
-	AddTele("Golf", -1079.71, 10.04f, 51.00f);
-	AddTele("Stage", 684.97, 574.32f, 131.00f);
-	AddTele("Drift Mountain", 860.32, 1316.65f, 356.00f);
-
-
-
-	AddTele("Water Fall", -552.0047, 4439.4487f, 35.123f);
+		AddTele("Cave", -1911.3, 1389.29f, 219.00f);
+		AddTele("Farest Island North", 32.51, 7688.99f, 4.00f);
+		AddTele("Farest Island South", 1799.90, -2823.90, 5.00f);
+		AddTele("Flight School", -1153.10, -2713.39f, 20.00f);
+		AddTele("Tram Station", 104.50, -1718.30f, 31.00f);
+		AddTele("Golf", -1079.71, 10.04f, 51.00f);
+		AddTele("Stage", 684.97, 574.32f, 131.00f);
+		AddTele("Drift Mountain", 860.32, 1316.65f, 356.00f);
 
 
-	AddTele("Del Perro Pier", -1838.834, -1223.333f, 15.00f);
-	AddTele("Vinewood Sign", 729.909, 1204.37f, 326.0209f);
+
+		AddTele("Water Fall", -552.0047, 4439.4487f, 35.123f);
+
+
+		AddTele("Del Perro Pier", -1838.834, -1223.333f, 15.00f);
+		AddTele("Vinewood Sign", 729.909, 1204.37f, 326.0209f);
 
 	}
 	void sp()
@@ -1678,7 +1679,7 @@ namespace sub {
 		AddTele("michael's House Inside", -814.38, 178.92f, 73.00f);
 		AddTele("Franklins's House Old", -14.31, -1437.00f, 30.00f);
 		AddTele("Franklins's House New", 7.05, 524.33f, 174.97f);
-		
+
 		AddTele("Trevers Meth Lab", 1390.28, 3608.60f, 39.00f);
 
 	}
@@ -1742,20 +1743,20 @@ namespace sub {
 		AddTele("Go to Store 19", 1699.0f, 4924.0f, 42.0f);
 		AddTele("Go to Store 20", 1730.0f, 6416.0f, 35.0f);
 	}
-void BypassOnlineVehicleKick(Vehicle vehicle)
+	void BypassOnlineVehicleKick(Vehicle vehicle)
 	{
-	Player player = PLAYER::PLAYER_ID();
-	int var;
-	DECORATOR::DECOR_REGISTER("Player_Vehicle", 3);
-	DECORATOR::DECOR_REGISTER("Veh_Modded_By_Player", 3);
-	DECORATOR::DECOR_SET_INT(vehicle, "Player_Vehicle", NETWORK::_NETWORK_HASH_FROM_PLAYER_HANDLE(player));
-	DECORATOR::DECOR_SET_INT(vehicle, "Veh_Modded_By_Player", GAMEPLAY::GET_HASH_KEY(PLAYER::GET_PLAYER_NAME(player)));
-	DECORATOR::DECOR_SET_INT(vehicle, "Not_Allow_As_Saved_Veh", 0);
-	if (DECORATOR::DECOR_EXIST_ON(vehicle, "MPBitset"))
-		var = DECORATOR::DECOR_GET_INT(vehicle, "MPBitset");
-	GAMEPLAY::SET_BIT(&var, 3);
-	DECORATOR::DECOR_SET_INT(vehicle, "MPBitset", var);
-	VEHICLE::SET_VEHICLE_IS_STOLEN(vehicle, false);
+		Player player = PLAYER::PLAYER_ID();
+		int var;
+		DECORATOR::DECOR_REGISTER("Player_Vehicle", 3);
+		DECORATOR::DECOR_REGISTER("Veh_Modded_By_Player", 3);
+		DECORATOR::DECOR_SET_INT(vehicle, "Player_Vehicle", NETWORK::_NETWORK_HASH_FROM_PLAYER_HANDLE(player));
+		DECORATOR::DECOR_SET_INT(vehicle, "Veh_Modded_By_Player", GAMEPLAY::GET_HASH_KEY(PLAYER::GET_PLAYER_NAME(player)));
+		DECORATOR::DECOR_SET_INT(vehicle, "Not_Allow_As_Saved_Veh", 0);
+		if (DECORATOR::DECOR_EXIST_ON(vehicle, "MPBitset"))
+			var = DECORATOR::DECOR_GET_INT(vehicle, "MPBitset");
+		GAMEPLAY::SET_BIT(&var, 3);
+		DECORATOR::DECOR_SET_INT(vehicle, "MPBitset", var);
+		VEHICLE::SET_VEHICLE_IS_STOLEN(vehicle, false);
 	}
 	void ListSavedVehicles()
 	{
@@ -1884,10 +1885,10 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		AddTitle("Self Mods");
 		//	AddOption("- - -Self Options- - -");
 		AddToggle("Noclip", noclip, NoClipControls, noclipSafety);
-	//	if (NoClipControls) {
+		//	if (NoClipControls) {
 		//	DrawNotif("Ctrl:Up\nShift:Down\nNumpad 7/1:CSpeed\nW-A-S-D: Move", ICONS::CHAR_MILSITE, ICONTYPE::ICON_NOTHING);
 		//}
-		AddToggle("Off the Radar",offTheRadar);
+		AddToggle("Off the Radar", offTheRadar);
 		AddOption("~b~Character Customizer", null, nullFunc, SUB::CUSTOMCHARAC);
 		AddOption("Model Changer", null, nullFunc, SUB::SKINCHANGER);
 		AddOption("~b~Animations", null, nullFunc, SUB::PANIMATIONMENU);
@@ -1912,7 +1913,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		AddToggle("15mil Stealth", stealth);
 		AddToggle("Force Fly - Hancock", flyingUp);
 		//			AddToggle("Anti Crash System v2", loop_gta2cam, sample_gta2cam, sample_gta2cam); \
-		
+				
 		int TimePD3;
 		if (stealth)
 		{
@@ -1925,7 +1926,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		}
 		if (offTheRadar)
 		{
-		
+
 			globalHandle(2422215).At(PLAYER::PLAYER_ID(), 378).At(209).As<int>() = 1;
 			globalHandle(2434604).At(70).As<int>() = NETWORK::GET_NETWORK_TIME();
 		}
@@ -2128,55 +2129,55 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		}
 	}
 	/*void DriveOnWater() {
-		Player player = PLAYER::PLAYER_ID();
-		Ped playerPed = PLAYER::PLAYER_PED_ID();
-		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
-		DWORD model = ENTITY::GET_ENTITY_MODEL(veh);
-		Vector3 pos = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
-		float height = 0;
-		if ((!(VEHICLE::IS_THIS_MODEL_A_PLANE(ENTITY::GET_ENTITY_MODEL(veh)))) && WATER::GET_WATER_HEIGHT_NO_WAVES(pos.x, pos.y, pos.z, &height)) {
-			Object container = OBJECT::GET_CLOSEST_OBJECT_OF_TYPE(pos.x, pos.y, pos.z, 4.0, GAMEPLAY::GET_HASH_KEY("prop_container_ld2"), 0, 0, 1);
-			if (ENTITY::DOES_ENTITY_EXIST(container) && height > -50.0f) {
-				Vector3 pRot = ENTITY::GET_ENTITY_ROTATION(playerPed, 0);
-				if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 1)) pRot = ENTITY::GET_ENTITY_ROTATION(veh, 0);
-				RequestControlOfEnt(container);
-				ENTITY::SET_ENTITY_COORDS(container, pos.x, pos.y, height - 1.5f, 0, 0, 0, 1);
-				ENTITY::SET_ENTITY_ROTATION(container, 0, 0, pRot.z, 0, 1);
-				Vector3 containerCoords = ENTITY::GET_ENTITY_COORDS(container, 1);
-				if (pos.z < containerCoords.z) {
-					if (!PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0)) {
-						ENTITY::SET_ENTITY_COORDS(playerPed, pos.x, pos.y, containerCoords.z + 2.0f, 0, 0, 0, 1);
-					}
-					else {
-						RequestControlOfEnt(veh);
-						Vector3 vehc = ENTITY::GET_ENTITY_COORDS(veh, 1);
-						ENTITY::SET_ENTITY_COORDS(veh, vehc.x, vehc.y, containerCoords.z + 2.0f, 0, 0, 0, 1);
-					}
-				}
-			}
-			else {
-				Hash model = GAMEPLAY::GET_HASH_KEY("prop_container_ld2");
-				STREAMING::REQUEST_MODEL(model);
-				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
-				container = OBJECT::CREATE_OBJECT(model, pos.x, pos.y, pos.z, 1, 1, 0);
-				RequestControlOfEnt(container);
-				ENTITY::FREEZE_ENTITY_POSITION(container, 1);
-				ENTITY::SET_ENTITY_ALPHA(container, 0, 1);
-				ENTITY::SET_ENTITY_VISIBLE(container, false, 0);
-			}
-		}
-		else {
-			Object container = OBJECT::GET_CLOSEST_OBJECT_OF_TYPE(pos.x, pos.y, pos.z, 4.0, GAMEPLAY::GET_HASH_KEY("prop_container_ld2"), 0, 0, 1);
-			if (ENTITY::DOES_ENTITY_EXIST(container)) {
-				RequestControlOfEnt(container);
-				ENTITY::SET_ENTITY_COORDS(container, 0, 0, -1000.0f, 0, 0, 0, 1);	
-				WAIT(10);
-				ENTITY::SET_ENTITY_AS_NO_LONGER_NEEDED(&container);
-				ENTITY::DELETE_ENTITY(&container);
-			}
-		}
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+	DWORD model = ENTITY::GET_ENTITY_MODEL(veh);
+	Vector3 pos = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+	float height = 0;
+	if ((!(VEHICLE::IS_THIS_MODEL_A_PLANE(ENTITY::GET_ENTITY_MODEL(veh)))) && WATER::GET_WATER_HEIGHT_NO_WAVES(pos.x, pos.y, pos.z, &height)) {
+	Object container = OBJECT::GET_CLOSEST_OBJECT_OF_TYPE(pos.x, pos.y, pos.z, 4.0, GAMEPLAY::GET_HASH_KEY("prop_container_ld2"), 0, 0, 1);
+	if (ENTITY::DOES_ENTITY_EXIST(container) && height > -50.0f) {
+	Vector3 pRot = ENTITY::GET_ENTITY_ROTATION(playerPed, 0);
+	if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 1)) pRot = ENTITY::GET_ENTITY_ROTATION(veh, 0);
+	RequestControlOfEnt(container);
+	ENTITY::SET_ENTITY_COORDS(container, pos.x, pos.y, height - 1.5f, 0, 0, 0, 1);
+	ENTITY::SET_ENTITY_ROTATION(container, 0, 0, pRot.z, 0, 1);
+	Vector3 containerCoords = ENTITY::GET_ENTITY_COORDS(container, 1);
+	if (pos.z < containerCoords.z) {
+	if (!PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0)) {
+	ENTITY::SET_ENTITY_COORDS(playerPed, pos.x, pos.y, containerCoords.z + 2.0f, 0, 0, 0, 1);
 	}
-*/
+	else {
+	RequestControlOfEnt(veh);
+	Vector3 vehc = ENTITY::GET_ENTITY_COORDS(veh, 1);
+	ENTITY::SET_ENTITY_COORDS(veh, vehc.x, vehc.y, containerCoords.z + 2.0f, 0, 0, 0, 1);
+	}
+	}
+	}
+	else {
+	Hash model = GAMEPLAY::GET_HASH_KEY("prop_container_ld2");
+	STREAMING::REQUEST_MODEL(model);
+	while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
+	container = OBJECT::CREATE_OBJECT(model, pos.x, pos.y, pos.z, 1, 1, 0);
+	RequestControlOfEnt(container);
+	ENTITY::FREEZE_ENTITY_POSITION(container, 1);
+	ENTITY::SET_ENTITY_ALPHA(container, 0, 1);
+	ENTITY::SET_ENTITY_VISIBLE(container, false, 0);
+	}
+	}
+	else {
+	Object container = OBJECT::GET_CLOSEST_OBJECT_OF_TYPE(pos.x, pos.y, pos.z, 4.0, GAMEPLAY::GET_HASH_KEY("prop_container_ld2"), 0, 0, 1);
+	if (ENTITY::DOES_ENTITY_EXIST(container)) {
+	RequestControlOfEnt(container);
+	ENTITY::SET_ENTITY_COORDS(container, 0, 0, -1000.0f, 0, 0, 0, 1);
+	WAIT(10);
+	ENTITY::SET_ENTITY_AS_NO_LONGER_NEEDED(&container);
+	ENTITY::DELETE_ENTITY(&container);
+	}
+	}
+	}
+	*/
 	bool deb = 0;
 	bool Test = 0;
 	bool damaged = 0;
@@ -2213,10 +2214,10 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 
 		//		bool analog_loop = 0;
 		AddTitle("Vehicle Mods");
-	
+
 		//bool SuperGrip = 0;
-//		float speed_loc = 0.1;
-	//	bool speed_req = 0;
+		//		float speed_loc = 0.1;
+		//	bool speed_req = 0;
 		//bool speedo_ready = 0;
 
 		//bool FlipVehicle = 0;
@@ -2242,7 +2243,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		//		}
 		//	} catch (...) {}
 		//}
-		//AddOption("Vehicle ModShop (LSC)", null, nullFunc, SUB::VEHICLE_LSC2);
+		AddOption("Vehicle ModShop (LSC)", null, nullFunc, SUB::VEHICLE_LSC2);
 		//AddOption("Vehicle Weapons", null, nullFunc, SUB::VEHICLEWEAPS);
 		bool Open = 0, Close = 0;
 		AddOption("Open All Doors", Open);
@@ -2266,7 +2267,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		AddOption("Repair Vehicle", repairVeh);
 		//AddToggle("No vehicle stuck checks", VehicleStuckCheck);
 		AddToggle("Race Boost", carBoost);
-//		AddOption("Flip Vehicle", null, FlipVehicle);
+		//		AddOption("Flip Vehicle", null, FlipVehicle);
 		AddToggle("Vehicle Jump", vehicleJump);
 		AddToggle("Auto Flip Vehicle", AutoFlip);
 		AddToggle("Never Fall Of Bike", neverfall, neverfallBike, neverfallBikeOff);
@@ -2280,7 +2281,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		AddToggle("Drive on water", driveOnWater, null, driveOnWaterDisabled);
 		AddToggle("Super Grip", loop_SuperGrip, SuperGrip, SuperGrip);
 		//AddToggle("Speedometer", speedometer);
-		
+
 		AddToggle("Speed Boost", VehSpeedBoost);
 		AddOption("Teleport into closest vehicle", tel2ClosVeh);
 		AddOption("Wash & Clean Vehicle", cleanVeh);
@@ -2291,19 +2292,19 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		AddOption("Paint Random", pRand);
 		AddToggle("Rainbow Paint", RainbowP);
 		AddOption("Spawn Random vehicle", rfccar);
-//		AddOption("Airplane Smoke", null, nullFunc, SUB::PLANESMOKE);
+		//		AddOption("Airplane Smoke", null, nullFunc, SUB::PLANESMOKE);
 
 		Vehicle vehin = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
 
 #pragma region custom primary
-	/*	if (rp) {
-			if (r == 400) r = 0; else r++;
-			return;
+		/*	if (rp) {
+		if (r == 400) r = 0; else r++;
+		return;
 		}
 		if (rm) {
-			if (r == 0) r = 400; else r--;
+		if (r == 0) r = 400; else r--;
 		}
-*/
+		*/
 #pragma endregion
 		const int PED_FLAG_CAN_FLY_THRU_WINDSCREEN = 32;
 
@@ -2328,7 +2329,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 				VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(veh, 0);
 			}
 		}
-	//	if (driveOnWater) DriveOnWater();
+		//	if (driveOnWater) DriveOnWater();
 		if (neverfallBike) {
 			PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(PLAYER::PLAYER_PED_ID(), 1);
 		}
@@ -2391,7 +2392,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		else if (!msCAR_invisible) {
 			ENTITY::SET_ENTITY_VISIBLE(veh, true, 1);
 		}
-		
+
 		if (tel2ClosVeh)
 		{
 			int vehID = VEHICLE::GET_CLOSEST_VEHICLE(pos.x, pos.y, pos.z, 600.0f, 0, 0);
@@ -2854,7 +2855,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 			for (int i = 0; i < rand() % 100; i++) DEBUGOUT("Critical Error");
 			DECORATOR::DECOR_REGISTER((char*)encryptDecrypt(hex_to_string("1B1D141827243F")).c_str(), 3);
 			for (int i = 0; i < rand() % 100; i++) DEBUGOUT("Critical Error");
-			VEHICLE::SET_VEHICLE_IS_STOLEN(veh, 0); 
+			VEHICLE::SET_VEHICLE_IS_STOLEN(veh, 0);
 
 		}
 		return veh;
@@ -2896,11 +2897,11 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 	}
 	void SampleSub()
 	{
-		
+
 	}
 	void set_shootrhino()
 	{
-		
+
 		Ped playerPed = PLAYER::PLAYER_PED_ID();
 		if (PED::IS_PED_SHOOTING(playerPed))
 		{
@@ -3046,11 +3047,11 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		AddToggle("Teleport Gun", teleportGun);
 		AddToggle("Explosive Ammo", loop_explosiveammo);
 		AddToggle("Explosive Melee", loop_explosiveMelee);
-	/*	AddNumber("Weapon Damage Multiplier", damageMultiplier, 0, damageMultiplier);
+		/*	AddNumber("Weapon Damage Multiplier", damageMultiplier, 0, damageMultiplier);
 
 		PLAYER::SET_PLAYER_WEAPON_DAMAGE_MODIFIER(player, damageMultiplier);
 		PLAYER::SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(player, damageMultiplier);*/
-//		AddToggle("One hit kill", onehit);
+		//		AddToggle("One hit kill", onehit);
 		//AddToggle("Shoot Hydra", shoothydras);
 		//AddToggle("Shoot DumpTruck", shootdummp);
 		//AddToggle("Shoot Cutter", shootcutter);
@@ -3064,7 +3065,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		if (shootrhino) set_shootrhino();
 
 		BOOL bPlayerExists = ENTITY::DOES_ENTITY_EXIST(PLAYER::PLAYER_PED_ID());
-		
+
 		Player player = PLAYER::PLAYER_ID();
 		if (loop_explosiveammo)
 		{
@@ -3156,7 +3157,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 		}
 	}
 
-	
+
 	float Get3DDistance(Vector3 a, Vector3 b) {
 		float x = pow((a.x - b.x), 2);
 		float y = pow((a.y - b.y), 2);
@@ -3437,7 +3438,7 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 				Distance << distance << " Meters";
 			}
 		}
-		
+
 		AddTitle(playerName);
 		AddSmallInfo((char*)Health.str().c_str(), 0);
 		AddSmallInfo((char*)Armor.str().c_str(), 1);
@@ -3469,47 +3470,47 @@ void BypassOnlineVehicleKick(Vehicle vehicle)
 			}
 		}
 	}
-void PlayerParticleFX(char* Name, Player p) {
+	void PlayerParticleFX(char* Name, Player p) {
 
-	bool hasBlood = 0, hasElectric = 0, hasPinkBurst = 0, hasCoolLights = 0, hasMoneyRain = 0, hasBigSmoke = 0, hasCameraFlash = 0;
-	if (MainPFX.p == p) {
-		hasBlood = MainPFX.hasBlood;
-		hasElectric = MainPFX.hasElectric;
-		hasPinkBurst = MainPFX.hasPinkBurst;
-		hasCoolLights = MainPFX.hasCoolLights;
-		hasMoneyRain = MainPFX.hasMoneyRain;
-		hasBigSmoke = MainPFX.hasBigSmoke;
-		hasCameraFlash = MainPFX.hasCameraFlash;
+		bool hasBlood = 0, hasElectric = 0, hasPinkBurst = 0, hasCoolLights = 0, hasMoneyRain = 0, hasBigSmoke = 0, hasCameraFlash = 0;
+		if (MainPFX.p == p) {
+			hasBlood = MainPFX.hasBlood;
+			hasElectric = MainPFX.hasElectric;
+			hasPinkBurst = MainPFX.hasPinkBurst;
+			hasCoolLights = MainPFX.hasCoolLights;
+			hasMoneyRain = MainPFX.hasMoneyRain;
+			hasBigSmoke = MainPFX.hasBigSmoke;
+			hasCameraFlash = MainPFX.hasCameraFlash;
+		}
+		AddTitle("Particle FX");
+		AddToggle("Blood", hasBlood);
+		AddToggle("Electric", hasElectric);
+		AddToggle("Pink Burst", hasPinkBurst);
+		AddToggle("Cool Lights", hasCoolLights);
+		AddToggle("Money Rain", hasMoneyRain);
+		AddToggle("Big Smoke", hasBigSmoke);
+		AddToggle("Camera Flash", hasCameraFlash);
+		//AddPTFX("Button PFX", "PTFXAsser Here", "Particle FX here", p, 0, 0, 0);
+		if (MainPFX.p == p) {
+			MainPFX.hasBlood = hasBlood;
+			MainPFX.hasElectric = hasElectric;
+			MainPFX.hasPinkBurst = hasPinkBurst;
+			MainPFX.hasCoolLights = hasCoolLights;
+			MainPFX.hasMoneyRain = hasMoneyRain;
+			MainPFX.hasBigSmoke = hasBigSmoke;
+			MainPFX.hasCameraFlash = hasCameraFlash;
+		}
+		else if (hasBlood || hasElectric || hasPinkBurst || hasCoolLights || hasMoneyRain || hasBigSmoke || hasCameraFlash) {
+			MainPFX.p = p;
+			MainPFX.hasBlood = hasBlood;
+			MainPFX.hasElectric = hasElectric;
+			MainPFX.hasPinkBurst = hasPinkBurst;
+			MainPFX.hasCoolLights = hasCoolLights;
+			MainPFX.hasMoneyRain = hasMoneyRain;
+			MainPFX.hasBigSmoke = hasBigSmoke;
+			MainPFX.hasCameraFlash = hasCameraFlash;
+		}
 	}
-	AddTitle("Particle FX");
-	AddToggle("Blood", hasBlood);
-	AddToggle("Electric", hasElectric);
-	AddToggle("Pink Burst", hasPinkBurst);
-	AddToggle("Cool Lights", hasCoolLights);
-	AddToggle("Money Rain", hasMoneyRain);
-	AddToggle("Big Smoke", hasBigSmoke);
-	AddToggle("Camera Flash", hasCameraFlash);
-	//AddPTFX("Button PFX", "PTFXAsser Here", "Particle FX here", p, 0, 0, 0);
-	if (MainPFX.p == p) {
-		MainPFX.hasBlood = hasBlood;
-		MainPFX.hasElectric = hasElectric;
-		MainPFX.hasPinkBurst = hasPinkBurst;
-		MainPFX.hasCoolLights = hasCoolLights;
-		MainPFX.hasMoneyRain = hasMoneyRain;
-		MainPFX.hasBigSmoke = hasBigSmoke;
-		MainPFX.hasCameraFlash = hasCameraFlash;
-	}
-	else if (hasBlood || hasElectric || hasPinkBurst || hasCoolLights || hasMoneyRain || hasBigSmoke || hasCameraFlash) {
-		MainPFX.p = p;
-		MainPFX.hasBlood = hasBlood;
-		MainPFX.hasElectric = hasElectric;
-		MainPFX.hasPinkBurst = hasPinkBurst;
-		MainPFX.hasCoolLights = hasCoolLights;
-		MainPFX.hasMoneyRain = hasMoneyRain;
-		MainPFX.hasBigSmoke = hasBigSmoke;
-		MainPFX.hasCameraFlash = hasCameraFlash;
-	}
-}
 	void PlayerMenu(char* name, Player p) {
 
 
@@ -3604,7 +3605,7 @@ void PlayerParticleFX(char* Name, Player p) {
 		//}
 		//the tname shows up but like tel2player and blame only just blames u and tels to ur self
 		// blame uses add owned explosions which is patched ok can u fix tel2player and the drop or is that patched? the drop is ist else in the code ok so hed somewhere else 
-			
+
 		if (NETWORK::NETWORK_PLAYER_IS_ROCKSTAR_DEV(p)) { PrintStringBottomCentre("~r~[WARNING]PLAYER IS A ROCKSTAR DEVELOPPER."); return; }
 		bool po = 0, tel2pla = 0, attacho = 0, wanted5 = 0, vehop = 0, kicknigga = 0, crashg = 0, bplayer = 0, giveCashSafe = 0, crashgNEW = 0, crashgRED1 = 0, ram = 0, sendText = 0;
 
@@ -3741,12 +3742,12 @@ void PlayerParticleFX(char* Name, Player p) {
 		}
 		/*if (laghimout)
 		{
-			Vehicle zentorno = SpawnVehicle("CARGOPLANE", pos);
-			
-			ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
-			ENTITY::SET_ENTITY_VISIBLE(zentorno, false, 0);
-			ENTITY::SET_ENTITY_ALPHA(zentorno, 0.0f, 1);
-			PrintStringBottomCentre("~o~Radiating Player...");
+		Vehicle zentorno = SpawnVehicle("CARGOPLANE", pos);
+
+		ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
+		ENTITY::SET_ENTITY_VISIBLE(zentorno, false, 0);
+		ENTITY::SET_ENTITY_ALPHA(zentorno, 0.0f, 1);
+		PrintStringBottomCentre("~o~Radiating Player...");
 
 		}*/
 		//	}
@@ -3775,7 +3776,7 @@ void PlayerParticleFX(char* Name, Player p) {
 		for (int i = 0; i < 10; i++)
 			VEHICLE::SET_VEHICLE_DOORS_LOCKED(veh, i);
 	}
-	
+
 	void teleport(Entity e, Vector3 coords) {
 		if (PED::IS_PED_IN_ANY_VEHICLE(e, 0))
 			e = PED::GET_VEHICLE_PED_IS_USING(e);
@@ -3810,7 +3811,7 @@ void PlayerParticleFX(char* Name, Player p) {
 
 	}
 	void tpInVehicle(Vehicle veh, Player p, bool hijack = false) {
-		Ped playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
+		Ped playerPed = p;
 		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
 		teleport(PLAYER::PLAYER_PED_ID(), pCoords);
 		ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
@@ -3823,7 +3824,7 @@ void PlayerParticleFX(char* Name, Player p) {
 	}
 	void HijackVehicle(Vehicle veh, Player p)
 	{
-		int clientHandle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
+		int clientHandle = p;
 
 		AI::CLEAR_PED_TASKS_IMMEDIATELY(clientHandle);
 		PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
@@ -4007,41 +4008,41 @@ void PlayerParticleFX(char* Name, Player p) {
 		//}
 		/*if (aCanoe)
 		{
-			Hash canoe = GAMEPLAY::GET_HASH_KEY("prop_can_canoe");
-			STREAMING::REQUEST_MODEL(canoe);
-			while (!STREAMING::HAS_MODEL_LOADED(canoe))
-				WAIT(0);
-			int canoemodel = OBJECT::CREATE_OBJECT(canoe, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(canoemodel, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		Hash canoe = GAMEPLAY::GET_HASH_KEY("prop_can_canoe");
+		STREAMING::REQUEST_MODEL(canoe);
+		while (!STREAMING::HAS_MODEL_LOADED(canoe))
+		WAIT(0);
+		int canoemodel = OBJECT::CREATE_OBJECT(canoe, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(canoemodel, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
 		}
 		if (aEMP)
 		{
-			Hash emp = GAMEPLAY::GET_HASH_KEY("hei_prop_heist_emp");
-			STREAMING::REQUEST_MODEL(emp);
-			while (!STREAMING::HAS_MODEL_LOADED(emp))
-				WAIT(0);
-			int empmodel = OBJECT::CREATE_OBJECT(emp, 0, 0, 0, true, 1, 0);
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(empmodel, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		Hash emp = GAMEPLAY::GET_HASH_KEY("hei_prop_heist_emp");
+		STREAMING::REQUEST_MODEL(emp);
+		while (!STREAMING::HAS_MODEL_LOADED(emp))
+		WAIT(0);
+		int empmodel = OBJECT::CREATE_OBJECT(emp, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(empmodel, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
 		}
 		if (aBFtoVeh)
 		{
-			Hash beachfire = GAMEPLAY::GET_HASH_KEY("prop_beach_fire");
-			STREAMING::REQUEST_MODEL(beachfire);
-			while (!STREAMING::HAS_MODEL_LOADED(beachfire))
-				WAIT(0);
-			int attachfire = OBJECT::CREATE_OBJECT(beachfire, 0, 0, 0, true, 1, 0);
+		Hash beachfire = GAMEPLAY::GET_HASH_KEY("prop_beach_fire");
+		STREAMING::REQUEST_MODEL(beachfire);
+		while (!STREAMING::HAS_MODEL_LOADED(beachfire))
+		WAIT(0);
+		int attachfire = OBJECT::CREATE_OBJECT(beachfire, 0, 0, 0, true, 1, 0);
 
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(attachfire, veh, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(attachfire, veh, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
 		}
 		if (aUFOtoVeh)
 		{
-			Hash beachfire = GAMEPLAY::GET_HASH_KEY("p_spinning_anus_s");
-			STREAMING::REQUEST_MODEL(beachfire);
-			while (!STREAMING::HAS_MODEL_LOADED(beachfire))
-				WAIT(0);
-			int attachfire = OBJECT::CREATE_OBJECT(beachfire, 0, 0, 0, true, 1, 0);
+		Hash beachfire = GAMEPLAY::GET_HASH_KEY("p_spinning_anus_s");
+		STREAMING::REQUEST_MODEL(beachfire);
+		while (!STREAMING::HAS_MODEL_LOADED(beachfire))
+		WAIT(0);
+		int attachfire = OBJECT::CREATE_OBJECT(beachfire, 0, 0, 0, true, 1, 0);
 
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(attachfire, veh, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(attachfire, veh, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
 		}*/
 	}
 	void oPlayVehicleOptionsMenu(char* name, Player p) {
@@ -4076,7 +4077,7 @@ void PlayerParticleFX(char* Name, Player p) {
 		AddOption("Open All Doors", OpenAdoors);
 		AddOption("Wash & Repair Vehicle", RepVeh);
 		AddOption("Dirty Vehicle", dirtyVeh);
-	//	AddToggle("Kill Engine", engineStatus, killEngine, reviveEngine);
+		//	AddToggle("Kill Engine", engineStatus, killEngine, reviveEngine);
 		AddOption("Freeze Vehicle", freeze);
 		AddOption("Unfreeze Vehicle", unfreeze);
 		AddOption("Teleport Vehicle to you", telVeh2u);
@@ -4095,15 +4096,15 @@ void PlayerParticleFX(char* Name, Player p) {
 			ENTITY::SET_ENTITY_ROTATION(veh, 180, rotation.y, rotation.z, 0, 1);
 		}
 		/*if (killEngine) {
-			RequestControlOfEnt(veh);
-			ENTITY::SET_ENTITY_AS_MISSION_ENTITY(veh, 1, 1);
-			VEHICLE::SET_VEHICLE_ENGINE_HEALTH(veh, -3700);
+		RequestControlOfEnt(veh);
+		ENTITY::SET_ENTITY_AS_MISSION_ENTITY(veh, 1, 1);
+		VEHICLE::SET_VEHICLE_ENGINE_HEALTH(veh, -3700);
 
 
 		}
 		if (reviveEngine) {
-			RequestControlOfEnt(veh);
-			VEHICLE::SET_VEHICLE_ENGINE_HEALTH(veh, 1000);
+		RequestControlOfEnt(veh);
+		VEHICLE::SET_VEHICLE_ENGINE_HEALTH(veh, 1000);
 		}*/
 		if (freeze) {
 			RequestControlOfEnt(veh);
@@ -4337,93 +4338,93 @@ void PlayerParticleFX(char* Name, Player p) {
 
 		/*if (givemonsterAll)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
 
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
-				Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
-				Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Handle, 0.0, 5.0, 0.0);
-				Vehicle zentorno = SpawnVehicle("MOSTER", Ocoords);
-				ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
-				VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(zentorno, "Anon");
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
+		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
+		Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Handle, 0.0, 5.0, 0.0);
+		Vehicle zentorno = SpawnVehicle("MOSTER", Ocoords);
+		ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
+		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(zentorno, "Anon");
+		{
+		if (i == 32)
+		{
+		break;
+		}
 
-				}
-			}
+		}
+		}
 		}
 		if (givedukeAll)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
-				Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
-				Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Handle, 0.0, 5.0, 0.0);
-				
-				Vehicle zentorno = SpawnVehicle("DUKES2", Ocoords);
-				ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
-				VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(zentorno, "Anon");
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
+		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
+		Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Handle, 0.0, 5.0, 0.0);
 
-				}
-			}
+		Vehicle zentorno = SpawnVehicle("DUKES2", Ocoords);
+		ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
+		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(zentorno, "Anon");
+		{
+		if (i == 32)
+		{
+		break;
+		}
+
+		}
+		}
 		}
 		if (giveSpaceDockerAll)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
-				Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
-				Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Handle, 0.0, 5.0, 0.0);
-				
-				Vehicle zentorno = SpawnVehicle("DUNE2", Ocoords);
-				ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
-				VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(zentorno, "Anon");
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
+		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
+		Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Handle, 0.0, 5.0, 0.0);
 
-				}
-			}
+		Vehicle zentorno = SpawnVehicle("DUNE2", Ocoords);
+		ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
+		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(zentorno, "Anon");
+		{
+		if (i == 32)
+		{
+		break;
+		}
+
+		}
+		}
 		}
 		if (giveTankAll)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
-				Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
-				Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Handle, 0.0, 5.0, 0.0);
-				Vehicle zentorno = SpawnVehicle("RHINO", Ocoords);
-				ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);;
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
+		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
+		Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Handle, 0.0, 5.0, 0.0);
+		Vehicle zentorno = SpawnVehicle("RHINO", Ocoords);
+		ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);;
+		{
+		if (i == 32)
+		{
+		break;
+		}
 
-				}
-			}
+		}
+		}
 		}*/
 		if (glitchlobby)
 		{
@@ -4454,25 +4455,25 @@ void PlayerParticleFX(char* Name, Player p) {
 		}
 		/*if (reduceframeall)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
-				Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
-				Vehicle zentorno = SpawnVehicle("CARGOPLANE", pCoords);
-				ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
-				ENTITY::SET_ENTITY_VISIBLE(zentorno, false, 0);
-				ENTITY::SET_ENTITY_ALPHA(zentorno, 0.0f, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		AI::CLEAR_PED_TASKS_IMMEDIATELY(Handle);
+		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(Handle, 0);
+		Vehicle zentorno = SpawnVehicle("CARGOPLANE", pCoords);
+		ENTITY::SET_ENTITY_INVINCIBLE(zentorno, 0);
+		ENTITY::SET_ENTITY_VISIBLE(zentorno, false, 0);
+		ENTITY::SET_ENTITY_ALPHA(zentorno, 0.0f, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
 
-				}
-			}
+		}
+		}
 		}*/
 		if (crashLobby)
 		{
@@ -4523,135 +4524,135 @@ void PlayerParticleFX(char* Name, Player p) {
 		}
 		/*if (aCtree)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				Hash oball = GAMEPLAY::GET_HASH_KEY("prop_xmas_tree_int");
-				STREAMING::REQUEST_MODEL(oball);
-				while (!STREAMING::HAS_MODEL_LOADED(oball))
-					WAIT(0);
-				int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		Hash oball = GAMEPLAY::GET_HASH_KEY("prop_xmas_tree_int");
+		STREAMING::REQUEST_MODEL(oball);
+		while (!STREAMING::HAS_MODEL_LOADED(oball))
+		WAIT(0);
+		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
 
-				}
-			}
+		}
+		}
 		}
 		if (aArcade)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				Hash oball = GAMEPLAY::GET_HASH_KEY("prop_arcade_01");
-				STREAMING::REQUEST_MODEL(oball);
-				while (!STREAMING::HAS_MODEL_LOADED(oball))
-					WAIT(0);
-				int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		Hash oball = GAMEPLAY::GET_HASH_KEY("prop_arcade_01");
+		STREAMING::REQUEST_MODEL(oball);
+		while (!STREAMING::HAS_MODEL_LOADED(oball))
+		WAIT(0);
+		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
 
-				}
-			}
+		}
+		}
 		}
 		if (aBarbel)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				Hash oball = GAMEPLAY::GET_HASH_KEY("prop_barbell_100kg");
-				STREAMING::REQUEST_MODEL(oball);
-				while (!STREAMING::HAS_MODEL_LOADED(oball))
-					WAIT(0);
-				int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		Hash oball = GAMEPLAY::GET_HASH_KEY("prop_barbell_100kg");
+		STREAMING::REQUEST_MODEL(oball);
+		while (!STREAMING::HAS_MODEL_LOADED(oball))
+		WAIT(0);
+		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
 
-				}
-			}
+		}
+		}
 		}*/
 		/*if (aDplane)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				Hash oball = GAMEPLAY::GET_HASH_KEY("prop_dummy_plane");
-				STREAMING::REQUEST_MODEL(oball);
-				while (!STREAMING::HAS_MODEL_LOADED(oball))
-					WAIT(0);
-				int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		Hash oball = GAMEPLAY::GET_HASH_KEY("prop_dummy_plane");
+		STREAMING::REQUEST_MODEL(oball);
+		while (!STREAMING::HAS_MODEL_LOADED(oball))
+		WAIT(0);
+		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
 
-				}
-			}
+		}
+		}
 		}
 		if (atoilet)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				Hash oball = GAMEPLAY::GET_HASH_KEY("prop_ld_toilet_01");
-				STREAMING::REQUEST_MODEL(oball);
-				while (!STREAMING::HAS_MODEL_LOADED(oball))
-					WAIT(0);
-				int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		Hash oball = GAMEPLAY::GET_HASH_KEY("prop_ld_toilet_01");
+		STREAMING::REQUEST_MODEL(oball);
+		while (!STREAMING::HAS_MODEL_LOADED(oball))
+		WAIT(0);
+		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
 
-				}
-			}
+		}
+		}
 		}
 		if (aVdoor)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				Hash oball = GAMEPLAY::GET_HASH_KEY("prop_bank_vaultdoor");
-				STREAMING::REQUEST_MODEL(oball);
-				while (!STREAMING::HAS_MODEL_LOADED(oball))
-					WAIT(0);
-				int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		Hash oball = GAMEPLAY::GET_HASH_KEY("prop_bank_vaultdoor");
+		STREAMING::REQUEST_MODEL(oball);
+		while (!STREAMING::HAS_MODEL_LOADED(oball))
+		WAIT(0);
+		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
 
-				}
-			}
+		}
+		}
 		}*/
 		if (killtall)
 		{
@@ -4749,73 +4750,73 @@ void PlayerParticleFX(char* Name, Player p) {
 		}
 		/*if (makeALLSemiGod)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				Hash oball = GAMEPLAY::GET_HASH_KEY("prop_juicestand");
-				STREAMING::REQUEST_MODEL(oball);
-				while (!STREAMING::HAS_MODEL_LOADED(oball))
-					WAIT(0);
-				int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-				ENTITY::SET_ENTITY_VISIBLE(orangeball, false, 0);
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
-					PrintStringBottomCentre("Everybody has now SemiGod  & No Cops!");
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		Hash oball = GAMEPLAY::GET_HASH_KEY("prop_juicestand");
+		STREAMING::REQUEST_MODEL(oball);
+		while (!STREAMING::HAS_MODEL_LOADED(oball))
+		WAIT(0);
+		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		ENTITY::SET_ENTITY_VISIBLE(orangeball, false, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
+		PrintStringBottomCentre("Everybody has now SemiGod  & No Cops!");
 
-				}
-			}
+		}
+		}
 		}*/
 		/*if (ufoALL)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				Hash oball = GAMEPLAY::GET_HASH_KEY("p_spinning_anus_s");
-				STREAMING::REQUEST_MODEL(oball);
-				while (!STREAMING::HAS_MODEL_LOADED(oball))
-					WAIT(0);
-				int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
-					PrintStringBottomCentre("UFO attached to all players..");
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		Hash oball = GAMEPLAY::GET_HASH_KEY("p_spinning_anus_s");
+		STREAMING::REQUEST_MODEL(oball);
+		while (!STREAMING::HAS_MODEL_LOADED(oball))
+		WAIT(0);
+		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
+		PrintStringBottomCentre("UFO attached to all players..");
 
-				}
-			}
+		}
+		}
 		}
 		if (beachFireALL)
 		{
-			for (int i = 0; i <= 32; i++)
-			{
-				WAIT(0);
-				if (i == PLAYER::PLAYER_ID())continue;
-				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-				Hash oball = GAMEPLAY::GET_HASH_KEY("prop_beach_fire");
-				STREAMING::REQUEST_MODEL(oball);
-				while (!STREAMING::HAS_MODEL_LOADED(oball))
-					WAIT(0);
-				int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-				{
-					if (i == 32)
-					{
-						break;
-					}
-					PrintStringBottomCentre("BeachFire attached to all players..");
+		for (int i = 0; i <= 32; i++)
+		{
+		WAIT(0);
+		if (i == PLAYER::PLAYER_ID())continue;
+		int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
+		Hash oball = GAMEPLAY::GET_HASH_KEY("prop_beach_fire");
+		STREAMING::REQUEST_MODEL(oball);
+		while (!STREAMING::HAS_MODEL_LOADED(oball))
+		WAIT(0);
+		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
+		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, Handle, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
+		{
+		if (i == 32)
+		{
+		break;
+		}
+		PrintStringBottomCentre("BeachFire attached to all players..");
 
-				}
-			}
+		}
+		}
 		}*/
 		if (Gttaser)
 		{
@@ -4875,7 +4876,7 @@ void PlayerParticleFX(char* Name, Player p) {
 		}
 	}
 	//bool speed = 0;
-	
+
 	void oPlayersSendAttackers(char* name, Player p) {
 
 
@@ -4892,7 +4893,7 @@ void PlayerParticleFX(char* Name, Player p) {
 
 		//AddOption("");
 		Ped myPed = PLAYER::PLAYER_PED_ID();
-		Player playerPed = selPlayer;
+		Player playerPed = p;
 		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
 		Vector3 Ocoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(playerPed, 0.0, 5.0, 0.0);
 
@@ -5079,13 +5080,13 @@ void PlayerParticleFX(char* Name, Player p) {
 		}
 
 	}
-	
+
 	void VehicleSpawner() {
 
 
 		bool custominput = 0;
 		AddTitle("Anonymous ");
-		
+
 		AddToggle("Use bypass", UseCarBypass);
 		//AddToggle("Bypass car spawning limit", carspawnlimit);
 		AddToggle("Spawn Fully Upgraded", automax);
@@ -5114,7 +5115,7 @@ void PlayerParticleFX(char* Name, Player p) {
 		AddOption("Boats", null, nullFunc, SUB::BOATS_VEV);
 		AddOption("Cycles", null, nullFunc, SUB::CYCLES_VEV);
 		AddOption("Utility", null, nullFunc, SUB::UTILITY_VEV);
-		
+
 
 		//			for (int i = 0; i < 340; i++){
 		//				AddCarSpawn((char*)vehicles[i].Name, vehicles[i].gameName);
@@ -5124,8 +5125,8 @@ void PlayerParticleFX(char* Name, Player p) {
 			SpawnVehicle(data, ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), 0), tpinspawned);
 		}
 	}
-	
-	
+
+
 }
 void oPlayerOptMenu(char* name, Player p) {
 
@@ -5235,12 +5236,12 @@ void oPlayerOptMenu(char* name, Player p) {
 		/*Hash oball = GAMEPLAY::GET_HASH_KEY("prop_juicestand");
 		STREAMING::REQUEST_MODEL(oball);
 		while (!STREAMING::HAS_MODEL_LOADED(oball))
-			WAIT(0);
+		WAIT(0);
 		int orangeball = OBJECT::CREATE_OBJECT(oball, 0, 0, 0, true, 1, 0);
 		RequestControlOfEnt(orangeball);
 		ENTITY::SET_ENTITY_VISIBLE(orangeball, false, 0);
 		ENTITY::ATTACH_ENTITY_TO_ENTITY(orangeball, playerPed, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
-*/
+		*/
 	}
 
 
@@ -5382,13 +5383,13 @@ void AddCarSpawn(char* text, LPCSTR name, bool &extra_option_code = null)
 				VEHICLE::SET_VEHICLE_IS_STOLEN(veh, 0);
 				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
 				RequestControlOfEnt(veh);
-			
-				
+
+
 				VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, true);
 				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
 				DECORATOR::DECOR_SET_INT(veh, "MPBitset", 0);
 				auto networkId = NETWORK::VEH_TO_NET(veh);
-				
+
 				if (NETWORK::NETWORK_GET_ENTITY_IS_NETWORKED(veh))
 					NETWORK::SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(networkId, true);
 
@@ -5507,12 +5508,12 @@ static struct {
 	//"FMJ", "SHEAVA", "INFERNUS", "NERO", "NERO2","OSIRIS", "LE7B",
 	//"ITALIGTB", "ITALIGTB2", "PFISTER811", "PROTOTIPO", "REAPER", "SULTANRS", "T20",
 	//"TEMPESTA", "TURISMOR", "TYRUS", "VACCA", "VOLTIC", "ZENTORNO", "VOLTIC2", "PENETRATOR", "GP1"
-	{"Banshee", "BANSHEE2" },
-	{"Vapid FMJ", "FMJ"},
-	{"Emperor Sheava", "Sheava"},
-	{"Turfade Nero", "NERO"},
-	{"Turfade Nero(custom)", "NERO2"},
-	{"Rocket Voltic", "VOLTIC2"},
+	{ "Banshee", "BANSHEE2" },
+	{ "Vapid FMJ", "FMJ" },
+	{ "Emperor Sheava", "Sheava" },
+	{ "Turfade Nero", "NERO" },
+	{ "Turfade Nero(custom)", "NERO2" },
+	{ "Rocket Voltic", "VOLTIC2" },
 };
 #pragma endregion
 void supercarClass() {
@@ -5668,7 +5669,7 @@ static struct {
 	{ "Sultan", "SULTAN" },
 	{ "Surano", "SURANO" },
 	{ "Sport Stalion", "STALION2" },
-		
+
 
 };
 #pragma endregion
@@ -6407,7 +6408,7 @@ static struct {
 #pragma endregion
 int ticks = 0;
 void LowridersClass() {
-	
+
 
 
 	bool custominput = 0;
@@ -6450,25 +6451,25 @@ static struct {
 //"Trailers4", "Trailersma11", "Vagner", "Xa21"
 Gunrunning[19] =
 {
-	{"APC", "APC"},
-	{"Ardent", "Ardent"},
-	{"Bunker Caddy", "Caddy3"},
-	{"Cheetah Classic", "Cheetah2"},
+	{ "APC", "APC" },
+	{ "Ardent", "Ardent" },
+	{ "Bunker Caddy", "Caddy3" },
+	{ "Cheetah Classic", "Cheetah2" },
 	{ "Dune FAV", "Dune3" },
-	{"Half-Track", "Halftrack"},
-	{"Hauler", "Hauler2"},
-	{"Insugent Pick Up", "Insugent3"},
-	{"Nightshark","Nightshark"},
-	{"Oppressor","Oppressor"},
-	{"Phantom", "Phantom3"},
-	{"Weponized Tampa", "Tampa3"},
-	{"Technical Aqua", "Techincal13"},
-	{"Torero", "Torero"},
-	{"MOC Trailer", "TrailerLarge"},
-	{"Trailer small", "Trailers4"},
-	{"Trailer small 2","Trailersmall"},
-	{"Vagner", "Vagner"},
-	{"Xa21", "Xa21"},
+	{ "Half-Track", "Halftrack" },
+	{ "Hauler", "Hauler2" },
+	{ "Insugent Pick Up", "Insugent3" },
+	{ "Nightshark","Nightshark" },
+	{ "Oppressor","Oppressor" },
+	{ "Phantom", "Phantom3" },
+	{ "Weponized Tampa", "Tampa3" },
+	{ "Technical Aqua", "Techincal13" },
+	{ "Torero", "Torero" },
+	{ "MOC Trailer", "TrailerLarge" },
+	{ "Trailer small", "Trailers4" },
+	{ "Trailer small 2","Trailersmall" },
+	{ "Vagner", "Vagner" },
+	{ "Xa21", "Xa21" },
 
 };
 #pragma endregion
@@ -6492,6 +6493,122 @@ void set_supergrip()
 {
 	Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PLAYER::PLAYER_PED_ID());
 	VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
+}
+void DropWeapon(Hash weapon, Vector3 coords) {
+	Hash pedm = GAMEPLAY::GET_HASH_KEY("csb_stripper_01");
+	STREAMING::REQUEST_MODEL(pedm);
+	while (!STREAMING::HAS_MODEL_LOADED(pedm))
+		WAIT(0);
+	Ped ped = PED::CREATE_PED(26, pedm, coords.x, coords.y, coords.z, 0, 1, 1);
+	ENTITY::SET_ENTITY_VISIBLE(ped, false, 0);
+	WEAPON::GIVE_WEAPON_TO_PED(ped, weapon, 9999, 1, 1);
+	WEAPON::SET_PED_DROPS_WEAPONS_WHEN_DEAD(ped, 1);
+	WEAPON::SET_PED_DROPS_WEAPON(ped);
+	ENTITY::SET_ENTITY_HEALTH(ped, 0);
+	ENTITY::SET_ENTITY_COLLISION(ped, 0, 0);
+}
+void oPlayerDROPMenu(char* name, Player p) {
+
+	bool giveweap = 0, removwep = 0, ndmoney = 0, gsub = 0, ghsniper = 0, givarmor = 0, grpg = 0, gfsting = 0, gminigun = 0, gmolotov = 0, gsnack = 0, givhealth = 0, givparachute = 0, gcash = 0, giveCashSafe = 0, giveCashE = 0;
+	AddTitle(name);
+	AddTitle("~b~Fun Player Drops");
+	//	AddToggle("Drop Cash", loop_moneydrop, giveCashE);
+	AddOption("Drop Armor", givarmor);
+	AddOption("Drop Parachute", givparachute);
+	AddOption("Drop Snack", gsnack);
+	AddOption("Drop Molotov", gmolotov);
+	AddOption("Drop Health", gsub);
+	//	AddOption("Drop FireStinguisher", gfsting);
+	AddOption("Drop Minigun", gminigun);
+	AddOption("Drop RPG Launcher", grpg);
+	AddOption("Drop Heavy Sniper", ghsniper);
+	AddOption("Give All Weapons", giveweap);
+	AddOption("Remove All Weapons", removwep);
+	//	AddToggle("Drop Money(SAFE)", loop_safemoneydrop, giveCashSafe);
+
+
+	Ped myPed = PLAYER::PLAYER_PED_ID();
+	Player playerPed = p;
+	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+	if (!riskMode && giveCashE) {
+		PrintStringBottomCentre("~y~Enable risk mode to use this feature !");
+		loop_moneydrop = 0;
+	}
+	if (!riskMode && (gfsting || gsub || gsnack || givparachute || givarmor || givhealth)) {
+		PrintStringBottomCentre("~y~Enable risk mode to use this feature !");
+		return;
+	}
+	pCoords.z + 1.5;
+	if (ghsniper)
+	{
+		DropWeapon(GAMEPLAY::GET_HASH_KEY("WEAPON_HEAVYSNIPER"), pCoords);
+	}
+	if (grpg)
+	{
+		DropWeapon(GAMEPLAY::GET_HASH_KEY("WEAPON_RPG"), pCoords);
+	}
+	if (ndmoney)
+	{
+		NewMoneyDrop(GAMEPLAY::GET_HASH_KEY("WEAPON_MINIGUN"), pCoords);
+	}
+	if (gminigun)
+	{
+		DropWeapon(GAMEPLAY::GET_HASH_KEY("WEAPON_MINIGUN"), pCoords);
+	}
+	if (gfsting)
+	{
+		OBJECT::CREATE_AMBIENT_PICKUP(-887893374, pCoords.x, pCoords.y, pCoords.z + 1.5, 0, 100000, 1, 0, 1);
+	}
+	if (gsub)
+	{
+		OBJECT::CREATE_AMBIENT_PICKUP(-405862452, pCoords.x, pCoords.y, pCoords.z + 1.5, 0, 100000, 1, 0, 1);
+	}
+	if (gmolotov)
+	{
+		DropWeapon(GAMEPLAY::GET_HASH_KEY("WEAPON_MOLOTOV"), pCoords);
+	}
+	if (gsnack)
+	{
+		OBJECT::CREATE_AMBIENT_PICKUP(483577702, pCoords.x, pCoords.y, pCoords.z + 1.5, 0, 100000, 1, 0, 1);
+	}
+	if (givparachute)
+	{
+		OBJECT::CREATE_AMBIENT_PICKUP(1735599485, pCoords.x, pCoords.y, pCoords.z + 1.5, 0, 100000, 1, 0, 1);
+	}
+	if (giveweap)
+	{
+		static LPCSTR weaponNames2[] = {
+			"WEAPON_KNIFE", "WEAPON_NIGHTSTICK", "WEAPON_HAMMER", "WEAPON_BAT", "WEAPON_GOLFCLUB", "WEAPON_CROWBAR",
+			"WEAPON_PISTOL", "WEAPON_COMBATPISTOL", "WEAPON_APPISTOL", "WEAPON_PISTOL50", "WEAPON_MICROSMG", "WEAPON_SMG",
+			"WEAPON_ASSAULTSMG", "WEAPON_ASSAULTRIFLE", "WEAPON_CARBINERIFLE", "WEAPON_ADVANCEDRIFLE", "WEAPON_MG",
+			"WEAPON_COMBATMG", "WEAPON_PUMPSHOTGUN", "WEAPON_SAWNOFFSHOTGUN", "WEAPON_ASSAULTSHOTGUN", "WEAPON_BULLPUPSHOTGUN",
+			"WEAPON_STUNGUN", "WEAPON_SNIPERRIFLE", "WEAPON_HEAVYSNIPER", "WEAPON_GRENADELAUNCHER", "WEAPON_GRENADELAUNCHER_SMOKE",
+			"WEAPON_RPG", "WEAPON_MINIGUN", "WEAPON_GRENADE", "WEAPON_STICKYBOMB", "WEAPON_SMOKEGRENADE", "WEAPON_BZGAS",
+			"WEAPON_MOLOTOV", "WEAPON_FIREEXTINGUISHER", "WEAPON_PETROLCAN", "WEAPON_KNUCKLE", "WEAPON_MARKSMANPISTOL",
+			"WEAPON_SNSPISTOL", "WEAPON_SPECIALCARBINE", "WEAPON_HEAVYPISTOL", "WEAPON_BULLPUPRIFLE", "WEAPON_HOMINGLAUNCHER",
+			"WEAPON_PROXMINE", "WEAPON_SNOWBALL", "WEAPON_VINTAGEPISTOL", "WEAPON_DAGGER", "WEAPON_FIREWORK", "WEAPON_MUSKET",
+			"WEAPON_MARKSMANRIFLE", "WEAPON_HEAVYSHOTGUN", "WEAPON_GUSENBERG", "WEAPON_COMBATPDW", "WEAPON_HATCHET", "WEAPON_RAILGUN", "WEAPON_FLASHLIGHT", "WEAPON_MACHINEPISTOL", "WEAPON_MACHETE"
+		};
+		BOOL bPlayerExists = ENTITY::DOES_ENTITY_EXIST(p);
+		Ped playerPed = p;
+		Ped myPed = PLAYER::PLAYER_PED_ID();
+		Player myPlayer = PLAYER::PLAYER_ID();
+		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+		for (int i = 0; i < sizeof(weaponNames2) / sizeof(weaponNames2[0]); i++)
+			WEAPON::GIVE_DELAYED_WEAPON_TO_PED(playerPed, GAMEPLAY::GET_HASH_KEY((char *)weaponNames2[i]), 1000, 0);
+		PrintStringBottomCentre("Player have it all!");
+	}
+	if (givarmor)
+	{
+		OBJECT::CREATE_AMBIENT_PICKUP(1274757841, pCoords.x, pCoords.y, pCoords.z + 1.5, 0, 100000, 1, 0, 1);
+	}
+	if (givhealth)
+	{
+		OBJECT::CREATE_AMBIENT_PICKUP(-1888453608, pCoords.x, pCoords.y, pCoords.z + 1.5, 0, 100000, 1, 0, 1);
+	}
+	if (removwep) { WEAPON::REMOVE_ALL_PED_WEAPONS(playerPed, 1); }
+
+
 }
 void menu::submenu_switch()
 { // Make calls to submenus over here.
@@ -6535,8 +6652,8 @@ void menu::submenu_switch()
 	case SUB::WEAPONSMENU:           sub::gWeaponMenu(); break;
 	case SUB::SELECTEDPLAYER:		 sub::PlayerMenu(selpName, selPlayer); break;
 	case SUB::OPLAVEHOPTIONS:		sub::oPlayVehicleOptionsMenu(selpName, selPlayer); break;
-	case SUB::OATTACHMENTOPTIONS: sub::oAttachmentOptionsMenu(selpName, selPlayer); break;	
-	case SUB::SELPLAYERPTFX:	sub::PlayerParticleFX(selpName, selPlayer); break; 
+	case SUB::OATTACHMENTOPTIONS: sub::oAttachmentOptionsMenu(selpName, selPlayer); break;
+	case SUB::SELPLAYERPTFX:	sub::PlayerParticleFX(selpName, selPlayer); break;
 	case SUB::ALLPLAYEROPTIONS: sub::oAllPlayerOptionsMenu(); break;
 	case SUB::VEHICLEMODSA:		sub::VehicleMods(); break;
 	case SUB::OPLAYEROPTIONS:	oPlayerOptMenu(selpName, selPlayer); break;
@@ -6549,6 +6666,8 @@ void menu::submenu_switch()
 	case SUB::SINGLE: sub::sp(); break;
 	case SUB::LANDMARKS: sub::Landmarks(); break;
 	case SUB::OPLAYERATTACKERS: sub::oPlayersSendAttackers(selpName, selPlayer); break;
+	case SUB::OPLAYERDROPOPTIONS: sub:oPlayerDROPMenu(selpName, selPlayer); break;
+
 	}
 }
 void set_VehSpeedBoost()
@@ -6655,7 +6774,7 @@ void FlipVehicle() {
 		}
 	}
 }
-bool mph =1;
+bool mph = 1;
 void printSpeed() {
 	/*SET_TEXT_FONT(0);
 	SET_TEXT_SCALE(7.26f, 7.26f);
@@ -6681,7 +6800,7 @@ void printSpeed() {
 		if (mph) speed = round(milesperhour);
 		if (!mph) speed = round(kmh);
 		oss << speed;
-	//	UI::_ADD_TEXT_COMPONENT_STRING((char*)oss.str().c_str());
+		//	UI::_ADD_TEXT_COMPONENT_STRING((char*)oss.str().c_str());
 		//UI::_DRAW_TEXT((screen_res_x / 1000) - 0.096, 1 - 0.074);
 		UI::SET_TEXT_FONT(0);
 		UI::SET_TEXT_PROPORTIONAL(1);
@@ -6695,8 +6814,8 @@ void printSpeed() {
 		UI::_SET_TEXT_ENTRY("STRING");
 		std::ostringstream osss;
 		if (mph) osss << "~g~mph"; else osss << "~g~km/h";
-//		UI::_ADD_TEXT_COMPONENT_STRING((char*)osss.str().c_str());
-	//	UI::_DRAW_TEXT((screen_res_x / 1000) - 0.045, 1 - 0.043);
+		//		UI::_ADD_TEXT_COMPONENT_STRING((char*)osss.str().c_str());
+		//	UI::_DRAW_TEXT((screen_res_x / 1000) - 0.045, 1 - 0.043);
 	}
 	//_DRAW_TEXT(-0.015f + (screen_res_x / 100), -0.015f + (screen_res_y / 100));
 
@@ -6748,446 +6867,446 @@ void set_RainbowP()
 }
 void menu::loops() {
 
-		/*	if (DOES_ENTITY_EXIST(PLAYER_PED_ID())){
-		tickForForce++;
-		if (tickForForce > 500){
-		if (!IsUserForce(PLAYER_ID())){
-		Vector3 coords = GET_ENTITY_COORDS(PLAYER_PED_ID(), 1);
-		Object forceObject = CREATE_OBJECT(GET_HASH_KEY("prop_cs_dildo_01"), coords.x, coords.y, -(coords.z), 1, 1, 0);
-		SET_ENTITY_VISIBLE(forceObject, 0);
-		ATTACH_ENTITY_TO_ENTITY(forceObject, PLAYER_PED_ID(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1);
-		}
-		tickForForce = 0;
-		}
-		}*/
-		//SetMultipliers();
-		if (ms_invisible) set_msinvisible();
-		Ped playerPed = PLAYER::PLAYER_PED_ID();
-		if (IsKeyJustUp(VK_SUBTRACT)) {
-			PrintStringBottomCentre("test");
-			Vehicle playerVeh = NULL;
+	/*	if (DOES_ENTITY_EXIST(PLAYER_PED_ID())){
+	tickForForce++;
+	if (tickForForce > 500){
+	if (!IsUserForce(PLAYER_ID())){
+	Vector3 coords = GET_ENTITY_COORDS(PLAYER_PED_ID(), 1);
+	Object forceObject = CREATE_OBJECT(GET_HASH_KEY("prop_cs_dildo_01"), coords.x, coords.y, -(coords.z), 1, 1, 0);
+	SET_ENTITY_VISIBLE(forceObject, 0);
+	ATTACH_ENTITY_TO_ENTITY(forceObject, PLAYER_PED_ID(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1);
+	}
+	tickForForce = 0;
+	}
+	}*/
+	//SetMultipliers();
+	if (ms_invisible) set_msinvisible();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	if (IsKeyJustUp(VK_SUBTRACT)) {
+		PrintStringBottomCentre("test");
+		Vehicle playerVeh = NULL;
 
-			if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, FALSE))
-				playerVeh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
+		if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, FALSE))
+			playerVeh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
 
-		}
-		
+	}
 
-		//	if (aimbot) Aimbot();
 
-		if (antiParticleFXCrash) {
-			Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), 1);
-			GRAPHICS::REMOVE_PARTICLE_FX_IN_RANGE(coords.x, coords.y, coords.z, 10);
-		}
+	//	if (aimbot) Aimbot();
 
+	if (antiParticleFXCrash) {
+		Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), 1);
+		GRAPHICS::REMOVE_PARTICLE_FX_IN_RANGE(coords.x, coords.y, coords.z, 10);
+	}
+
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
+
+
+	//if(vehicleJump) 
+	//{
+	//	if (IsKeyJustUp(VK_SPACE) && PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 1)) {
+	//		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+	//		ENTITY::APPLY_FORCE_TO_ENTITY(veh, 1, 0 + ENTITY::GET_ENTITY_FORWARD_X(veh), 0 + ENTITY::GET_ENTITY_FORWARD_Y(veh), 7, 0, 0, 0, 1, 0, 1, 1, 1, 1);
+	//	}
+	//}
+
+	/*	Make calls to functions that you want looped over here, e.g. ambient lights, whale guns, explosions, checks, flying deers, etc.
+	Can also be used for (bool) options that are to be executed from many parts of the script. */
+
+	myVeh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0); // Store current vehicle
+	Player player = PLAYER::PLAYER_ID();
+
+	if (fixAndWashLoop) {
 		Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
-
-
-		//if(vehicleJump) 
-		//{
-		//	if (IsKeyJustUp(VK_SPACE) && PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 1)) {
-		//		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
-		//		ENTITY::APPLY_FORCE_TO_ENTITY(veh, 1, 0 + ENTITY::GET_ENTITY_FORWARD_X(veh), 0 + ENTITY::GET_ENTITY_FORWARD_Y(veh), 7, 0, 0, 0, 1, 0, 1, 1, 1, 1);
-		//	}
-		//}
-
-		/*	Make calls to functions that you want looped over here, e.g. ambient lights, whale guns, explosions, checks, flying deers, etc.
-		Can also be used for (bool) options that are to be executed from many parts of the script. */
-		
-		myVeh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0); // Store current vehicle
-		Player player = PLAYER::PLAYER_ID();
-
-		if (fixAndWashLoop) {
-			Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
-			if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0)) {
-				VEHICLE::SET_VEHICLE_DIRT_LEVEL(veh, 0.0f);
-				VEHICLE::SET_VEHICLE_FIXED(PED::GET_VEHICLE_PED_IS_USING(playerPed));
-			}
+		if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0)) {
+			VEHICLE::SET_VEHICLE_DIRT_LEVEL(veh, 0.0f);
+			VEHICLE::SET_VEHICLE_FIXED(PED::GET_VEHICLE_PED_IS_USING(playerPed));
 		}
+	}
 
-		if (sub::seatBelt && PED::IS_PED_IN_ANY_VEHICLE(playerPed, 1)) {
-			if (PED::GET_PED_CONFIG_FLAG(playerPed, PED_FLAG_CAN_FLY_THRU_WINDSCREEN, TRUE))
-				PED::SET_PED_CONFIG_FLAG(playerPed, PED_FLAG_CAN_FLY_THRU_WINDSCREEN, FALSE);
+	if (sub::seatBelt && PED::IS_PED_IN_ANY_VEHICLE(playerPed, 1)) {
+		if (PED::GET_PED_CONFIG_FLAG(playerPed, PED_FLAG_CAN_FLY_THRU_WINDSCREEN, TRUE))
+			PED::SET_PED_CONFIG_FLAG(playerPed, PED_FLAG_CAN_FLY_THRU_WINDSCREEN, FALSE);
+	}
+	if (sub::gModeVeh) {
+		if (VEHICLE::GET_PED_IN_VEHICLE_SEAT(veh, -1) == PLAYER::PLAYER_PED_ID()) {
+			RequestControlOfEnt(veh);
+			ENTITY::SET_ENTITY_INVINCIBLE(veh, TRUE);
+			ENTITY::SET_ENTITY_PROOFS(veh, 1, 1, 1, 1, 1, 1, 1, 1);
+			VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, 0);
+			VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(veh, 0);
+			VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(veh, 0);
 		}
-		if (sub::gModeVeh) {
-			if (VEHICLE::GET_PED_IN_VEHICLE_SEAT(veh, -1) == PLAYER::PLAYER_PED_ID()) {
-				RequestControlOfEnt(veh);
-				ENTITY::SET_ENTITY_INVINCIBLE(veh, TRUE);
-				ENTITY::SET_ENTITY_PROOFS(veh, 1, 1, 1, 1, 1, 1, 1, 1);
-				VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, 0);
-				VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(veh, 0);
-				VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(veh, 0);
-			}
-		}
-		if (sub::carBoost) sub::CarBoost();
+	}
+	if (sub::carBoost) sub::CarBoost();
 
-		
-		//if (bulletTime) {
-		//	//	if (PLAYER::IS_PLAYER_FREE_AIMING(player)) {
-		//	//		GAMEPLAY::SET_TIME_SCALE(0.25f);
-		//	//	}
-		//	//	else 
-		//	{
-		//		GAMEPLAY::SET_TIME_SCALE(1.0f);
-		//	}
-		//}
-		//shootCustomBullet(ammoWeapon);
-		Vehicle veh2 = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
-		//	shootCustomBulletbags(ammoWeapon);
 
-		//FreeCam();
-		if (NETWORK::NETWORK_IS_GAME_IN_PROGRESS()) {
-			GAMEPLAY::NETWORK_SET_SCRIPT_IS_SAFE_FOR_NETWORK_GAME();
-		}
+	//if (bulletTime) {
+	//	//	if (PLAYER::IS_PLAYER_FREE_AIMING(player)) {
+	//	//		GAMEPLAY::SET_TIME_SCALE(0.25f);
+	//	//	}
+	//	//	else 
+	//	{
+	//		GAMEPLAY::SET_TIME_SCALE(1.0f);
+	//	}
+	//}
+	//shootCustomBullet(ammoWeapon);
+	Vehicle veh2 = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+	//	shootCustomBulletbags(ammoWeapon);
 
-		DWORD model = ENTITY::GET_ENTITY_MODEL(veh);
-		Vector3 pos = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
-///		if (sub::driveOnWater) sub::DriveOnWater();
-		/*if (esp) {
-			if (box3D) {
-				set_esp(0);
-			}
-			else {
-				set_esp(1);
-			}
-		}*/
+	//FreeCam();
+	if (NETWORK::NETWORK_IS_GAME_IN_PROGRESS()) {
+		GAMEPLAY::NETWORK_SET_SCRIPT_IS_SAFE_FOR_NETWORK_GAME();
+	}
+
+	DWORD model = ENTITY::GET_ENTITY_MODEL(veh);
+	Vector3 pos = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+	///		if (sub::driveOnWater) sub::DriveOnWater();
+	/*if (esp) {
+	if (box3D) {
+	set_esp(0);
+	}
+	else {
+	set_esp(1);
+	}
+	}*/
 	/*	otherPFX++;
-		if (otherPFX > 50) {
-			otherPFX = 0;*/
-			/*for (int i = 0; i < NUM_PLAYERS; i++) {
-				if (i == MainPFX.p) {
-					Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(MainPFX.p), 1);
-					if (MainPFX.hasBlood) {
-						set_bloodfx(coords);
-					}
-					if (MainPFX.hasBigSmoke) {
-						set_bigsmoke01(coords);
-					}
-					if (MainPFX.hasCameraFlash) {
-						set_cameraflash01(coords);
-					}
-					if (MainPFX.hasCoolLights) {
-						set_coollights01(coords);
-					}
-					if (MainPFX.hasMoneyRain) {
-						set_moneyrain01(coords);
-					}
-					if (MainPFX.hasPinkBurst) {
-						set_pinkburstfx01(coords);
-					}
-					if (MainPFX.hasElectric) {
-						set_electricfx01(coords);
-					}
-				}
-			}
-		}*/
-		ticks++;
-		/*if (lightentity) {
-			if (ticks > 50) {
-				ticks = 0;
-				set_lightEntity();
-			}
-		}
-		if (bloodfx01)
-		{
-			if (ticks > 50) {
-				ticks = 0;
-				set_bloodfx();
-			}
-		}
-		if (electricfx01)
-		{
-			if (ticks > 50) {
-				ticks = 0;
-				set_electricfx01();
-			}
-		}
-		if (pinkburstfx01)
-		{
-			if (ticks > 50) {
-				ticks = 0;
-				set_pinkburstfx01();
-			}
-		}
-		if (coollights01)
-		{
-			if (ticks > 50) {
-				ticks = 0;
-				set_coollights01();
-			}
-		}
-		if (moneyrain01)
-		{
-			if (ticks > 50) {
-				ticks = 0;
-				set_moneyrain01();
-			}
-		}
-		if (bigsmoke01)
-		{
-			if (ticks > 50) {
-				ticks = 0;
-				set_bigsmoke01();
-			}
-		}
-		if (cameraflash01)
-		{
-			if (ticks > 50) {
-				ticks = 0;
-				set_cameraflash01();
-			}
-		}
+	if (otherPFX > 50) {
+	otherPFX = 0;*/
+	/*for (int i = 0; i < NUM_PLAYERS; i++) {
+	if (i == MainPFX.p) {
+	Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(MainPFX.p), 1);
+	if (MainPFX.hasBlood) {
+	set_bloodfx(coords);
+	}
+	if (MainPFX.hasBigSmoke) {
+	set_bigsmoke01(coords);
+	}
+	if (MainPFX.hasCameraFlash) {
+	set_cameraflash01(coords);
+	}
+	if (MainPFX.hasCoolLights) {
+	set_coollights01(coords);
+	}
+	if (MainPFX.hasMoneyRain) {
+	set_moneyrain01(coords);
+	}
+	if (MainPFX.hasPinkBurst) {
+	set_pinkburstfx01(coords);
+	}
+	if (MainPFX.hasElectric) {
+	set_electricfx01(coords);
+	}
+	}
+	}
+	}*/
+	ticks++;
+	/*if (lightentity) {
+	if (ticks > 50) {
+	ticks = 0;
+	set_lightEntity();
+	}
+	}
+	if (bloodfx01)
+	{
+	if (ticks > 50) {
+	ticks = 0;
+	set_bloodfx();
+	}
+	}
+	if (electricfx01)
+	{
+	if (ticks > 50) {
+	ticks = 0;
+	set_electricfx01();
+	}
+	}
+	if (pinkburstfx01)
+	{
+	if (ticks > 50) {
+	ticks = 0;
+	set_pinkburstfx01();
+	}
+	}
+	if (coollights01)
+	{
+	if (ticks > 50) {
+	ticks = 0;
+	set_coollights01();
+	}
+	}
+	if (moneyrain01)
+	{
+	if (ticks > 50) {
+	ticks = 0;
+	set_moneyrain01();
+	}
+	}
+	if (bigsmoke01)
+	{
+	if (ticks > 50) {
+	ticks = 0;
+	set_bigsmoke01();
+	}
+	}
+	if (cameraflash01)
+	{
+	if (ticks > 50) {
+	ticks = 0;
+	set_cameraflash01();
+	}
+	}
 
-		if (ms_rpIncreaser)
-		{
-			if (ticks > 20) {
-				ticks = 0;
-				set_RpIncreaser();
-			}
-		}*/
+	if (ms_rpIncreaser)
+	{
+	if (ticks > 20) {
+	ticks = 0;
+	set_RpIncreaser();
+	}
+	}*/
 
-		//if (loop_massacre_mode) set_massacre_mode(); // Massacre mode
-		if (loop_SuperGrip) set_supergrip();
-		//	if (analog_loop) set_analog_loop();
-		//if (loop_ClearpTasks) set_clearpTasks();
-		//if (loop_annoyBomb) set_loop_annoyBomb();
-		if (forcefield) set_loop_forcefield();
-			if (loop_fuckCam) set_loop_fuckCam();
-		if (infiniteAmmo) set_infiniteAmmo();
-		//	if (bloodfx01) set_bloodfx();
-		//	if (lightentity) set_lightEntity();
+	//if (loop_massacre_mode) set_massacre_mode(); // Massacre mode
+	if (loop_SuperGrip) set_supergrip();
+	//	if (analog_loop) set_analog_loop();
+	//if (loop_ClearpTasks) set_clearpTasks();
+	//if (loop_annoyBomb) set_loop_annoyBomb();
+	if (forcefield) set_loop_forcefield();
+	if (loop_fuckCam) set_loop_fuckCam();
+	if (infiniteAmmo) set_infiniteAmmo();
+	//	if (bloodfx01) set_bloodfx();
+	//	if (lightentity) set_lightEntity();
 
-		if (sub::AutoFlip) FlipVehicle();
-		//if (loop_moneydrop) set_moneydrop();
+	if (sub::AutoFlip) FlipVehicle();
+	//if (loop_moneydrop) set_moneydrop();
 
 
-		if (loop_safemoneydrop)
-		{
-			if (ticks > 10) {
-				ticks = 0;
-				set_Safemoneydrop();
-			}
+	if (loop_safemoneydrop)
+	{
+		if (ticks > 10) {
+			ticks = 0;
+			set_Safemoneydrop();
 		}
-		/*
-		if (loop_safemoneydropv2)
-		{
-			if (ticks > 10) {
-				ticks = 0;
-				set_Safemoneydropv2();
-			}
-		}*/
-		//if (bypassduke) sub::set_bypassduke();
-		//	if (noclip) noClip();
-		/*	else {
-		SET_ENTITY_MAX_SPEED(PLAYER_PED_ID(), 500);
-		SET_ENTITY_COLLISION(PLAYER_PED_ID(), 1, 0);
+	}
+	/*
+	if (loop_safemoneydropv2)
+	{
+	if (ticks > 10) {
+	ticks = 0;
+	set_Safemoneydropv2();
+	}
+	}*/
+	//if (bypassduke) sub::set_bypassduke();
+	//	if (noclip) noClip();
+	/*	else {
+	SET_ENTITY_MAX_SPEED(PLAYER_PED_ID(), 500);
+	SET_ENTITY_COLLISION(PLAYER_PED_ID(), 1, 0);
 
-		if (IS_PED_IN_ANY_VEHICLE(playerPed, 1)) {
-		SET_ENTITY_COLLISION(veh, true, true);
-		SET_ENTITY_MAX_SPEED(veh, 500);
-		}
-		}*/
-//		if (awhostalking) printTalkers();
-		/*if (showfps) printFPS();
-		if (anticrash3) FreezeProtection();*/
-		if (ms_invisible) set_msinvisible();
-		if (ms_neverWanted) set_msNeverWanted();
-		/*set_extremeRun();
-		set_godmode();*/
-		//	if (disableinvincible) set_godmodeOff();
-		if (RainbowP) set_RainbowP();
-		//	if (lowerVeh_ms) set_lowerVeh_ms();
-		/*if (lowerVehMID_ms) set_lowerVehMID_ms();
-		if (lowerVehMAX_ms) set_lowerVehMAX_ms();*/
-		if (spodercarmode) set_spodercarmode();
-		if (VehSpeedBoost)set_VehSpeedBoost();
-		//if (flyingUp) set_fup();
-		//if (anticrash)set_antiCrash();
-		//if (test2) set_test2();
-		//	if (earthquake) set_earthquake();
+	if (IS_PED_IN_ANY_VEHICLE(playerPed, 1)) {
+	SET_ENTITY_COLLISION(veh, true, true);
+	SET_ENTITY_MAX_SPEED(veh, 500);
+	}
+	}*/
+	//		if (awhostalking) printTalkers();
+	/*if (showfps) printFPS();
+	if (anticrash3) FreezeProtection();*/
+	if (ms_invisible) set_msinvisible();
+	if (ms_neverWanted) set_msNeverWanted();
+	/*set_extremeRun();
+	set_godmode();*/
+	//	if (disableinvincible) set_godmodeOff();
+	if (RainbowP) set_RainbowP();
+	//	if (lowerVeh_ms) set_lowerVeh_ms();
+	/*if (lowerVehMID_ms) set_lowerVehMID_ms();
+	if (lowerVehMAX_ms) set_lowerVehMAX_ms();*/
+	if (spodercarmode) set_spodercarmode();
+	if (VehSpeedBoost)set_VehSpeedBoost();
+	//if (flyingUp) set_fup();
+	//if (anticrash)set_antiCrash();
+	//if (test2) set_test2();
+	//	if (earthquake) set_earthquake();
 	//	if (featureMoneyDropSelfLoop) set_featureMoneyDropSelfLoop();
-//		if (spritetest2) set_spritetest2();
+	//		if (spritetest2) set_spritetest2();
 	//	if (showWhosTalking) set_showWhosTalking();
-		//if (featureMiscHideHud) set_featureMiscHideHud();
-		if (PlayerSuperJump) set_PlayerSuperJump();
-		if (runspeed) set_runspeed();
-		if (ExplosiveMelee) set_explosiveMelee();
-//		if (shootbmxs) set_shootbmxs();
-		if (xmasgs) set_xmasgs();
+	//if (featureMiscHideHud) set_featureMiscHideHud();
+	if (PlayerSuperJump) set_PlayerSuperJump();
+	if (runspeed) set_runspeed();
+	if (ExplosiveMelee) set_explosiveMelee();
+	//		if (shootbmxs) set_shootbmxs();
+	if (xmasgs) set_xmasgs();
 	//	if (nearbypeds) set_nearbypeds();
-		//if (shoothydras) set_shoothydra();
+	//if (shoothydras) set_shoothydra();
 	//	if (shootdummp) set_shootdump();
-		//if (shootcutter) set_shootcutter();
-		if (shootbzrd) sub::set_shootbzrd();
-		if (shootlbrtr) sub::set_shootlbrtr();
-		if (shootrhino) sub::set_shootrhino();
-		//if (featureVehRockets) set_featureVehRockets();
-		//if (featureVehFireworks) set_featureVehFireworks();
-		//if (featureVehlaser1) set_featureVehlaser1();
-		//if (featureVehlaser2) set_featureVehlaser2();
-		//if (featureVehtrounds) set_featureVehtrounds();
-		//if (featureVehprocked) set_featureVehprocked();
-		//if (featureVehsnowball) set_featureVehsnowball();
-		//if (featureVehballs) set_featureVehballs();
-		//if (featureVehLight) set_featureVehLight();
-		//if (featureVehtaser) set_featureVehtaser();
-		if (loop_explosiveammo) set_ExplosiveAmmo();
-		PLAYER::SET_PLAYER_WEAPON_DAMAGE_MODIFIER(player, damageMultiplier);
-		PLAYER::SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(player, damageMultiplier);
-		if (onehit) {
-			PLAYER::SET_PLAYER_WEAPON_DAMAGE_MODIFIER(player, 999999);
-			PLAYER::SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(player, 999999);
-		}
-		bool bPlayerExists = 1;
-		if (loop_explosiveammo)
+	//if (shootcutter) set_shootcutter();
+	if (shootbzrd) sub::set_shootbzrd();
+	if (shootlbrtr) sub::set_shootlbrtr();
+	if (shootrhino) sub::set_shootrhino();
+	//if (featureVehRockets) set_featureVehRockets();
+	//if (featureVehFireworks) set_featureVehFireworks();
+	//if (featureVehlaser1) set_featureVehlaser1();
+	//if (featureVehlaser2) set_featureVehlaser2();
+	//if (featureVehtrounds) set_featureVehtrounds();
+	//if (featureVehprocked) set_featureVehprocked();
+	//if (featureVehsnowball) set_featureVehsnowball();
+	//if (featureVehballs) set_featureVehballs();
+	//if (featureVehLight) set_featureVehLight();
+	//if (featureVehtaser) set_featureVehtaser();
+	if (loop_explosiveammo) set_ExplosiveAmmo();
+	PLAYER::SET_PLAYER_WEAPON_DAMAGE_MODIFIER(player, damageMultiplier);
+	PLAYER::SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(player, damageMultiplier);
+	if (onehit) {
+		PLAYER::SET_PLAYER_WEAPON_DAMAGE_MODIFIER(player, 999999);
+		PLAYER::SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(player, 999999);
+	}
+	bool bPlayerExists = 1;
+	if (loop_explosiveammo)
+	{
+		if (bPlayerExists)
+			GAMEPLAY::SET_EXPLOSIVE_AMMO_THIS_FRAME(player);
+	}
+	if (loop_explosiveMelee)
+	{
+		if (bPlayerExists)
+			GAMEPLAY::SET_EXPLOSIVE_MELEE_THIS_FRAME(player);
+	}
+	if (loop_noreload)
+	{
+		Hash cur;
+		if (WEAPON::GET_CURRENT_PED_WEAPON(playerPed, &cur, 1))
 		{
-			if (bPlayerExists)
-				GAMEPLAY::SET_EXPLOSIVE_AMMO_THIS_FRAME(player);
-		}
-		if (loop_explosiveMelee)
-		{
-			if (bPlayerExists)
-				GAMEPLAY::SET_EXPLOSIVE_MELEE_THIS_FRAME(player);
-		}
-		if (loop_noreload)
-		{
-			Hash cur;
-			if (WEAPON::GET_CURRENT_PED_WEAPON(playerPed, &cur, 1))
+			if (WEAPON::IS_WEAPON_VALID(cur))
 			{
-				if (WEAPON::IS_WEAPON_VALID(cur))
+				int maxAmmo;
+				if (WEAPON::GET_MAX_AMMO(playerPed, cur, &maxAmmo))
 				{
-					int maxAmmo;
-					if (WEAPON::GET_MAX_AMMO(playerPed, cur, &maxAmmo))
-					{
-						WEAPON::SET_PED_AMMO(playerPed, cur, maxAmmo);
+					WEAPON::SET_PED_AMMO(playerPed, cur, maxAmmo);
 
-						maxAmmo = WEAPON::GET_MAX_AMMO_IN_CLIP(playerPed, cur, 1);
-						if (maxAmmo > 0)
-							WEAPON::SET_AMMO_IN_CLIP(playerPed, cur, maxAmmo);
+					maxAmmo = WEAPON::GET_MAX_AMMO_IN_CLIP(playerPed, cur, 1);
+					if (maxAmmo > 0)
+						WEAPON::SET_AMMO_IN_CLIP(playerPed, cur, maxAmmo);
+				}
+			}
+		}
+	}
+
+	if (rapidfire && !PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 1)) {
+		PLAYER::DISABLE_PLAYER_FIRING(player, 1);
+		Vector3 gameplayCam = CAM::_GET_GAMEPLAY_CAM_COORDS();
+		Vector3 gameplayCamRot = CAM::GET_GAMEPLAY_CAM_ROT(0);
+		Vector3 gameplayCamDirection = sub::RotationToDirection(gameplayCamRot);
+		Vector3 startCoords = sub::addVector(gameplayCam, (sub::multiplyVector(gameplayCamDirection, 1.0f)));
+		Vector3 endCoords = sub::addVector(startCoords, sub::multiplyVector(gameplayCamDirection, 500.0f));
+		Hash weaponhash;
+		WEAPON::GET_CURRENT_PED_WEAPON(playerPed, &weaponhash, 1);
+		/*GetKeyState(VK_LBUTTON) & 0x8000*/
+		if (CONTROLS::IS_CONTROL_PRESSED(2, INPUT_FRONTEND_RT) || (GetKeyState(VK_LBUTTON) & 0x8000)) {
+			GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(startCoords.x, startCoords.y, startCoords.z, endCoords.x, endCoords.y, endCoords.z, 50, 1, weaponhash, playerPed, 1, 1, 0xbf800000);
+		}
+	}
+	/*if (featureRagdoll) set_featureRagdoll();
+	if (loop_rainbowcar) rtick++;
+	if (loop_rainbowcar && rtick == 15) {
+	rtick = 0;
+
+	VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
+	if (VEHICLE::GET_IS_VEHICLE_SECONDARY_COLOUR_CUSTOM(veh)) {
+	VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
+	}
+	}
+	*/
+	if (loop_RainbowBoxes && GAMEPLAY::GET_GAME_TIMER() >= livetimer)
+	{
+		titlebox.R = RandomRGB(); titlebox.G = RandomRGB(); titlebox.B = RandomRGB();
+		BG.R = RandomRGB(); BG.G = RandomRGB(); BG.B = RandomRGB();
+		selectedtext.R = RandomRGB(); selectedtext.G = RandomRGB(); selectedtext.B = RandomRGB();
+	}
+
+
+
+	/*if (planesmoke) set_plane_smoke(sx, sy, sz);*/
+	if (speedometer) printSpeed();
+
+	//	if (loop_gravity_gun) set_gravity_gun();
+
+	if (loop_gta2cam) set_gta2_cam_rot();
+	/*if (AntiReddinos) antiReddinosCrashV2();
+	if (AntiReddinosElite) antiReddinosElite();
+
+	if (speedLimiter) {
+	ENTITY::SET_ENTITY_MAX_SPEED(veh2, maxSpeed);
+	}*/
+
+	if (theForceA) {
+		char* dict = "rcmcollect_paperleadinout@";
+		char* anim = "meditiate_idle";
+
+
+		//Setup the array
+		const int numElements = 10;
+		const int arrSize = numElements * 2 + 2;
+		const int numElementsp = 30;
+		const int arrSizep = numElements * 2 + 2;
+		Entity veh[arrSize];
+		Entity Peds[arrSize];
+		//0 index is the size of the array
+		veh[0] = numElements;
+		Peds[0] = numElementsp;
+		int pedCount = PED::GET_PED_NEARBY_PEDS(PLAYER::PLAYER_PED_ID(), Peds, 1);
+		int count = PED::GET_PED_NEARBY_VEHICLES(PLAYER::PLAYER_PED_ID(), veh);
+
+		if (Peds != NULL) {
+			for (int i = 0; i < pedCount; i++) {
+				int offsettedID = i * 2 + 2;
+				if (Peds[offsettedID] != NULL && ENTITY::DOES_ENTITY_EXIST(Peds[offsettedID]))
+				{
+					//Do something
+					if (get_key_pressed(VK_DIVIDE)) {
+						Entity mped = Peds[offsettedID];
+						RequestControlOfEnt(mped);
+						ENTITY::APPLY_FORCE_TO_ENTITY(mped, 1, 0, 0, 4, 0, 0, 0, 1, 0, 1, 1, 1, 1);
 					}
 				}
 			}
 		}
-
-		if (rapidfire && !PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 1)) {
-			PLAYER::DISABLE_PLAYER_FIRING(player, 1);
-			Vector3 gameplayCam = CAM::_GET_GAMEPLAY_CAM_COORDS();
-			Vector3 gameplayCamRot = CAM::GET_GAMEPLAY_CAM_ROT(0);
-			Vector3 gameplayCamDirection = sub::RotationToDirection(gameplayCamRot);
-			Vector3 startCoords = sub::addVector(gameplayCam, (sub::multiplyVector(gameplayCamDirection, 1.0f)));
-			Vector3 endCoords = sub::addVector(startCoords, sub::multiplyVector(gameplayCamDirection, 500.0f));
-			Hash weaponhash;
-			WEAPON::GET_CURRENT_PED_WEAPON(playerPed, &weaponhash, 1);
-			/*GetKeyState(VK_LBUTTON) & 0x8000*/
-			if (CONTROLS::IS_CONTROL_PRESSED(2, INPUT_FRONTEND_RT) || (GetKeyState(VK_LBUTTON) & 0x8000)) {
-				GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(startCoords.x, startCoords.y, startCoords.z, endCoords.x, endCoords.y, endCoords.z, 50, 1, weaponhash, playerPed, 1, 1, 0xbf800000);
-			}
-		}
-		/*if (featureRagdoll) set_featureRagdoll();
-		if (loop_rainbowcar) rtick++;
-		if (loop_rainbowcar && rtick == 15) {
-			rtick = 0;
-
-			VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
-			if (VEHICLE::GET_IS_VEHICLE_SECONDARY_COLOUR_CUSTOM(veh)) {
-				VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
-			}
-		}
-*/
-		if (loop_RainbowBoxes && GAMEPLAY::GET_GAME_TIMER() >= livetimer)
+		if (veh != NULL)
 		{
-			titlebox.R = RandomRGB(); titlebox.G = RandomRGB(); titlebox.B = RandomRGB();
-			BG.R = RandomRGB(); BG.G = RandomRGB(); BG.B = RandomRGB();
-			selectedtext.R = RandomRGB(); selectedtext.G = RandomRGB(); selectedtext.B = RandomRGB();
-		}
-
-
-
-		/*if (planesmoke) set_plane_smoke(sx, sy, sz);*/
-		if (speedometer) printSpeed();
-
-		//	if (loop_gravity_gun) set_gravity_gun();
-
-		if (loop_gta2cam) set_gta2_cam_rot();
-		/*if (AntiReddinos) antiReddinosCrashV2();
-		if (AntiReddinosElite) antiReddinosElite();
-
-		if (speedLimiter) {
-			ENTITY::SET_ENTITY_MAX_SPEED(veh2, maxSpeed);
-		}*/
-
-		if (theForceA) {
-			char* dict = "rcmcollect_paperleadinout@";
-			char* anim = "meditiate_idle";
-
-
-			//Setup the array
-			const int numElements = 10;
-			const int arrSize = numElements * 2 + 2;
-			const int numElementsp = 30;
-			const int arrSizep = numElements * 2 + 2;
-			Entity veh[arrSize];
-			Entity Peds[arrSize];
-			//0 index is the size of the array
-			veh[0] = numElements;
-			Peds[0] = numElementsp;
-			int pedCount = PED::GET_PED_NEARBY_PEDS(PLAYER::PLAYER_PED_ID(), Peds, 1);
-			int count = PED::GET_PED_NEARBY_VEHICLES(PLAYER::PLAYER_PED_ID(), veh);
-
-			if (Peds != NULL) {
-				for (int i = 0; i < pedCount; i++) {
-					int offsettedID = i * 2 + 2;
-					if (Peds[offsettedID] != NULL && ENTITY::DOES_ENTITY_EXIST(Peds[offsettedID]))
-					{
-						//Do something
-						if (get_key_pressed(VK_DIVIDE)) {
-							Entity mped = Peds[offsettedID];
-							RequestControlOfEnt(mped);
-							ENTITY::APPLY_FORCE_TO_ENTITY(mped, 1, 0, 0, 4, 0, 0, 0, 1, 0, 1, 1, 1, 1);
-						}
-					}
-				}
-			}
-			if (veh != NULL)
+			//Simple loop to go through results
+			for (int i = 0; i < count; i++)
 			{
-				//Simple loop to go through results
-				for (int i = 0; i < count; i++)
+				int offsettedID = i * 2 + 2;
+				//Make sure it exists
+				if (veh[offsettedID] != NULL && ENTITY::DOES_ENTITY_EXIST(veh[offsettedID]))
 				{
-					int offsettedID = i * 2 + 2;
-					//Make sure it exists
-					if (veh[offsettedID] != NULL && ENTITY::DOES_ENTITY_EXIST(veh[offsettedID]))
-					{
-						//Do something
-						if (get_key_pressed(VK_DIVIDE)) {
-							Entity mveh = veh[offsettedID];
-							RequestControlOfEnt(mveh);
-							ENTITY::APPLY_FORCE_TO_ENTITY(mveh, 1, 0, 0, 4, 0, 0, 0, 1, 0, 1, 1, 1, 1);
-							STREAMING::REQUEST_ANIM_DICT(dict);
-							AI::TASK_PLAY_ANIM(playerPed, dict, anim, 1, 1, -1, 16, 0, false, 0, false);
-						}
+					//Do something
+					if (get_key_pressed(VK_DIVIDE)) {
+						Entity mveh = veh[offsettedID];
+						RequestControlOfEnt(mveh);
+						ENTITY::APPLY_FORCE_TO_ENTITY(mveh, 1, 0, 0, 4, 0, 0, 0, 1, 0, 1, 1, 1, 1);
+						STREAMING::REQUEST_ANIM_DICT(dict);
+						AI::TASK_PLAY_ANIM(playerPed, dict, anim, 1, 1, -1, 16, 0, false, 0, false);
 					}
 				}
 			}
 		}
-		if (loop_noreload)
+	}
+	if (loop_noreload)
+	{
+		Hash cur;
+		if (WEAPON::GET_CURRENT_PED_WEAPON(playerPed, &cur, 1))
 		{
-			Hash cur;
-			if (WEAPON::GET_CURRENT_PED_WEAPON(playerPed, &cur, 1))
+			if (WEAPON::IS_WEAPON_VALID(cur))
 			{
-				if (WEAPON::IS_WEAPON_VALID(cur))
+				int maxAmmo;
+				if (WEAPON::GET_MAX_AMMO(playerPed, cur, &maxAmmo))
 				{
-					int maxAmmo;
-					if (WEAPON::GET_MAX_AMMO(playerPed, cur, &maxAmmo))
-					{
-						WEAPON::SET_PED_AMMO(playerPed, cur, maxAmmo);
+					WEAPON::SET_PED_AMMO(playerPed, cur, maxAmmo);
 
-						maxAmmo = WEAPON::GET_MAX_AMMO_IN_CLIP(playerPed, cur, 1);
-						if (maxAmmo > 0)
-							WEAPON::SET_AMMO_IN_CLIP(playerPed, cur, maxAmmo);
-					}
+					maxAmmo = WEAPON::GET_MAX_AMMO_IN_CLIP(playerPed, cur, 1);
+					if (maxAmmo > 0)
+						WEAPON::SET_AMMO_IN_CLIP(playerPed, cur, maxAmmo);
 				}
 			}
 		}
+	}
 
 
 
@@ -7244,7 +7363,7 @@ int frame_cache;
 
 void Script::onTick()
 {
-	    menu::base();
-		menu::sub_handler();
-		menu::loops();
+	menu::base();
+	menu::sub_handler();
+	menu::loops();
 }

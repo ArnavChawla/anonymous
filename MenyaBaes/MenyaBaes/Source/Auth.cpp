@@ -5,7 +5,7 @@
 #include <codecvt>
 using std::string;
 
-#define URL L"http://185.188.6.98/auth_server"
+#define URL L"https://rmauth.xyz/auth_server/"
 
 wstring s2ws(const std::string& str)
 {
