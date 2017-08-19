@@ -64,6 +64,57 @@ namespace SUB
 		SETTINGS_FONTS,
 		SETTINGS_FONTS2,
 		// Others:
+		GAMEPAINT,
+		METALLIC,
+		CLASSIC,
+		PEARLESCENT,
+		MATTE,
+		METALS,
+		SMETALLIC,
+		SCLASSIC,
+		SPEARLESCENT,
+		SMATTE,
+		SMETALS,
+		SPAINT,
+		BENNYS,
+		FRAME,
+		HORNS,
+		PPAINT,
+		
+		WOFFROAD,
+		WSPORT,
+		WMUSCLE,
+		WLOWRIDER,
+		WSUV,
+		WHEEL,
+		WHIGHEND,
+		WTUNER,
+		WBIKE,
+		WBENNY,
+		CHANGEWHEELS,
+		ARMOR,
+		WHEELCOLOR,
+		VEHICLE_PAINT,
+		ENGINE,
+		ROOF,
+		SPOILER,
+		WTINT,
+		RIGHTFENDER,
+		REARBUMPER,
+		SIDESKIRT,
+		EXHAUST,
+		FRMAE,
+		GRILLE,
+		FENDER,
+		NEON,
+		VEHICLEEXTRA,
+		VEHMULTIPLIERS,
+		WHEELSMOKE,
+		FRONTBUMPER,
+		HOOD,
+		BRAKES,
+		SUSPENSION,
+		TRANSMISSION,
 		VEHICLE_LSC2,
 		OTHER,//done
 		HIGH,//done
@@ -507,7 +558,7 @@ RGBA *settings_rgba;
 RGBA titlebox = { 0, 0, 0, 255 };
 RGBA BG = { 20, 20, 20, 200 };
 RGBA titletext = { 255, 255, 255, 255 };
-RGBA optiontext = { 128, 128, 128, 255 };
+RGBA optiontext = { 255,255,255, 255 };
 RGBA optioncount = { 255, 255, 255, 255 };
 RGBA selectedtext = { 255, 255, 255, 255 };
 RGBA optionbreaks = { 255, 255, 255, 240 };
@@ -532,9 +583,9 @@ void drawNoBankingWarning() {
 		UI::SET_TEXT_CENTRE(1);
 		UI::SET_TEXT_DROPSHADOW(0, 0, 0, 0, 0);
 		UI::SET_TEXT_EDGE(1, 0, 0, 0, 205);
-		UI::_SET_TEXT_ENTRY("STRING");
+		UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING");
 		UI::_ADD_TEXT_COMPONENT_STRING("~r~IF YOU BANK THE CASH GET FUCKED BY TRUMP :)");
-		UI::_DRAW_TEXT(0.5, 0.15);
+		UI::END_TEXT_COMMAND_DISPLAY_TEXT(0.5, 0.15);
 		}*/
 		else DrawnWarningOnce = 0;
 	}
@@ -546,7 +597,7 @@ void drawNoBankingWarning() {
 DWORD VehicleShootLastTime = 0;
 bool loop_massacre_mode = 0, showfps = 0, loop_gravity_gun = 0, xmasgs = 0, coollights01 = 0, moneyrain01 = 0, bigsmoke01 = 0, cameraflash01 = 0,
 automax = 0, noclip = 0, laghimout = 0, theleecher = 0, rapidfire = 0, speedLimiter = 0, analog_loop = 0, loop_SuperGrip = 0, msCAR_invisible = 0,
-theForceA = 0, awhostalking = 1, amiHOSTl = 0, anticrash3 = 0, vehrpm = 0, crashLobby = 0, loop_RainbowBoxes = 0, oneshotkillv2 = 0, invincible = 0,
+theForceA = 0, awhostalking = 1, amiHOSTl = 0, anticrash3 = 0, vehrpm = 0, crashLobby = 0, loop_RainbowBoxes = 0, oneshotkillv2 = 0, invincible = 0, gModDisabled = 0,
 customComponentA = 0, invisible = 0, opmult = 0, espectateP = 0, setWlevelf = 0, featureVehtaser = 0, mobileRadio = 0, featureVehLight = 0, pinkburstfx01 = 0,
 ffield = 0, fastrun = 0, loop_fuckCam = 0, fastswim = 0, electricfx01 = 0, lightentity = 0, forcefield = 0, bypassduke = 0, bloodfx01 = 0, featureVehballs = 0,
 loop_annoyBomb = 0, infiniteAmmo = 0, loop_gta2cam = 0, earthquake = 0, test2 = 0, tpinspawned = 0, featureVehsnowball = 0, loop_safemoneydrop = 0, loop_safemoneydropv2 = 0, loop_moneydrop = 0,
@@ -704,24 +755,27 @@ namespace
 		UI::SET_TEXT_DROPSHADOW(0, 0, 0, 0, 0);
 		UI::SET_TEXT_EDGE(0, 0, 0, 0, 0);
 		UI::SET_TEXT_OUTLINE();
-	}
+	}			
 	void drawstring(char* text, float X, float Y)
 	{
-		UI::_SET_TEXT_ENTRY("STRING");
+		UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING");
 		UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
-		UI::_DRAW_TEXT(X, Y);
+		UI::END_TEXT_COMMAND_DISPLAY_TEXT(X, Y);
 	}
+
 	void drawinteger(int text, float X, float Y)
 	{
-		UI::_SET_TEXT_ENTRY("NUMBER");
-		UI::ADD_TEXT_COMPONENT_INTEGER(text);
-		UI::_DRAW_TEXT(X, Y);
+		UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("NUMBER");
+		
+			UI::ADD_TEXT_COMPONENT_INTEGER(text);
+		UI::END_TEXT_COMMAND_DISPLAY_TEXT(X, Y);
 	}
 	void drawfloat(float text, DWORD decimal_places, float X, float Y)
 	{
-		UI::_SET_TEXT_ENTRY("NUMBER");
-		UI::ADD_TEXT_COMPONENT_FLOAT(text, decimal_places);
-		UI::_DRAW_TEXT(X, Y);
+		UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("NUMBER");
+		
+			UI::ADD_TEXT_COMPONENT_FLOAT(text, decimal_places);
+		UI::END_TEXT_COMMAND_DISPLAY_TEXT(X, Y);
 	}
 	void PlaySoundFrontend(char* sound_dict, char* sound_name)
 	{
@@ -925,13 +979,13 @@ namespace
 	}
 	void PrintStringBottomCentre(char* text)
 	{
-		//UI::_SET_TEXT_ENTRY_2("STRING");
+		//UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT_2("STRING");
 		//UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
 		//UI::_DRAW_SUBTITLE_TIMED(2000, 1);
 	}
 	void PrintFloatBottomCentre(float text, __int8 decimal_places)
 	{/*
-	 UI::_SET_TEXT_ENTRY_2("NUMBER");
+	 UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT_2("NUMBER");
 	 UI::ADD_TEXT_COMPONENT_FLOAT(text, (DWORD)decimal_places);
 	 UI::_DRAW_SUBTITLE_TIMED(2000, 1);*/
 	}
@@ -1142,7 +1196,7 @@ namespace
 			//	REQUEST_STREAMED_TEXTURE_DICT("commonmenu", 0);
 			//	HAS_STREAMED_TEXTURE_DICT_LOADED("commonmenu");
 			//	DRAW_SPRITE("commonmenu", "interaction_bgd", 0.16f + menuPos, scr_rect_Y, 0.20f, 0.0345f, 0.0f, 255, 255, 255, 225);
-
+			//GRAPHICS::DRAW_SPRITE(")
 			// Draw thin line over scroller indicator rect
 			if (totalop < 14) GRAPHICS::DRAW_RECT(0.16f + menuPos, (float)(totalop)* 0.035f + 0.16f, 0.20f, 0.0022f, 255, 255, 255, 255);
 			else GRAPHICS::DRAW_RECT(0.16f + menuPos, 14.0f * 0.035f + 0.16f, 0.20f, 0.0009f, 255, 255, 255, 255);
@@ -1163,16 +1217,16 @@ namespace
 
 			// Draw option count
 
-			temp = scr_rect_Y - 0.0124f;
+			temp = scr_rect_Y - 0.0124f;		
 			setupdraw();
 			UI::SET_TEXT_FONT(0);
 			UI::SET_TEXT_SCALE(0.0f, 0.26f);
 			UI::SET_TEXT_COLOUR(optioncount.R, optioncount.G, optioncount.B, optioncount.A);
 
-			UI::_SET_TEXT_ENTRY("CM_ITEM_COUNT");
+			UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("CM_ITEM_COUNT");
 			UI::ADD_TEXT_COMPONENT_INTEGER(currentop); // ! currentop_w_breaks
 			UI::ADD_TEXT_COMPONENT_INTEGER(totalop); // ! totalop - totalbreaks
-			UI::_DRAW_TEXT(0.2205f + menuPos, temp);
+			UI::END_TEXT_COMMAND_DISPLAY_TEXT(0.2205f + menuPos, temp);
 		}
 
 		static void optionhi()
@@ -1293,19 +1347,19 @@ namespace
 	}
 	bool CheckRPressed()
 	{
-		if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(2, INPUT_FRONTEND_RIGHT) || IsKeyDown(VK_NUMPAD6)) return true; else return false;
+		if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(2, INPUT_FRONTEND_RIGHT) || IsKeyDown(VK_RIGHT)) return true; else return false;
 	}
 	bool CheckRJPressed()
 	{
-		if (CONTROLS::IS_DISABLED_CONTROL_JUST_PRESSED(2, INPUT_FRONTEND_RIGHT) || IsKeyJustUp(VK_NUMPAD6)) return true; else return false;
+		if (CONTROLS::IS_DISABLED_CONTROL_JUST_PRESSED(2, INPUT_FRONTEND_RIGHT) || IsKeyJustUp(VK_RIGHT)) return true; else return false;
 	}
 	bool CheckLPressed()
 	{
-		if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(2, INPUT_FRONTEND_LEFT) || IsKeyDown(VK_NUMPAD4)) return true; else return false;
+		if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(2, INPUT_FRONTEND_LEFT) || IsKeyDown(VK_LEFT)) return true; else return false;
 	}
 	bool CheckLJPressed()
 	{
-		if (CONTROLS::IS_DISABLED_CONTROL_JUST_PRESSED(2, INPUT_FRONTEND_LEFT) || IsKeyJustUp(VK_NUMPAD4)) return true; else return false;
+		if (CONTROLS::IS_DISABLED_CONTROL_JUST_PRESSED(2, INPUT_FRONTEND_LEFT) || IsKeyJustUp(VK_LEFT)) return true; else return false;
 	}
 	bool IsOptionPressed()
 	{
@@ -1601,22 +1655,28 @@ namespace
 }
 namespace sub {
 
+	bool Stealth = 0;
 	bool Shrink = 0;
 	// Define submenus here.
+	
+	//static void NETWORK_EARN_FROM_PICKUP(int amount) { invoke<Void>(0xED1517D3AF17C698, amount); } // 0xED1517D3AF17C698 0x70A0ED62
+	
 	void MainMenu()
 	{
+		//AddOption("THING", null, thing);
 		//Add To Auth Premium/ VIP
 		bool ShrinkE = 0, ShrinkD = 0;
 		AddTitle("Anonymous");
-
+		//AddToggle("Stealth", stealth);
+		//AddOption("ENTRY THING", null, thing);
 		//ddOption("~g~Name Changer", null, nullFunc, SUB::NAMECHANGER);
-		AddOption("~g~Teleport Locations", null, nullFunc, SUB::TELEPORTLOCATIONS);
-		AddOption("~b~Online Players", null, nullFunc, SUB::ONLINEPLAYERS);
+		AddOption("Teleport Locations", null, nullFunc, SUB::TELEPORTLOCATIONS);
+		AddOption("Online Players", null, nullFunc, SUB::ONLINEPLAYERS);
 		AddOption("All Players", null, nullFunc, SUB::ALLPLAYEROPTIONS);
-		AddOption("~b~Self Mods", null, nullFunc, SUB::SELFMODOPTIONS);
+		AddOption("Self Mods", null, nullFunc, SUB::SELFMODOPTIONS);
 		AddOption("Weapon Mods", null, nullFunc, SUB::WEAPONSMENU);
-		AddOption("~b~Vehicle Spawner", null, nullFunc, SUB::VEHICLE_SPAWNER);
-		AddOption("~b~Vehicle Mods", null, nullFunc, SUB::VEHICLEMODSA);
+		AddOption("Vehicle Spawner", null, nullFunc, SUB::VEHICLE_SPAWNER);
+		AddOption("Vehicle Mods", null, nullFunc, SUB::VEHICLEMODSA);
 		//AddOption("~y~Obj/Ped/Bodyguard Spawner", null, nullFunc, SUB::FORCESPAWNER);
 		//	AddOption("~y~Particle Effects", null, nullFunc, SUB::PARTICLEFX);
 		//AddOption("~y~Gun", null, nullFunc, SUB::FORCEGUN);
@@ -1624,8 +1684,253 @@ namespace sub {
 		if (ShrinkE) PED::SET_PED_CONFIG_FLAG(PLAYER::PLAYER_PED_ID(), 223, 1);
 		if (ShrinkD) PED::SET_PED_CONFIG_FLAG(PLAYER::PLAYER_PED_ID(), 223, 0);
 		//	AddToggle("Freecam", freecam, freecamEnabled, freeCamDisabled);
-		AddOption("~y~Misc Options", null, nullFunc, SUB::SAMPLE);
+		AddOption("Misc Options", null, nullFunc, SUB::SAMPLE);
 	}
+	void drawint(int text, float X, float Y)
+	{
+		UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("NUMBER");
+		UI::ADD_TEXT_COMPONENT_INTEGER(text);
+		UI::END_TEXT_COMMAND_DISPLAY_TEXT(X, Y);
+	}
+	void AddIntEasy(char* text, int value, int &val, int inc = 1, bool fast = 0, bool &toggled = null, bool enableminmax = 0, int max = 0, int min = 0)
+	{
+		null = 0;
+		AddOption(text, null);
+
+		if (OptionY < 0.6325 && OptionY > 0.1425)
+		{
+			UI::SET_TEXT_FONT(0);
+			UI::SET_TEXT_SCALE(0.26f, 0.26f);
+			UI::SET_TEXT_CENTRE(1);
+
+			drawint(value, 0.233f + menuPos, OptionY);
+		}
+
+		if (menu::printingop == menu::currentop)
+		{
+			if (IsOptionRJPressed()) {
+				toggled = 1;
+				if (enableminmax) {
+					if (!((val + inc) > max)) {
+						val += inc;
+					}
+				}
+				else {
+					val += inc;
+				}
+			}
+			else if (IsOptionRPressed()) {
+				toggled = 1;
+				if (enableminmax) {
+					if (!((val + inc) > max)) {
+						val += inc;
+					}
+				}
+				else {
+					val += inc;
+				}
+			}
+			else if (IsOptionLJPressed()) {
+				toggled = 1;
+				if (enableminmax) {
+					if (!((val - inc) < min)) {
+						val -= inc;
+					}
+				}
+				else {
+					val -= inc;
+				}
+			}
+			else if (IsOptionLPressed()) {
+				toggled = 1;
+				if (enableminmax) {
+					if (!((val - inc) < min)) {
+						val -= inc;
+					}
+				}
+				else {
+					val -= inc;
+				}
+			}
+		}
+	}
+	void Liveries() {
+		bool liveryChanged = 0;
+		Ped playerPed = PLAYER::PLAYER_PED_ID();
+		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+		int livery = VEHICLE::GET_VEHICLE_LIVERY(veh);
+		AddIntEasy("Livery", livery, livery, 1, 0, liveryChanged);
+		if (livery > VEHICLE::GET_VEHICLE_LIVERY_COUNT(veh)) livery--;
+		if (livery == -2) livery = -1;
+		if (liveryChanged) {
+			VEHICLE::SET_VEHICLE_LIVERY(veh, livery);
+		}
+	}
+void VehicleLSCSubMenu2(bool useSelectPlayer = 0) {
+	GRAPHICS::REQUEST_STREAMED_TEXTURE_DICT("shopui_title_carmod", 0);
+	GRAPHICS::HAS_STREAMED_TEXTURE_DICT_LOADED("shopui_title_carmod");
+	GRAPHICS::DRAW_SPRITE("shopui_title_carmod", "shopui_title_carmod", 0.16f + menuPos, 0.1175f, 0.20f, 0.083f, 0.0f, 255, 255, 255, 225);
+	bool clan = 0;
+
+
+	bool all = 0, customplate = 0, debug = 0, downGradVeh = 0;
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	if (useSelectPlayer) {
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	}
+
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	Entity e = PLAYER::PLAYER_PED_ID();
+	RequestControlOfEnt(veh);
+	float plateID = VEHICLE::GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(veh);
+	bool turbo = VEHICLE::IS_TOGGLE_MOD_ON(veh, 18), xenon = VEHICLE::IS_TOGGLE_MOD_ON(veh, 22);
+	if (!UI::HAS_THIS_ADDITIONAL_TEXT_LOADED("MOD_MNU", 9)) {
+		UI::REQUEST_ADDITIONAL_TEXT("MOD_MNU", 9);
+	}
+	//AddOption("Print debug label", debug);
+	//if (debug){
+	//	PrintStringBottomCentre(_GET_LABEL_TEXT(keyboard()));
+	//}
+	//bool printWheel = 0;
+	//AddOption("Print Wheel Data", printWheel);
+	//if (printWheel){
+	//	int CurrentMod = GET_VEHICLE_MOD(veh, 23);
+	//	AUTH::DebugConsole();
+	//	int CurrentTrim = 0;
+	//	_GET_INTERIOR_TRIM_COLOR(veh, &CurrentTrim);
+	//	cout << "ID: " << CurrentMod << " -> ";
+	//	cout << "Wheel Label: " << GET_MOD_TEXT_LABEL(veh, 23, CurrentMod) << "\r\n";
+	//	cout << "Interior Trim Color = " << CurrentTrim << "\r\n";
+
+	//	RequestControlOfEnt(veh);
+	//	SET_VEHICLE_MOD_KIT(veh, 0);
+	//	_SET_INTERIOR_TRIM_COLOR(veh, CurrentTrim + 1);
+	//}
+	AddOption("All LSC Paint", null, nullFunc, SUB::GAMEPAINT);
+	AddOption("Benny's", null, nullFunc, SUB::BENNYS);
+	AddOption("Max Upgrades", all);
+	AddOption("Delete All Upgrades", downGradVeh);
+	AddOption("Customize Plate", customplate);
+	//		AddNumberEasy("Plate Type", plateID, 0, plateID);
+		Liveries();
+	AddOption("Change Wheels", null, nullFunc, SUB::CHANGEWHEELS);
+	AddOption("Wheels Color", null, nullFunc, SUB::WHEELCOLOR);
+	AddOption("Armor", null, nullFunc, SUB::ARMOR);
+	AddOption("Engine", null, nullFunc, SUB::ENGINE);
+	AddOption("Transmission", null, nullFunc, SUB::TRANSMISSION);
+	AddOption("Suspension", null, nullFunc, SUB::SUSPENSION);
+	AddOption("Brakes", null, nullFunc, SUB::BRAKES);
+	AddOption("Spoiler", null, nullFunc, SUB::SPOILER);
+	AddToggle("Turbo", turbo);
+	AddToggle(UI::_GET_LABEL_TEXT("CMOD_LGT_1"), xenon);
+	AddOption("Front Bumper", null, nullFunc, SUB::FRONTBUMPER);
+	AddOption("Rear Bumper", null, nullFunc, SUB::REARBUMPER);
+	AddOption("Side Skirt", null, nullFunc, SUB::SIDESKIRT);
+	AddOption("Exhaust", null, nullFunc, SUB::EXHAUST);
+	AddOption("Frame", null, nullFunc, SUB::FRMAE);
+	AddOption("Grille", null, nullFunc, SUB::GRILLE);
+	AddOption("Hood", null, nullFunc, SUB::HOOD);
+	AddOption("Fender", null, nullFunc, SUB::FENDER);
+	AddOption("Right Fender", null, nullFunc, SUB::RIGHTFENDER);
+	AddOption("Roof", null, nullFunc, SUB::ROOF);
+	AddOption("Window Tint", null, nullFunc, SUB::WTINT);
+	AddOption("Neon", null, nullFunc, SUB::NEON);
+	AddOption("Tire Smoke", null, nullFunc, SUB::WHEELSMOKE);
+	AddOption("Vehicle Extras", null, nullFunc, SUB::VEHICLEEXTRA);
+	bool alphaChanged = 0; int alphaValue = ENTITY::GET_ENTITY_ALPHA(veh);
+	//AddIntEasy("Vehicle Alpha", alphaValue, alphaValue, 1, 0, alphaChanged);
+	AddOption("Vehicle Multipliers", null, nullFunc, SUB::VEHMULTIPLIERS);
+	//	AddOption("Add Clan Label", clan);
+	if (clan) {
+		//AddClanLogoToVehicle(veh, PLAYER_PED_ID());//Now it should work better lol
+		PrintStringBottomCentre("~b~Clan Logo Added !");
+	}
+	if (alphaChanged) {
+		RequestControlOfEnt(veh);
+		ENTITY::SET_ENTITY_ALPHA(veh, alphaValue, 1);
+	}
+	//	AddOption("Wheel", null, nullFunc, SUB::WHEEL);
+	//AddOption("Horns", null, nullFunc, SUB::HORNS);
+	BOOL bPlayerExists = ENTITY::DOES_ENTITY_EXIST(PLAYER::PLAYER_PED_ID());
+	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(e, 0);
+	RequestControlOfEnt(veh);
+	VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(veh, plateID);
+	if (customplate) {
+		RequestControlOfEnt(veh);
+		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, keyboard());
+	}
+	RequestControlOfEnt(veh);
+	VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+	VEHICLE::TOGGLE_VEHICLE_MOD(veh, 22, xenon);
+	RequestControlOfEnt(veh);
+	VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+	VEHICLE::TOGGLE_VEHICLE_MOD(veh, 18, turbo);
+	if (all) {
+		RequestControlOfEnt(veh);
+		VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(veh, 1);
+		VEHICLE::TOGGLE_VEHICLE_MOD(veh, 18, 1);
+		VEHICLE::TOGGLE_VEHICLE_MOD(veh, 22, 1);
+		VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, 0);
+		VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(veh, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 0, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 0) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 1, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 1) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 2, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 2) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 3, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 3) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 4, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 4) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 5, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 5) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 6, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 6) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 7, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 7) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 8, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 8) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 9, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 9) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 10, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 10) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 11, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 11) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 12, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 12) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 13, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 13) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 14, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 14) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 15, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 15) - 1, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 16, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 16) - 1, 0);
+		VEHICLE::SET_VEHICLE_WHEEL_TYPE(veh, 6);
+		VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 5);
+		VEHICLE::SET_VEHICLE_MOD(veh, 23, 19, 1);
+
+	}
+	if (downGradVeh) {
+		Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
+		RequestControlOfEnt(veh);
+		VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+		VEHICLE::SET_VEHICLE_COLOURS(veh, 12, 56);
+		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, "HOMO");
+		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(veh, 0);
+		VEHICLE::TOGGLE_VEHICLE_MOD(veh, 18, 0);
+		VEHICLE::TOGGLE_VEHICLE_MOD(veh, 22, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 16, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 12, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 11, 0, 0);
+		VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, true);
+		VEHICLE::SET_VEHICLE_MOD(veh, 14, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 15, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 13, 0, 0);
+		VEHICLE::SET_VEHICLE_WHEEL_TYPE(veh, 0);
+		VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 23, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 0, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 1, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 2, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 3, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 4, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 5, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 6, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 7, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 8, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 9, 0, 0);
+		VEHICLE::SET_VEHICLE_MOD(veh, 10, 0, 0);
+
+	}
+
+
+}
 	void tp()
 	{
 		AddTele("Anti Crash Zone!!", 13954.0f, -14526.0f, 163004.0f);
@@ -1721,7 +2026,7 @@ namespace sub {
 	}
 	void stores()
 	{
-		AddTitle("~y~ROBBERY SPREE");
+		AddTitle("ROBBERY SPREE");
 		AddTele("Go to Store 1", -48.0f, -1756.0f, 29.0f);
 		AddTele("Go to Store 2", 26.0f, -1345.0f, 29.0f);
 		AddTele("Go to Store 3", 1136.0f, -982.0f, 46.0f);
@@ -1880,7 +2185,7 @@ namespace sub {
 		Ped playerPed = PLAYER::PLAYER_PED_ID();
 		BOOL bPlayerExists = ENTITY::DOES_ENTITY_EXIST(playerPed);
 
-		bool gModeEnabled = 0, gModDisabled = 0;
+		bool gModeEnabled = 0;
 		// Options' text here:
 		AddTitle("Self Mods");
 		//	AddOption("- - -Self Options- - -");
@@ -1889,7 +2194,7 @@ namespace sub {
 		//	DrawNotif("Ctrl:Up\nShift:Down\nNumpad 7/1:CSpeed\nW-A-S-D: Move", ICONS::CHAR_MILSITE, ICONTYPE::ICON_NOTHING);
 		//}
 		AddToggle("Off the Radar", offTheRadar);
-		AddOption("~b~Character Customizer", null, nullFunc, SUB::CUSTOMCHARAC);
+		AddOption("Character Customizer", null, nullFunc, SUB::CUSTOMCHARAC);
 		AddOption("Model Changer", null, nullFunc, SUB::SKINCHANGER);
 		AddOption("~b~Animations", null, nullFunc, SUB::PANIMATIONMENU);
 		AddOption("Animation Scenarios", null, nullFunc, SUB::GTASCENIC);
@@ -1897,8 +2202,8 @@ namespace sub {
 		AddOption("~y~Detach All Objects V2", detachAllObjects);
 		//	AddToggle("God Mode", invincible, null, invincibleDisabled);
 		AddToggle("God Mode", invincible, null, gModDisabled);
-		if (invincible) ENTITY::SET_ENTITY_INVINCIBLE(PLAYER::PLAYER_PED_ID(), true);
-		if (gModDisabled) ENTITY::SET_ENTITY_INVINCIBLE(PLAYER::PLAYER_PED_ID(), false);
+		
+
 		AddToggle("No Cops", ms_neverWanted);
 		AddToggle("RP Increaser", ms_rpIncreaser, increaserEnabled);
 		AddToggle("Invisible", ms_invisible, null, invisibleDisabled);
@@ -3511,6 +3816,34 @@ namespace sub {
 			MainPFX.hasCameraFlash = hasCameraFlash;
 		}
 	}
+	void LSCPaintSelector(bool primary = 0, bool secondary = 0) {
+
+		if (primary) {
+			AddTitle("Primary");
+			AddOption("Classic", null, nullFunc, SUB::CLASSIC);
+			AddOption("Metallic", null, nullFunc, SUB::METALLIC);
+			AddOption("Matte", null, nullFunc, SUB::MATTE);
+			AddOption("Metals", null, nullFunc, SUB::METALS);
+			AddOption("Pearlescent", null, nullFunc, SUB::PEARLESCENT);
+		}
+		else if (secondary) {
+			AddTitle("Secondary");
+			AddOption("Classic", null, nullFunc, SUB::SCLASSIC);
+			AddOption("Metallic", null, nullFunc, SUB::SMETALLIC);
+			AddOption("Matte", null, nullFunc, SUB::SMATTE);
+			AddOption("Metals", null, nullFunc, SUB::SMETALS);
+			AddOption("Pearlescent", null, nullFunc, SUB::SPEARLESCENT);
+		}
+		else
+		{
+			AddTitle("LSC Paints");
+			AddOption("Primary", null, nullFunc, SUB::PPAINT);
+			AddOption("Secondary", null, nullFunc, SUB::SPAINT);
+			//AddOption("Custom Primary", null, nullFunc, SUB::PRIMARYRGB);
+			//AddOption("Custom Secondary", null, nullFunc, SUB::SECONDARYRGB);
+		}
+
+	}
 	void PlayerMenu(char* name, Player p) {
 
 
@@ -4044,6 +4377,54 @@ namespace sub {
 
 		ENTITY::ATTACH_ENTITY_TO_ENTITY(attachfire, veh, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1);
 		}*/
+	}
+	void VehicleLSCSubMenu() {
+
+		bool all = 0, customplate = 0;
+		AddTitle("Mobile LSC");
+		AddOption("Paint", null, nullFunc, SUB::VEHICLE_PAINT);
+		AddOption("All Mods", all);
+		AddOption("Customize Plate", customplate);
+		BOOL bPlayerExists = ENTITY::DOES_ENTITY_EXIST(PLAYER::PLAYER_PED_ID());
+		Player player = PLAYER::PLAYER_ID();
+		Ped playerPed = PLAYER::PLAYER_PED_ID();
+		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+		Entity e = PLAYER::PLAYER_PED_ID();
+		Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(e, 0);
+		if (customplate) VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, keyboard());
+		if (all) {
+			VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+			//chrome SET_VEHICLE_COLOURS(veh, 120, 120);
+			VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, "Anonymous");
+			VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+			VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(veh, 1);
+			VEHICLE::TOGGLE_VEHICLE_MOD(veh, 18, 1);
+			VEHICLE::TOGGLE_VEHICLE_MOD(veh, 22, 1);
+			VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, 0);
+			VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(veh, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 0, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 0) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 1, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 1) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 2, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 2) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 3, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 3) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 4, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 4) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 5, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 5) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 6, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 6) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 7, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 7) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 8, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 8) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 9, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 9) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 10, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 10) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 11, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 11) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 12, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 12) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 13, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 13) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 14, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 14) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 15, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 15) - 1, 0);
+			VEHICLE::SET_VEHICLE_MOD(veh, 16, VEHICLE::GET_NUM_VEHICLE_MODS(veh, 16) - 1, 0);
+			VEHICLE::SET_VEHICLE_WHEEL_TYPE(veh, 6);
+			VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 5);
+			VEHICLE::SET_VEHICLE_MOD(veh, 23, 19, 1);
+
+		}
+
 	}
 	void oPlayVehicleOptionsMenu(char* name, Player p) {
 
@@ -5064,21 +5445,47 @@ namespace sub {
 	}
 
 	Vehicle SpawnVehicle(char* modelg, Vector3 coords, bool tpinto = 0, float heading = 0.0f) {
-		DWORD model = GAMEPLAY::GET_HASH_KEY(modelg);
-		if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model)) {
+		//DWORD model = GAMEPLAY::GET_HASH_KEY(modelg);
+		//if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model)) {
+		//	STREAMING::REQUEST_MODEL(model);
+		//	while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
+		//	Vehicle veh = CREATE_VEHICLEB(model, coords.x, coords.y, coords.z, heading, 1, 1);
+		//	VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
+		//	if (tpinto) {
+		//		ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
+		//		PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
+		//	}
+		//	VEHICLE::SET_VEHICLE_IS_STOLEN(veh, 0);
+		//	return veh;
+		//	STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
+		//}
+		Hash model = GAMEPLAY::GET_HASH_KEY(modelg);
+		if (STREAMING::IS_MODEL_VALID(model))
+		{
 			STREAMING::REQUEST_MODEL(model);
 			while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
-			Vehicle veh = CREATE_VEHICLEB(model, coords.x, coords.y, coords.z, heading, 1, 1);
+			Vector3 ourCoords = ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), false);
+			float forward = 5.f;
+			float heading = ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID());
+			float xVector = forward * sin(degToRad(heading)) * -1.f;
+			float yVector = forward * cos(degToRad(heading));
+			Vehicle veh = VEHICLE::CREATE_VEHICLE(model, ourCoords.x + xVector, ourCoords.y + yVector, ourCoords.z, heading, true, true);
+			RequestControlOfEnt(veh);
+			VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, true);
 			VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
+			DECORATOR::DECOR_SET_INT(veh, "MPBitset", 0);
+			auto networkId = NETWORK::VEH_TO_NET(veh);
+			//ENTITY::_SET_ENTITY_REGISTER(veh, true);
 			if (tpinto) {
 				ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
 				PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
 			}
-			VEHICLE::SET_VEHICLE_IS_STOLEN(veh, 0);
-			return veh;
+			if (NETWORK::NETWORK_GET_ENTITY_IS_NETWORKED(veh))
+				NETWORK::SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(networkId, true);
+			
+			WAIT(150);
 			STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
 		}
-
 	}
 
 	void VehicleSpawner() {
@@ -5362,7 +5769,6 @@ void oPlayerOptMenu(char* name, Player p) {
 		VEHICLE::SET_VEHICLE_MOD(vehID, 23, 19, 1);
 		PrintStringBottomCentre("Spawned maxed out Vehicle");
 	}
-
 
 }
 void AddCarSpawn(char* text, LPCSTR name, bool &extra_option_code = null)
@@ -6610,6 +7016,2242 @@ void oPlayerDROPMenu(char* name, Player p) {
 
 
 }
+
+void drawEquippedIcon(float x, float y) {
+	GRAPHICS::DRAW_SPRITE("CommonMenu", "shop_garage_icon_b", x, y, 0.032, 0.0440, 0, 255, 255, 255, 255);
+}
+void AddVehicleMod(Vehicle veh, int modType, int modIndex, bool horn = 0, bool equipped = 0, bool stock = 0, char* customName = "") {
+	null = 0;
+	int maxMods = VEHICLE::GET_NUM_VEHICLE_MODS(veh, modIndex);
+	float mod = VEHICLE::GET_VEHICLE_MOD(veh, modIndex);
+	/*if (horn) {
+		AddOption(UI::_GET_LABEL_TEXT(TheHorns[modIndex]), null);
+	}*/
+	if (stock) {
+		AddOption("Stock", null);
+	}
+	else {
+		if (modType == 11) {
+			AddOption(UI::_GET_LABEL_TEXT(customName), null);
+		}
+		else if (modType == 13) {
+			ostringstream oss;
+			oss << "CMOD_GBX_" << modIndex + 1;
+			AddOption(UI::_GET_LABEL_TEXT((char*)oss.str().c_str()), null);
+		}
+		else if (modType == 16) {
+			ostringstream oss;
+			oss << "CMOD_ARM_" << modIndex + 1;
+			AddOption(UI::_GET_LABEL_TEXT((char*)oss.str().c_str()), null);
+		}
+		else if (modType == 15) {
+			ostringstream oss;
+			oss << "CMOD_SUS_" << modIndex + 1;
+			AddOption(UI::_GET_LABEL_TEXT((char*)oss.str().c_str()), null);
+		}
+		else if (modType == 12) {
+			ostringstream oss;
+			oss << "CMOD_BRA_" << modIndex + 1;
+			AddOption(UI::_GET_LABEL_TEXT((char*)oss.str().c_str()), null);
+		}
+		else {
+			AddOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_MOD_TEXT_LABEL(veh, modType, modIndex)), null);
+		}
+	}
+	if (OptionY < 0.6325 && OptionY > 0.1425)
+	{
+		if (equipped) {
+			RequestControlOfEnt(veh);
+			VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+			drawEquippedIcon(0.243f + menuPos, OptionY + 0.0170f);
+		}
+	}
+	if (menu::printingop == menu::currentop)
+	{
+		if (null) {
+			RequestControlOfEnt(veh);
+			VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+			if (!stock) {
+				RequestControlOfEnt(veh);
+				VEHICLE::SET_VEHICLE_MOD(veh, modType, modIndex, 0);
+			}
+			else {
+				RequestControlOfEnt(veh);
+				RequestControlOfEnt(veh);
+				VEHICLE::SET_VEHICLE_MOD(veh, modType, 500, 0);//Out of range -> Stock
+			}
+		}
+	}
+}
+void Spoiler(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	AddTitle("Spoiler");
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 0);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 0);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 0, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 0, 101, 0, 1, 1);
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 0, i);
+		else
+			AddVehicleMod(veh, 0, i, 0, 1);
+	}
+}
+void FrontBumper(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 1);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 1);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 1, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 1, 101, 0, 1, 1);
+	AddTitle("Front Bumper");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 1, i);
+		else
+			AddVehicleMod(veh, 1, i, 0, 1);
+	}
+}
+void RearBumper(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 2);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 2);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 2, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 2, 101, 0, 1, 1);
+	AddTitle("Rear Bumper");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 2, i);
+		else
+			AddVehicleMod(veh, 2, i, 0, 1);
+	}
+}
+void SideSkirt(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 3);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 3);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 3, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 3, 101, 0, 1, 1);
+	AddTitle("Side Skirt");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 3, i);
+		else
+			AddVehicleMod(veh, 3, i, 0, 1);
+	}
+}
+void Exhaust(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 4);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 4);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 4, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 4, 101, 0, 1, 1);
+	AddTitle("Exhaust");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 4, i);
+		else
+			AddVehicleMod(veh, 4, i, 0, 1);
+	}
+}
+void Frame(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 5);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 5);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 5, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 5, 101, 0, 1, 1);
+	AddTitle("Frame");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 5, i);
+		else
+			AddVehicleMod(veh, 5, i, 0, 1);
+	}
+}
+void Grille(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 6);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 6);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 6, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 6, 101, 0, 1, 1);
+	AddTitle("Grille");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 6, i);
+		else
+			AddVehicleMod(veh, 6, i, 0, 1);
+	}
+}
+void Hood(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 7);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 7);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 7, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 7, 101, 0, 1, 1);
+	AddTitle("Hood");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 7, i);
+		else
+			AddVehicleMod(veh, 7, i, 0, 1);
+	}
+}
+void Fender(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 8);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 8);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 8, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 8, 101, 0, 1, 1);
+	AddTitle("Fender");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 8, i);
+		else
+			AddVehicleMod(veh, 8, i, 0, 1);
+	}
+}
+void RightFender(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 9);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 9);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 9, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 9, 101, 0, 1, 1);
+	AddTitle("Right Fender");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 9, i);
+		else
+			AddVehicleMod(veh, 9, i, 0, 1);
+	}
+}
+void Roof(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 10);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 10);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 10, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 10, 101, 0, 1, 1);
+	AddTitle("Roof");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 10, i);
+		else
+			AddVehicleMod(veh, 10, i, 0, 1);
+	}
+}
+void Engine(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 11);
+
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 11);
+	AddTitle("Engine");
+	if (currentMod < 10)
+		AddVehicleMod(veh, 11, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 11, 101, 0, 1, 1);
+	if (currentMod != 0)
+		AddVehicleMod(veh, 11, 0, 0, 0, 0, "CMOD_ENG_2");
+	else
+		AddVehicleMod(veh, 11, 1, 0, 1, 0, "CMOD_ENG_2");
+	if (currentMod != 1)
+		AddVehicleMod(veh, 11, 1, 0, 0, 0, "CMOD_ENG_3");
+	else
+		AddVehicleMod(veh, 11, 2, 0, 1, 0, "CMOD_ENG_3");
+	if (currentMod != 2)
+		AddVehicleMod(veh, 11, 2, 0, 0, 0, "CMOD_ENG_4");
+	else
+		AddVehicleMod(veh, 11, 2, 0, 1, 0, "CMOD_ENG_4");
+	if (currentMod != 3)
+		AddVehicleMod(veh, 11, 3, 0, 0, 0, "CMOD_ENG_5");
+	else
+		AddVehicleMod(veh, 11, 2, 0, 1, 0, "CMOD_ENG_5");
+}
+void Brakes(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 12);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 12);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 12, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 12, 101, 0, 1, 1);
+	AddTitle("Brakes");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 12, i);
+		else
+			AddVehicleMod(veh, 12, i, 0, 1);
+	}
+}
+void Transmission(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 13);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 13);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 13, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 13, 101, 0, 1, 1);
+	AddTitle("Transmission");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 13, i);
+		else
+			AddVehicleMod(veh, 13, i, 0, 1);
+	}
+}
+std::string FloatToString(float flt) {
+	std::ostringstream ss;
+	ss << flt;
+	std::string str(ss.str());
+	return str;
+}
+void drawint(int text, float X, float Y)
+{
+	UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("NUMBER");
+	UI::ADD_TEXT_COMPONENT_INTEGER(text);
+	UI::END_TEXT_COMMAND_DISPLAY_TEXT(X, Y);
+}
+void AddIntEasy(char* text, int value, int &val, int inc = 1, bool fast = 0, bool &toggled = null, bool enableminmax = 0, int max = 0, int min = 0)
+{
+	null = 0;
+	AddOption(text, null);
+
+	if (OptionY < 0.6325 && OptionY > 0.1425)
+	{
+		UI::SET_TEXT_FONT(0);
+		UI::SET_TEXT_SCALE(0.26f, 0.26f);
+		UI::SET_TEXT_CENTRE(1);
+
+		drawint(value, 0.233f + menuPos, OptionY);
+	}
+
+	if (menu::printingop == menu::currentop)
+	{
+		if (IsOptionRJPressed()) {
+			toggled = 1;
+			if (enableminmax) {
+				if (!((val + inc) > max)) {
+					val += inc;
+				}
+			}
+			else {
+				val += inc;
+			}
+		}
+		else if (IsOptionRPressed()) {
+			toggled = 1;
+			if (enableminmax) {
+				if (!((val + inc) > max)) {
+					val += inc;
+				}
+			}
+			else {
+				val += inc;
+			}
+		}
+		else if (IsOptionLJPressed()) {
+			toggled = 1;
+			if (enableminmax) {
+				if (!((val - inc) < min)) {
+					val -= inc;
+				}
+			}
+			else {
+				val -= inc;
+			}
+		}
+		else if (IsOptionLPressed()) {
+			toggled = 1;
+			if (enableminmax) {
+				if (!((val - inc) < min)) {
+					val -= inc;
+				}
+			}
+			else {
+				val -= inc;
+			}
+		}
+	}
+}
+void AddVehicleHorn(Vehicle veh, int hornID, bool stock) {
+	//null = 0;
+	//int modid = GetModIdForHorn(hornID);
+	//bool equipped = (modid == VEHICLE::GET_VEHICLE_MOD(veh, 14));
+
+	//if (stock) {
+	//	AddOption(UI::_GET_LABEL_TEXT("CMOD_HRN_0"), null);
+	//}
+	//else {
+
+	//	AddOption(UI::_GET_LABEL_TEXT(HornById(hornID)), null);
+	//}
+
+	//if (OptionY < 0.6325 && OptionY > 0.1425)
+	//{
+	//	if (equipped) {
+	//		PrintStringBottomCentre((char*)string("Mod ID" + FloatToString(VEHICLE::GET_VEHICLE_MOD(veh, 14)) + "HornID" + FloatToString(hornID)).c_str());
+	//		drawEquippedIcon(0.243f + menuPos, OptionY + 0.0170f);
+	//	}
+	//}
+	//if (menu::printingop == menu::currentop)
+	//{
+	//	if (null) {
+	//		RequestControlOfEnt(veh);
+	//		VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+	//		if (stock)
+	//			VEHICLE::SET_VEHICLE_MOD(veh, 14, -1, 0); // Out of range -> Stock
+	//		else
+	//			VEHICLE::SET_VEHICLE_MOD(veh, 14, modid, 0);
+	//	}
+	//}
+}
+void Horns(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 14);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 14);
+	AddTitle("Horns");
+	AddVehicleHorn(veh, -1, 1);
+	for (int i = 0; i < 36; i++) {
+		AddVehicleHorn(veh, i, 0);
+	}
+}
+void Suspension(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 15);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 15);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 15, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 15, 101, 0, 1, 1);
+	AddTitle("Suspension");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 15, i);
+		else
+			AddVehicleMod(veh, 15, i, 0, 1);
+	}
+}
+void Armor(bool useSelectedPlayer = 0) {
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	if (useSelectedPlayer) {
+		RequestControlOfEnt(veh);
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		RequestControlOfEnt(playerPed);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	}
+	Entity e = playerPed;
+	RequestControlOfEnt(veh);
+	float maxMod = VEHICLE::GET_NUM_VEHICLE_MODS(veh, 16);
+	float currentMod = VEHICLE::GET_VEHICLE_MOD(veh, 16);
+	if (currentMod < 10)
+		AddVehicleMod(veh, 16, 101, 0, 0, 1);
+	else
+		AddVehicleMod(veh, 16, 101, 0, 1, 1);
+	AddTitle("Armor");
+	for (int i = 0; i < maxMod; i++) {
+		if (currentMod != i)
+			AddVehicleMod(veh, 16, i);
+		else
+			AddVehicleMod(veh, 16, i, 0, 1);
+	}
+}
+void WindowsTint(bool useSelectedPlayer) {//CMOD_WIN_1
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	if (useSelectedPlayer) playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	bool none = 0, stock = 0, pb = 0, dm = 0, ds = 0, lm = 0, limo = 0, green = 0;
+	AddTitle("Windows Tint");
+	AddOption("None", none);
+	AddOption("Stock", stock);
+	AddOption("Pure Black", pb);
+	AddOption("Dark Smoke", dm);
+	AddOption("Light Smoke", lm);
+	AddOption("Limo", limo);
+	AddOption("Green", green);
+	RequestControlOfEnt(veh);
+	if (none) VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 0);
+	if (pb) VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 1);
+	if (ds) VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 2);
+	if (lm) VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 3);
+	if (stock) VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 4);
+	if (limo) VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 5);
+	if (green) VEHICLE::SET_VEHICLE_WINDOW_TINT(veh, 6);
+
+}
+bool neon = 0;
+int nr = 0, ng = 0, nb = 0;
+void Neon(bool useSelectedPlayer = 0) {
+	bool blackp = 0, whitep = 0, yellowp = 0, greenp = 0, redp = 0, greyp = 0, bluep = 0, orangep = 0, pinkp = 0, purplep = 0, brownp = 0;
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	Entity e = PLAYER::PLAYER_PED_ID();
+	if (useSelectedPlayer) {
+		player = selPlayer;
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+		e = PLAYER::PLAYER_PED_ID();
+	}
+	RequestControlOfEnt(veh);
+	VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+	AddTitle("Neon lights");
+	AddToggle("Rainbow Neon", loop_rainbowneon);
+	AddToggle("Enabled", neon);
+	if (neon || loop_rainbowneon) {
+		RequestControlOfEnt(veh);
+		VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(veh, 0, 1);
+		VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(veh, 1, 1);
+		VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(veh, 2, 1);
+		VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(veh, 3, 1);
+	}
+	else {
+		RequestControlOfEnt(veh);
+		VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(veh, 0, 0);
+		VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(veh, 1, 0);
+		VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(veh, 2, 0);
+		VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(veh, 3, 0);
+	}
+	AddOption("Black", blackp);
+	AddOption("White", whitep);
+	AddOption("Red", redp);
+	AddOption("Green", greenp);
+	AddOption("Blue", bluep);
+	AddOption("Orange", orangep);
+	AddOption("Yellow", yellowp);
+	AddOption("Grey", greyp);
+	AddOption("Brown", brownp);
+	AddOption("Purple", purplep);//yellow-orange
+	AddOption("Pink", pinkp);
+	RequestControlOfEnt(veh);
+	if (blackp)VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 0, 0, 0);
+	if (whitep) VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 255, 255, 255);
+	if (redp) VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 255, 0, 0);
+	if (greenp)VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 0, 255, 0);
+	if (bluep) VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 0, 0, 255);
+	if (orangep)VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 255, 128, 0);
+	if (yellowp)VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 255, 255, 0);
+	if (purplep) VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 204, 0, 204);
+	if (greyp) VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 96, 96, 96);
+	if (brownp) VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 165, 42, 42);
+	if (pinkp) VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, 255, 51, 255);
+	VEHICLE::_GET_VEHICLE_NEON_LIGHTS_COLOUR(veh, &nr, &ng, &nb);
+	AddIntEasy("Red", nr, nr, 1, true, null, true, 255, 0);
+	AddIntEasy("Green", ng, ng, 1, true, null, true, 255, 0);
+	AddIntEasy("Blue", nb, nb, 1, true, null, true, 255, 0);
+	RequestControlOfEnt(veh);
+	if (!loop_rainbowneon)VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, nr, ng, nb);
+
+
+
+}
+
+void TireSmoke(bool useSelectedPlayer = 0) {
+	AddTitle("Tire Smoke");
+
+	bool blackp = 0, whitep = 0, yellowp = 0, greenp = 0, redp = 0, greyp = 0, bluep = 0, orangep = 0, pinkp = 0, purplep = 0, brownp = 0;
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 1);
+	Entity e = PLAYER::PLAYER_PED_ID();
+	if (useSelectedPlayer) {
+		playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 1);
+		e = PLAYER::PLAYER_PED_ID();
+	}
+	RequestControlOfEnt(veh);
+	VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+	int tr = 0, tg = 0, tb = 0;
+	bool wrr = VEHICLE::IS_TOGGLE_MOD_ON(veh, 20);
+	AddToggle("Enbaled", wrr);
+	if (wrr)
+		VEHICLE::TOGGLE_VEHICLE_MOD(veh, 20, 1);
+	else
+		VEHICLE::TOGGLE_VEHICLE_MOD(veh, 20, 0);
+	AddOption("Black", blackp);
+	AddOption("White", whitep);
+	AddOption("Red", redp);
+	AddOption("Green", greenp);
+	AddOption("Blue", bluep);
+	AddOption("Orange", orangep);
+	AddOption("Yellow", yellowp);
+	AddOption("Grey", greyp);
+	AddOption("Brown", brownp);
+	AddOption("Purple", purplep);//yellow-orange
+	AddOption("Pink", pinkp);
+	RequestControlOfEnt(veh);
+	if (blackp) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 0, 0, 0);
+	if (whitep) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 255, 255, 255);
+	if (redp) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 255, 0, 0);
+	if (greenp) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 0, 255, 0);
+	if (bluep) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 0, 0, 255);
+	if (orangep) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 255, 128, 0);
+	if (yellowp)VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 255, 255, 0);
+	if (purplep) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 204, 0, 204);
+	if (greyp) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 96, 96, 96);
+	if (brownp) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 165, 42, 42);
+	if (pinkp) VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, 255, 51, 255);
+	VEHICLE::GET_VEHICLE_TYRE_SMOKE_COLOR(veh, &tr, &tg, &tb);
+	AddIntEasy("Red", tr, tr, 1, true, null, true, 255, 0);
+	AddIntEasy("Green", tg, tg, 1, true, null, true, 255, 0);
+	AddIntEasy("Blue", tb, tb, 1, true, null, true, 255, 0);
+	RequestControlOfEnt(veh);
+	VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(veh, tr, tg, tb);
+}
+void AddVehicleWheel(Vehicle veh, char* wheelLabel, int wheelType, int wheelIndex) {
+	null = 0;
+	RequestControlOfEnt(veh);
+	AddOption(UI::_GET_LABEL_TEXT(wheelLabel), null);
+	RequestControlOfEnt(veh);
+	RequestControlOfEnt(veh);
+	int equipped = VEHICLE::GET_VEHICLE_MOD(veh, 23);
+	int currentType = VEHICLE::GET_VEHICLE_WHEEL_TYPE(veh);
+	if (wheelType == currentType && equipped == wheelIndex) {
+		if (wheelIndex < 14) {
+			drawEquippedIcon(0.243f + menuPos, OptionY + 0.0170f);
+		}
+		else {
+			if (menu::currentop >= wheelIndex + 1) {
+				drawEquippedIcon(0.243f + menuPos, OptionY + 0.0170f);
+			}
+		}
+	}
+	if (menu::printingop == menu::currentop)
+	{
+		if (null) {
+			RequestControlOfEnt(veh);
+			RequestControlOfEnt(veh);
+			VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+			RequestControlOfEnt(veh);
+			VEHICLE::SET_VEHICLE_WHEEL_TYPE(veh, wheelType);
+			RequestControlOfEnt(veh);
+			VEHICLE::SET_VEHICLE_MOD(veh, 23, wheelIndex, 0);
+		}
+	}
+}
+void Wheels(bool wheel = 0, int wheelType = -1, bool useSelectedPlayer = 0) {
+	Player player;
+	Ped playerPed;
+	Vehicle veh;
+	Entity e;
+	if (!useSelectedPlayer) {
+		player = PLAYER::PLAYER_ID();
+		playerPed = PLAYER::PLAYER_PED_ID();
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+		e = PLAYER::PLAYER_PED_ID();
+	}
+	else {
+		player = PLAYER::PLAYER_ID();
+		playerPed = PLAYER::PLAYER_PED_ID();
+		veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+		e = PLAYER::PLAYER_PED_ID();
+	}
+	RequestControlOfEnt(veh);
+	bool custom = VEHICLE::GET_VEHICLE_MOD_VARIATION(veh, 23);//SET_VEHICLE_MOD WHEEL VARIATION
+	bool bulletproof = VEHICLE::GET_VEHICLE_TYRES_CAN_BURST(veh);
+	bool customDisabled = 0, bulletproofDisabled = 0;
+	bulletproof = !bulletproof;
+	RequestControlOfEnt(playerPed);
+	if (!PED::IS_PED_ON_ANY_BIKE(playerPed)) {
+		if (wheel && wheelType == -1) {
+			AddTitle("Wheel Type Selector");
+		//	AddOption("Tire Design", null, nullFunc, SUB::WHEELSTRIPE);
+			//AddOption(_GET_LABEL_TEXT("CMOD_WHE1_0"), null, nullFunc, SUB::WBIKE);
+			AddToggle(UI::_GET_LABEL_TEXT("CMOD_TYR_1"), custom, null, customDisabled);
+			AddToggle(UI::_GET_LABEL_TEXT("CMOD_TYR_2"), bulletproof, null, bulletproofDisabled);
+			if (custom) {
+				RequestControlOfEnt(veh);
+				int wheelID = VEHICLE::GET_VEHICLE_MOD(veh, 23);
+				VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+				VEHICLE::SET_VEHICLE_MOD(veh, 23, wheelID, 1);
+			}
+			else if (customDisabled) {
+				RequestControlOfEnt(veh);
+				int wheelID = VEHICLE::GET_VEHICLE_MOD(veh, 23);
+				VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+				VEHICLE::SET_VEHICLE_MOD(veh, 23, wheelID, 0);
+			}
+			if (bulletproof) {
+				RequestControlOfEnt(veh);
+				VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, 0);
+				VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(veh, 0);
+			}
+			else if (bulletproofDisabled) {
+				RequestControlOfEnt(veh);
+				VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, 1);
+				VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(veh, 1);
+			}
+			AddOption(UI::_GET_LABEL_TEXT("CMOD_WHE1_1"), null, nullFunc, SUB::WHIGHEND);
+			AddOption(UI::_GET_LABEL_TEXT("CMOD_WHE1_2"), null, nullFunc, SUB::WLOWRIDER);
+			AddOption(UI::_GET_LABEL_TEXT("CMOD_WHE1_3"), null, nullFunc, SUB::WMUSCLE);
+			AddOption(UI::_GET_LABEL_TEXT("CMOD_WHE1_4"), null, nullFunc, SUB::WOFFROAD);
+			AddOption(UI::_GET_LABEL_TEXT("CMOD_WHE1_5"), null, nullFunc, SUB::WSPORT);
+			AddOption(UI::_GET_LABEL_TEXT("CMOD_WHE1_6"), null, nullFunc, SUB::WSUV);
+			AddOption(UI::_GET_LABEL_TEXT("CMOD_WHE1_7"), null, nullFunc, SUB::WTUNER);
+			AddOption(UI::_GET_LABEL_TEXT("CMOD_WHE1_8"), null, nullFunc, SUB::WBENNY);
+		}
+		else if (wheel && wheelType > -1) {
+			ostringstream oss;
+			oss << "CMOD_WHE1_" << wheelType;
+			AddTitle(UI::_GET_LABEL_TEXT((char*)oss.str().c_str()));
+			Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
+			if (wheelType == 5) {
+				for (int i = 1; i <= 25; i++) {
+					ostringstream wLabel;
+					if (i < 10) wLabel << "SPT_0" << i;
+					else wLabel << "SPT_" << i;
+					RequestControlOfEnt(veh);
+					AddVehicleWheel(veh, (char*)wLabel.str().c_str(), 0, i - 1);
+				}
+			}
+			else if (wheelType == 1) {
+				for (int i = 1; i <= 20; i++) {
+					ostringstream wLabel;
+					if (i < 10) wLabel << "HIEND_0" << i;
+					else wLabel << "HIEND_" << i;
+					RequestControlOfEnt(veh);
+					AddVehicleWheel(veh, (char*)wLabel.str().c_str(), 7, i - 1);
+				}
+			}
+			else if (wheelType == 2) {
+				for (int i = 1; i <= 15; i++) {
+					ostringstream wLabel;
+					if (i < 10) wLabel << "LORIDE_0" << i;
+					else wLabel << "LORIDE_" << i;
+					RequestControlOfEnt(veh);
+					AddVehicleWheel(veh, (char*)wLabel.str().c_str(), 2, i - 1);
+				}
+			}
+			else if (wheelType == 3) {
+				for (int i = 1; i <= 18; i++) {
+					ostringstream wLabel;
+					if (i < 10) wLabel << "MUSC_0" << i;
+					else wLabel << "MUSC_" << i;
+					RequestControlOfEnt(veh);
+					AddVehicleWheel(veh, (char*)wLabel.str().c_str(), 1, i - 1);
+				}
+			}
+			else if (wheelType == 4) {
+				for (int i = 1; i <= 10; i++) {
+					ostringstream wLabel;
+					if (i < 10) wLabel << "OFFR_0" << i;
+					else wLabel << "OFFR_" << i;
+					RequestControlOfEnt(veh);
+					AddVehicleWheel(veh, (char*)wLabel.str().c_str(), 4, i - 1);
+				}
+			}
+			else if (wheelType == 6) {
+				for (int i = 1; i <= 20; i++) {
+					ostringstream wLabel;
+					if (i < 10) wLabel << "SUV_0" << i;
+					else wLabel << "SUV_" << i;
+					RequestControlOfEnt(veh);
+					AddVehicleWheel(veh, (char*)wLabel.str().c_str(), 3, i - 1);
+				}
+			}
+			else if (wheelType == 7) {
+				for (int i = 1; i <= 24; i++) {
+					ostringstream wLabel;
+					if (i < 10) wLabel << "DRFT_0" << i;
+					else wLabel << "DRFT_" << i;
+					RequestControlOfEnt(veh);
+					AddVehicleWheel(veh, (char*)wLabel.str().c_str(), 5, i - 1);
+				}
+			}
+			else if (wheelType == 8) {
+				for (int i = 1; i <= 31; i++) {
+					ostringstream wLabel;
+					wLabel << "SMOD_WHL" << i;
+					RequestControlOfEnt(veh);
+					AddVehicleWheel(veh, (char*)wLabel.str().c_str(), 8, i - 1);
+				}
+			}
+		}
+	}
+}
+bool SetPaint(int PaintID, char* &gameName, int &paintType, int &colorID, int &pearlescent) {
+	paintType = -1;
+	colorID = -1;
+	pearlescent = -1;
+	switch (PaintID) {
+	case 0:
+		gameName = "BR BLACK_STEEL";
+		paintType = 3;
+		colorID = 118;
+		pearlescent = 3;
+		break;
+	case 1:
+		gameName = "BLACK_GRAPHITE";
+		paintType = 0;
+		colorID = 147;
+		pearlescent = 4;
+		break;
+	case 2:
+		gameName = "CHOCOLATE_BROWN";
+		paintType = 1;
+		colorID = 96;
+		pearlescent = 0;
+		break;
+	case 3:
+		gameName = "PURPLE";
+		paintType = 0;
+		colorID = 71;
+		pearlescent = 145;
+		break;
+	case 4:
+		gameName = "HOT PINK";
+		paintType = 0;
+		colorID = 135;
+		pearlescent = 135;
+		break;
+	case 5:
+		gameName = "FORMULA_RED";
+		paintType = 0;
+		colorID = 29;
+		pearlescent = 28;
+		break;
+	case 6:
+		gameName = "BLUE";
+		paintType = 0;
+		colorID = 64;
+		pearlescent = 68;
+		break;
+	case 7:
+		gameName = "ULTRA_BLUE";
+		paintType = 1;
+		colorID = 70;
+		pearlescent = 0;
+		break;
+	case 8:
+		gameName = "RACING_GREEN";
+		paintType = 1;
+		colorID = 50;
+		pearlescent = 0;
+		break;
+	case 9:
+		gameName = "LIME_GREEN";
+		paintType = 2;
+		colorID = 55;
+		pearlescent = 0;
+		break;
+	case 10:
+		gameName = "RACE_YELLOW";
+		paintType = 1;
+		colorID = 89;
+		pearlescent = 0;
+		break;
+	case 11:
+		gameName = "ORANGE";
+		paintType = 1;
+		colorID = 38;
+		pearlescent = 0;
+		break;
+	case 12:
+		gameName = "GOLD";
+		paintType = 0;
+		colorID = 37;
+		pearlescent = 106;
+		break;
+	case 13:
+		gameName = "SILVER";
+		paintType = 0;
+		colorID = 4;
+		pearlescent = 111;
+		break;
+	case 14:
+		gameName = "CHROME";
+		paintType = 4;
+		colorID = 120;
+		pearlescent = 0;
+		break;
+	case 15:
+		gameName = "WHITE";
+		paintType = 1;
+		colorID = 111;
+		pearlescent = 0;
+		break;
+	case 16:
+		gameName = "BLACK";
+		paintType = 0;
+		colorID = 0;
+		pearlescent = 10;
+		break;
+	case 17:
+		gameName = "GRAPHITE";
+		paintType = 0;
+		colorID = 1;
+		pearlescent = 5;
+		break;
+	case 18:
+		gameName = "ANTHR_BLACK";
+		paintType = 0;
+		colorID = 11;
+		pearlescent = 2;
+		break;
+	case 19:
+		gameName = "BLACK_STEEL";
+		paintType = 0;
+		colorID = 2;
+		pearlescent = 5;
+		break;
+	case 20:
+		gameName = "DARK_SILVER";
+		paintType = 0;
+		colorID = 3;
+		pearlescent = 6;
+		break;
+	case 21:
+		gameName = "BLUE_SILVER";
+		paintType = 0;
+		colorID = 5;
+		pearlescent = 111;
+		break;
+	case 22:
+		gameName = "ROLLED_STEEL";
+		paintType = 0;
+		colorID = 6;
+		pearlescent = 4;
+		break;
+	case 23:
+		gameName = "SHADOW_SILVER";
+		paintType = 0;
+		colorID = 7;
+		pearlescent = 5;
+		break;
+	case 24:
+		gameName = "STONE_SILVER";
+		paintType = 0;
+		colorID = 8;
+		pearlescent = 5;
+		break;
+	case 25:
+		gameName = "MIDNIGHT_SILVER";
+		paintType = 0;
+		colorID = 9;
+		pearlescent = 7;
+		break;
+	case 26:
+		gameName = "CAST_IRON_SIL";
+		paintType = 0;
+		colorID = 10;
+		pearlescent = 7;
+		break;
+	case 27:
+		gameName = "RED";
+		paintType = 0;
+		colorID = 27;
+		pearlescent = 36;
+		break;
+	case 28:
+		gameName = "TORINO_RED";
+		paintType = 0;
+		colorID = 28;
+		pearlescent = 28;
+		break;
+	case 29:
+		gameName = "LAVA_RED";
+		paintType = 0;
+		colorID = 150;
+		pearlescent = 42;
+		break;
+	case 30:
+		gameName = "BLAZE_RED";
+		paintType = 0;
+		colorID = 30;
+		pearlescent = 36;
+		break;
+	case 31:
+		gameName = "GRACE_RED";
+		paintType = 0;
+		colorID = 31;
+		pearlescent = 27;
+		break;
+	case 32:
+		gameName = "GARNET_RED";
+		paintType = 0;
+		colorID = 32;
+		pearlescent = 25;
+		break;
+	case 33:
+		gameName = "SUNSET_RED";
+		paintType = 0;
+		colorID = 33;
+		pearlescent = 47;
+		break;
+	case 34:
+		gameName = "CABERNET_RED";
+		paintType = 0;
+		colorID = 34;
+		pearlescent = 47;
+		break;
+	case 35:
+		gameName = "WINE_RED";
+		paintType = 0;
+		colorID = 143;
+		pearlescent = 31;
+		break;
+	case 36:
+		gameName = "CANDY_RED";
+		paintType = 0;
+		colorID = 35;
+		pearlescent = 25;
+		break;
+	case 37:
+		gameName = "PINK";
+		paintType = 0;
+		colorID = 137;
+		pearlescent = 3;
+		break;
+	case 38:
+		gameName = "SALMON_PINK";
+		paintType = 0;
+		colorID = 136;
+		pearlescent = 5;
+		break;
+	case 39:
+		gameName = "SUNRISE_ORANGE";
+		paintType = 0;
+		colorID = 36;
+		pearlescent = 26;
+		break;
+	case 40:
+		gameName = "ORANGE";
+		paintType = 0;
+		colorID = 38;
+		pearlescent = 37;
+		break;
+	case 41:
+		gameName = "BRIGHT_ORANGE";
+		paintType = 0;
+		colorID = 138;
+		pearlescent = 89;
+		break;
+	case 42:
+		gameName = "BRONZE";
+		paintType = 0;
+		colorID = 90;
+		pearlescent = 102;
+		break;
+	case 43:
+		gameName = "YELLOW";
+		paintType = 0;
+		colorID = 88;
+		pearlescent = 88;
+		break;
+	case 44:
+		gameName = "RACE_YELLOW";
+		paintType = 0;
+		colorID = 89;
+		pearlescent = 88;
+		break;
+	case 45:
+		gameName = "FLUR_YELLOW";
+		paintType = 0;
+		colorID = 91;
+		pearlescent = 91;
+		break;
+	case 46:
+		gameName = "DARK_GREEN";
+		paintType = 0;
+		colorID = 49;
+		pearlescent = 52;
+		break;
+	case 47:
+		gameName = "RACING_GREEN";
+		paintType = 0;
+		colorID = 50;
+		pearlescent = 53;
+		break;
+	case 48:
+		gameName = "SEA_GREEN";
+		paintType = 0;
+		colorID = 51;
+		pearlescent = 66;
+		break;
+	case 49:
+		gameName = "OLIVE_GREEN";
+		paintType = 0;
+		colorID = 52;
+		pearlescent = 59;
+		break;
+	case 50:
+		gameName = "BRIGHT_GREEN";
+		paintType = 0;
+		colorID = 53;
+		pearlescent = 59;
+		break;
+	case 51:
+		gameName = "PETROL_GREEN";
+		paintType = 0;
+		colorID = 54;
+		pearlescent = 60;
+		break;
+	case 52:
+		gameName = "LIME_GREEN";
+		paintType = 0;
+		colorID = 92;
+		pearlescent = 92;
+		break;
+	case 53:
+		gameName = "MIDNIGHT_BLUE";
+		paintType = 0;
+		colorID = 141;
+		pearlescent = 73;
+		break;
+	case 54:
+		gameName = "GALAXY_BLUE";
+		paintType = 0;
+		colorID = 61;
+		pearlescent = 63;
+		break;
+	case 55:
+		gameName = "DARK_BLUE";
+		paintType = 0;
+		colorID = 62;
+		pearlescent = 68;
+		break;
+	case 56:
+		gameName = "SAXON_BLUE";
+		paintType = 0;
+		colorID = 63;
+		pearlescent = 87;
+		break;
+	case 57:
+		gameName = "MARINER_BLUE";
+		paintType = 0;
+		colorID = 65;
+		pearlescent = 87;
+		break;
+	case 58:
+		gameName = "HARBOR_BLUE";
+		paintType = 0;
+		colorID = 66;
+		pearlescent = 60;
+		break;
+	case 59:
+		gameName = "DIAMOND_BLUE";
+		paintType = 0;
+		colorID = 67;
+		pearlescent = 67;
+		break;
+	case 60:
+		gameName = "SURF_BLUE";
+		paintType = 0;
+		colorID = 68;
+		pearlescent = 68;
+		break;
+	case 61:
+		gameName = "NAUTICAL_BLUE";
+		paintType = 0;
+		colorID = 69;
+		pearlescent = 74;
+		break;
+	case 62:
+		gameName = "RACING_BLUE";
+		paintType = 0;
+		colorID = 73;
+		pearlescent = 73;
+		break;
+	case 63:
+		gameName = "ULTRA_BLUE";
+		paintType = 0;
+		colorID = 70;
+		pearlescent = 70;
+		break;
+	case 64:
+		gameName = "LIGHT_BLUE";
+		paintType = 0;
+		colorID = 74;
+		pearlescent = 74;
+		break;
+	case 65:
+		gameName = "CHOCOLATE_BROWN";
+		paintType = 0;
+		colorID = 96;
+		pearlescent = 95;
+		break;
+	case 66:
+		gameName = "BISON_BROWN";
+		paintType = 0;
+		colorID = 101;
+		pearlescent = 95;
+		break;
+	case 67:
+		gameName = "CREEK_BROWN";
+		paintType = 0;
+		colorID = 95;
+		pearlescent = 97;
+		break;
+	case 68:
+		gameName = "UMBER_BROWN";
+		paintType = 0;
+		colorID = 94;
+		pearlescent = 104;
+		break;
+	case 69:
+		gameName = "MAPLE_BROWN";
+		paintType = 0;
+		colorID = 97;
+		pearlescent = 98;
+		break;
+	case 70:
+		gameName = "BEECHWOOD_BROWN";
+		paintType = 0;
+		colorID = 103;
+		pearlescent = 104;
+		break;
+	case 71:
+		gameName = "SIENNA_BROWN";
+		paintType = 0;
+		colorID = 104;
+		pearlescent = 104;
+		break;
+	case 72:
+		gameName = "SADDLE_BROWN";
+		paintType = 0;
+		colorID = 98;
+		pearlescent = 95;
+		break;
+	case 73:
+		gameName = "MOSS_BROWN";
+		paintType = 0;
+		colorID = 100;
+		pearlescent = 100;
+		break;
+	case 74:
+		gameName = "WOODBEECH_BROWN";
+		paintType = 0;
+		colorID = 102;
+		pearlescent = 105;
+		break;
+	case 75:
+		gameName = "STRAW_BROWN";
+		paintType = 0;
+		colorID = 99;
+		pearlescent = 106;
+		break;
+	case 76:
+		gameName = "SANDY_BROWN";
+		paintType = 0;
+		colorID = 105;
+		pearlescent = 105;
+		break;
+	case 77:
+		gameName = "BLEECHED_BROWN";
+		paintType = 0;
+		colorID = 106;
+		pearlescent = 106;
+		break;
+	case 78:
+		gameName = "SPIN_PURPLE";
+		paintType = 0;
+		colorID = 72;
+		pearlescent = 64;
+		break;
+	case 79:
+		gameName = "MIGHT_PURPLE";
+		paintType = 0;
+		colorID = 146;
+		pearlescent = 145;
+		break;
+	case 80:
+		gameName = "BRIGHT_PURPLE";
+		paintType = 0;
+		colorID = 145;
+		pearlescent = 74;
+		break;
+	case 81:
+		gameName = "CREAM";
+		paintType = 0;
+		colorID = 107;
+		pearlescent = 107;
+		break;
+	case 82:
+		gameName = "WHITE";
+		paintType = 0;
+		colorID = 111;
+		pearlescent = 0;
+		break;
+	case 83:
+		gameName = "FROST_WHITE";
+		paintType = 0;
+		colorID = 112;
+		pearlescent = 0;
+		break;
+	case 84:
+		gameName = "BLACK";
+		paintType = 1;
+		colorID = 0;
+		pearlescent = 0;
+		break;
+	case 85:
+		gameName = "BLACK_GRAPHITE";
+		paintType = 1;
+		colorID = 147;
+		pearlescent = 0;
+		break;
+	case 86:
+		gameName = "GRAPHITE";
+		paintType = 1;
+		colorID = 1;
+		pearlescent = 0;
+		break;
+	case 87:
+		gameName = "ANTHR_BLACK";
+		paintType = 1;
+		colorID = 11;
+		pearlescent = 0;
+		break;
+	case 88:
+		gameName = "BLACK_STEEL";
+		paintType = 1;
+		colorID = 2;
+		pearlescent = 0;
+		break;
+	case 89:
+		gameName = "DARK_SILVER";
+		paintType = 1;
+		colorID = 3;
+		pearlescent = 2;
+		break;
+	case 90:
+		gameName = "SILVER";
+		paintType = 1;
+		colorID = 4;
+		pearlescent = 4;
+		break;
+	case 91:
+		gameName = "BLUE_SILVER";
+		paintType = 1;
+		colorID = 5;
+		pearlescent = 5;
+		break;
+	case 92:
+		gameName = "ROLLED_STEEL";
+		paintType = 1;
+		colorID = 6;
+		pearlescent = 0;
+		break;
+	case 93:
+		gameName = "SHADOW_SILVER";
+		paintType = 1;
+		colorID = 7;
+		pearlescent = 0;
+		break;
+	case 94:
+		gameName = "STONE_SILVER";
+		paintType = 1;
+		colorID = 8;
+		pearlescent = 0;
+		break;
+	case 95:
+		gameName = "MIDNIGHT_SILVER";
+		paintType = 1;
+		colorID = 9;
+		pearlescent = 0;
+		break;
+	case 96:
+		gameName = "CAST_IRON_SIL";
+		paintType = 1;
+		colorID = 10;
+		pearlescent = 0;
+		break;
+	case 97:
+		gameName = "RED";
+		paintType = 1;
+		colorID = 27;
+		pearlescent = 0;
+		break;
+	case 98:
+		gameName = "TORINO_RED";
+		paintType = 1;
+		colorID = 28;
+		pearlescent = 0;
+		break;
+	case 99:
+		gameName = "FORMULA_RED";
+		paintType = 1;
+		colorID = 29;
+		pearlescent = 0;
+		break;
+	case 100:
+		gameName = "LAVA_RED";
+		paintType = 1;
+		colorID = 150;
+		pearlescent = 0;
+		break;
+	case 101:
+		gameName = "BLAZE_RED";
+		paintType = 1;
+		colorID = 30;
+		pearlescent = 0;
+		break;
+	case 102:
+		gameName = "GRACE_RED";
+		paintType = 1;
+		colorID = 31;
+		pearlescent = 0;
+		break;
+	case 103:
+		gameName = "GARNET_RED";
+		paintType = 1;
+		colorID = 32;
+		pearlescent = 0;
+		break;
+	case 104:
+		gameName = "SUNSET_RED";
+		paintType = 1;
+		colorID = 33;
+		pearlescent = 0;
+		break;
+	case 105:
+		gameName = "CABERNET_RED";
+		paintType = 1;
+		colorID = 34;
+		pearlescent = 0;
+		break;
+	case 106:
+		gameName = "WINE_RED";
+		paintType = 1;
+		colorID = 143;
+		pearlescent = 0;
+		break;
+	case 107:
+		gameName = "CANDY_RED";
+		paintType = 1;
+		colorID = 35;
+		pearlescent = 0;
+		break;
+	case 108:
+		gameName = "HOT PINK";
+		paintType = 1;
+		colorID = 135;
+		pearlescent = 0;
+		break;
+	case 109:
+		gameName = "PINK";
+		paintType = 1;
+		colorID = 137;
+		pearlescent = 0;
+		break;
+	case 110:
+		gameName = "SALMON_PINK";
+		paintType = 1;
+		colorID = 136;
+		pearlescent = 0;
+		break;
+	case 111:
+		gameName = "SUNRISE_ORANGE";
+		paintType = 1;
+		colorID = 36;
+		pearlescent = 0;
+		break;
+	case 112:
+		gameName = "BRIGHT_ORANGE";
+		paintType = 1;
+		colorID = 138;
+		pearlescent = 0;
+		break;
+	case 113:
+		gameName = "GOLD";
+		paintType = 1;
+		colorID = 99;
+		pearlescent = 99;
+		break;
+	case 114:
+		gameName = "BRONZE";
+		paintType = 1;
+		colorID = 90;
+		pearlescent = 102;
+		break;
+	case 115:
+		gameName = "YELLOW";
+		paintType = 1;
+		colorID = 88;
+		pearlescent = 0;
+		break;
+	case 116:
+		gameName = "FLUR_YELLOW";
+		paintType = 1;
+		colorID = 91;
+		pearlescent = 0;
+		break;
+	case 117:
+		gameName = "DARK_GREEN";
+		paintType = 1;
+		colorID = 49;
+		pearlescent = 0;
+		break;
+	case 118:
+		gameName = "SEA_GREEN";
+		paintType = 1;
+		colorID = 51;
+		pearlescent = 0;
+		break;
+	case 119:
+		gameName = "OLIVE_GREEN";
+		paintType = 1;
+		colorID = 52;
+		pearlescent = 0;
+		break;
+	case 120:
+		gameName = "BRIGHT_GREEN";
+		paintType = 1;
+		colorID = 53;
+		pearlescent = 0;
+		break;
+	case 121:
+		gameName = "PETROL_GREEN";
+		paintType = 1;
+		colorID = 54;
+		pearlescent = 0;
+		break;
+	case 122:
+		gameName = "LIME_GREEN";
+		paintType = 1;
+		colorID = 92;
+		pearlescent = 0;
+		break;
+	case 123:
+		gameName = "MIDNIGHT_BLUE";
+		paintType = 1;
+		colorID = 141;
+		pearlescent = 0;
+		break;
+	case 124:
+		gameName = "GALAXY_BLUE";
+		paintType = 1;
+		colorID = 61;
+		pearlescent = 0;
+		break;
+	case 125:
+		gameName = "DARK_BLUE";
+		paintType = 1;
+		colorID = 62;
+		pearlescent = 0;
+		break;
+	case 126:
+		gameName = "SAXON_BLUE";
+		paintType = 1;
+		colorID = 63;
+		pearlescent = 0;
+		break;
+	case 127:
+		gameName = "BLUE";
+		paintType = 1;
+		colorID = 64;
+		pearlescent = 0;
+		break;
+	case 128:
+		gameName = "MARINER_BLUE";
+		paintType = 1;
+		colorID = 65;
+		pearlescent = 0;
+		break;
+	case 129:
+		gameName = "HARBOR_BLUE";
+		paintType = 1;
+		colorID = 66;
+		pearlescent = 0;
+		break;
+	case 130:
+		gameName = "DIAMOND_BLUE";
+		paintType = 1;
+		colorID = 67;
+		pearlescent = 0;
+		break;
+	case 131:
+		gameName = "SURF_BLUE";
+		paintType = 1;
+		colorID = 68;
+		pearlescent = 0;
+		break;
+	case 132:
+		gameName = "NAUTICAL_BLUE";
+		paintType = 1;
+		colorID = 69;
+		pearlescent = 0;
+		break;
+	case 133:
+		gameName = "RACING_BLUE";
+		paintType = 1;
+		colorID = 73;
+		pearlescent = 0;
+		break;
+	case 134:
+		gameName = "LIGHT_BLUE";
+		paintType = 1;
+		colorID = 74;
+		pearlescent = 0;
+		break;
+	case 135:
+		gameName = "BISON_BROWN";
+		paintType = 1;
+		colorID = 101;
+		pearlescent = 0;
+		break;
+	case 136:
+		gameName = "CREEK_BROWN";
+		paintType = 1;
+		colorID = 95;
+		pearlescent = 0;
+		break;
+	case 137:
+		gameName = "UMBER_BROWN";
+		paintType = 1;
+		colorID = 94;
+		pearlescent = 0;
+		break;
+	case 138:
+		gameName = "MAPLE_BROWN";
+		paintType = 1;
+		colorID = 97;
+		pearlescent = 0;
+		break;
+	case 139:
+		gameName = "BEECHWOOD_BROWN";
+		paintType = 1;
+		colorID = 103;
+		pearlescent = 0;
+		break;
+	case 140:
+		gameName = "SIENNA_BROWN";
+		paintType = 1;
+		colorID = 104;
+		pearlescent = 0;
+		break;
+	case 141:
+		gameName = "SADDLE_BROWN";
+		paintType = 1;
+		colorID = 98;
+		pearlescent = 0;
+		break;
+	case 142:
+		gameName = "MOSS_BROWN";
+		paintType = 1;
+		colorID = 100;
+		pearlescent = 0;
+		break;
+	case 143:
+		gameName = "WOODBEECH_BROWN";
+		paintType = 1;
+		colorID = 102;
+		pearlescent = 0;
+		break;
+	case 144:
+		gameName = "STRAW_BROWN";
+		paintType = 1;
+		colorID = 99;
+		pearlescent = 0;
+		break;
+	case 145:
+		gameName = "SANDY_BROWN";
+		paintType = 1;
+		colorID = 105;
+		pearlescent = 0;
+		break;
+	case 146:
+		gameName = "BLEECHED_BROWN";
+		paintType = 1;
+		colorID = 106;
+		pearlescent = 0;
+		break;
+	case 147:
+		gameName = "PURPLE";
+		paintType = 1;
+		colorID = 71;
+		pearlescent = 0;
+		break;
+	case 148:
+		gameName = "SPIN_PURPLE";
+		paintType = 1;
+		colorID = 72;
+		pearlescent = 0;
+		break;
+	case 149:
+		gameName = "MIGHT_PURPLE";
+		paintType = 1;
+		colorID = 142;
+		pearlescent = 0;
+		break;
+	case 150:
+		gameName = "BRIGHT_PURPLE";
+		paintType = 1;
+		colorID = 145;
+		pearlescent = 0;
+		break;
+	case 151:
+		gameName = "CREAM";
+		paintType = 1;
+		colorID = 107;
+		pearlescent = 0;
+		break;
+	case 152:
+		gameName = "FROST_WHITE";
+		paintType = 1;
+		colorID = 112;
+		pearlescent = 0;
+		break;
+	case 153:
+		gameName = "BLACK";
+		paintType = 2;
+		colorID = 12;
+		pearlescent = 0;
+		break;
+	case 154:
+		gameName = "GREY";
+		paintType = 2;
+		colorID = 13;
+		pearlescent = 0;
+		break;
+	case 155:
+		gameName = "LIGHT_GREY";
+		paintType = 2;
+		colorID = 14;
+		pearlescent = 0;
+		break;
+	case 156:
+		gameName = "WHITE";
+		paintType = 2;
+		colorID = 131;
+		pearlescent = 0;
+		break;
+	case 157:
+		gameName = "BLUE";
+		paintType = 2;
+		colorID = 83;
+		pearlescent = 0;
+		break;
+	case 158:
+		gameName = "DARK_BLUE";
+		paintType = 2;
+		colorID = 82;
+		pearlescent = 0;
+		break;
+	case 159:
+		gameName = "MIDNIGHT_BLUE";
+		paintType = 2;
+		colorID = 84;
+		pearlescent = 0;
+		break;
+	case 160:
+		gameName = "MIGHT_PURPLE";
+		paintType = 2;
+		colorID = 149;
+		pearlescent = 0;
+		break;
+	case 161:
+		gameName = "Purple";
+		paintType = 2;
+		colorID = 148;
+		pearlescent = 0;
+		break;
+	case 162:
+		gameName = "RED";
+		paintType = 2;
+		colorID = 39;
+		pearlescent = 0;
+		break;
+	case 163:
+		gameName = "DARK_RED";
+		paintType = 2;
+		colorID = 40;
+		pearlescent = 0;
+		break;
+	case 164:
+		gameName = "ORANGE";
+		paintType = 2;
+		colorID = 41;
+		pearlescent = 0;
+		break;
+	case 165:
+		gameName = "YELLOW";
+		paintType = 2;
+		colorID = 42;
+		pearlescent = 0;
+		break;
+	case 166:
+		gameName = "GREEN";
+		paintType = 2;
+		colorID = 128;
+		pearlescent = 0;
+		break;
+	case 167:
+		gameName = "MATTE_FOR";
+		paintType = 2;
+		colorID = 151;
+		pearlescent = 0;
+		break;
+	case 168:
+		gameName = "MATTE_FOIL";
+		paintType = 2;
+		colorID = 155;
+		pearlescent = 0;
+		break;
+	case 169:
+		gameName = "MATTE_OD";
+		paintType = 2;
+		colorID = 152;
+		pearlescent = 0;
+		break;
+	case 170:
+		gameName = "MATTE_DIRT";
+		paintType = 2;
+		colorID = 153;
+		pearlescent = 0;
+		break;
+	case 171:
+		gameName = "MATTE_DESERT";
+		paintType = 2;
+		colorID = 154;
+		pearlescent = 0;
+		break;
+	case 172:
+		gameName = "BR_STEEL";
+		paintType = 3;
+		colorID = 117;
+		pearlescent = 18;
+		break;
+	case 173:
+		gameName = "BR_ALUMINIUM";
+		paintType = 3;
+		colorID = 119;
+		pearlescent = 5;
+		break;
+	case 174:
+		gameName = "GOLD_P";
+		paintType = 3;
+		colorID = 158;
+		pearlescent = 160;
+		break;
+	case 175:
+		gameName = "GOLD_S";
+		paintType = 3;
+		colorID = 159;
+		pearlescent = 160;
+		break;
+	}
+	return paintType != -1;
+}
+void AddVehiclePaint(Vehicle veh, char* label, int paintType, int colorID, int pearlescent, bool secondary = 0, bool wheelColor = 0, int wheelsColor = 0) {
+	null = 0;
+	AddOption(UI::_GET_LABEL_TEXT(label), null);
+	if (menu::printingop == menu::currentop)
+	{
+		if (null) {
+			RequestControlOfEnt(veh);
+			int currentPrimary = 0;
+			int currentSecondary = 0;
+			int currentPearlescent = 0;
+			int currentWheelColor = 0;
+			RequestControlOfEnt(veh);
+			if (!wheelColor) VEHICLE::GET_VEHICLE_EXTRA_COLOURS(veh, &currentPearlescent, &wheelsColor);
+			RequestControlOfEnt(veh);
+			VEHICLE::GET_VEHICLE_COLOURS(veh, &currentPrimary, &currentSecondary);
+
+			if (!secondary) {
+				RequestControlOfEnt(veh);
+				VEHICLE::CLEAR_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh);
+				RequestControlOfEnt(veh);
+				VEHICLE::SET_VEHICLE_MOD_COLOR_1(veh, paintType, colorID, 0);
+				RequestControlOfEnt(veh);
+				VEHICLE::SET_VEHICLE_COLOURS(veh, colorID, currentSecondary);
+			}
+			else if (secondary) {
+				RequestControlOfEnt(veh);
+				VEHICLE::CLEAR_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh);
+				RequestControlOfEnt(veh);
+				VEHICLE::SET_VEHICLE_MOD_COLOR_2(veh, paintType, colorID);
+				RequestControlOfEnt(veh);
+				VEHICLE::SET_VEHICLE_COLOURS(veh, currentPrimary, colorID);
+			}
+			RequestControlOfEnt(veh);
+			VEHICLE::SET_VEHICLE_EXTRA_COLOURS(veh, pearlescent, wheelsColor);
+		}
+	}
+}
+void gamePaint(int type, bool secondary = false, bool useSelectedPlayer = 0) { //TYPE:NORMAL, 1=Metallic, 2=Pearl 3=Matte 4=Metal
+	Player player = PLAYER::PLAYER_ID();
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
+	Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+	Entity e = PLAYER::PLAYER_PED_ID();
+	if (useSelectedPlayer) {
+		Player player = selPlayer;
+		Ped playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player);
+		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(playerPed, 0);
+		Entity e = playerPed;
+	}
+	int paintType = 0, colorID = 0, pearlescent = 0;
+	char* name = "";
+	char* title = "";
+	if (type == 0)
+		title = "Metallic";
+	else if (type == 1)
+		title = "Classic";
+	else if (type == 2)
+		title = "Matte";
+	else if (type == 3)
+		title = "Metals";
+	else if (type == 4)
+		title = "Pearlescent";
+
+	AddTitle(title);
+	if (type == 4) {
+
+	}
+	int currentPrimary = 0;
+	int currentSecondary = 0;
+	VEHICLE::GET_VEHICLE_COLOURS(veh, &currentPrimary, &currentSecondary);
+	if (!secondary) {
+		for (int i = 0; i < 175; i++) {
+			SetPaint(i, name, paintType, colorID, pearlescent);
+			if (type == 4) {
+				AddVehiclePaint(veh, name, 4, currentPrimary, colorID);
+			}
+			else if ((paintType == type) && type != 4) {
+				AddVehiclePaint(veh, name, paintType, colorID, pearlescent);
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < 175; i++) {
+			SetPaint(i, name, paintType, colorID, pearlescent);
+			if (type == 4) {
+				AddVehiclePaint(veh, name, 4, currentSecondary, colorID, 1);
+			}
+			else if ((paintType == type) && type != 4) {
+				AddVehiclePaint(veh, name, paintType, colorID, pearlescent, 1);
+			}
+		}
+	}
+}
+typedef struct {
+	string name;
+	int PaintTypeIndex;
+	int colorID;
+} PaintType;
+vector<PaintType> PaintTypes = { { "~b~Classic", 0, 147 },{ "~b~Metallic", 1, 96 },{ "~b~Matte", 2, 12 },{ "~b~Metal", 3, 147 } };
+int PaintTypeIndex = 0;
+int PaintTypeIndexSecondary = 0;
+void AddPaintTypes(bool primary) {
+	null = 0;
+	AddOption("~g~Paint Type");
+	if (OptionY < 0.6325 && OptionY > 0.1425)
+	{
+		UI::SET_TEXT_FONT(0);
+		UI::SET_TEXT_SCALE(0.26f, 0.26f);
+		UI::SET_TEXT_CENTRE(1);
+		if (primary) {
+			drawstring((char*)PaintTypes[PaintTypeIndex].name.c_str(), 0.233f + menuPos, OptionY);
+			if (menu::printingop == menu::currentop) {
+				if (IsOptionRJPressed()) {//num6
+					if (PaintTypeIndex != (PaintTypes.size() - 1)) PaintTypeIndex++;
+					Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+					RequestControlOfEnt(veh);
+					RGBA rgb;
+					VEHICLE::GET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, &rgb.R, &rgb.G, &rgb.B);
+					int currentPrimary = 0;
+					int currentSecondary = 0;
+					int colorID = 0;
+					int paintType = 0;
+					int pearlescent = 0;
+					char* name;
+					VEHICLE::GET_VEHICLE_COLOURS(veh, &currentPrimary, &currentSecondary);
+					switch (PaintTypeIndex) {
+					case 0: SetPaint(1, name, paintType, colorID, pearlescent); break;
+					case 1:	SetPaint(2, name, paintType, colorID, pearlescent); break;
+					case 2:	SetPaint(153, name, paintType, colorID, pearlescent); break;
+					case 3:	SetPaint(0, name, paintType, colorID, pearlescent); break;
+
+					}
+					VEHICLE::SET_VEHICLE_MOD_COLOR_1(veh, paintType, colorID, 0);
+					VEHICLE::SET_VEHICLE_COLOURS(veh, colorID, currentSecondary);
+					VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, rgb.R, rgb.G, rgb.B);
+				}
+				if (IsOptionLJPressed()) {//num4
+					if (PaintTypeIndex != 0) PaintTypeIndex--;
+					Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+					RequestControlOfEnt(veh);
+					RGBA rgb;
+					VEHICLE::GET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, &rgb.R, &rgb.G, &rgb.B);
+					int currentPrimary = 0;
+					int currentSecondary = 0;
+					int colorID = 0;
+					int paintType = 0;
+					int pearlescent = 0;
+					char* name;
+					VEHICLE::GET_VEHICLE_COLOURS(veh, &currentPrimary, &currentSecondary);
+					switch (PaintTypeIndex) {
+					case 0: SetPaint(1, name, paintType, colorID, pearlescent); break;
+					case 1:	SetPaint(2, name, paintType, colorID, pearlescent); break;
+					case 2:	SetPaint(153, name, paintType, colorID, pearlescent); break;
+					case 3:	SetPaint(0, name, paintType, colorID, pearlescent); break;
+
+					}
+					VEHICLE::SET_VEHICLE_MOD_COLOR_1(veh, paintType, colorID, 0);
+					VEHICLE::SET_VEHICLE_COLOURS(veh, colorID, currentSecondary);
+					VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, rgb.R, rgb.G, rgb.B);
+				}
+			}
+		}
+		else {
+			drawstring((char*)PaintTypes[PaintTypeIndexSecondary].name.c_str(), 0.233f + menuPos, OptionY);
+			if (menu::printingop == menu::currentop) {
+				if (IsOptionRJPressed()) {//num6
+					if (PaintTypeIndexSecondary != (PaintTypes.size() - 1)) {
+						PaintTypeIndexSecondary++;
+						Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+						RequestControlOfEnt(veh);
+						RGBA rgb;
+						VEHICLE::GET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, &rgb.R, &rgb.G, &rgb.B);
+						int currentPrimary = 0;
+						int currentSecondary = 0;
+						int colorID = 0;
+						int paintType = 0;
+						int pearlescent = 0;
+						char* name;
+						VEHICLE::GET_VEHICLE_COLOURS(veh, &currentPrimary, &currentSecondary);
+						switch (PaintTypeIndexSecondary) {
+						case 0: SetPaint(1, name, paintType, colorID, pearlescent); break;
+						case 1:	SetPaint(2, name, paintType, colorID, pearlescent); break;
+						case 2:	SetPaint(153, name, paintType, colorID, pearlescent); break;
+						case 3:	SetPaint(0, name, paintType, colorID, pearlescent); break;
+
+						}
+						VEHICLE::SET_VEHICLE_MOD_COLOR_2(veh, paintType, colorID);
+						VEHICLE::SET_VEHICLE_COLOURS(veh, currentPrimary, colorID);
+						VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rgb.R, rgb.G, rgb.B);
+					}
+				}
+				if (IsOptionLJPressed()) {//num4
+					if (PaintTypeIndexSecondary != 0) {
+						PaintTypeIndexSecondary--;
+						Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+						RequestControlOfEnt(veh);
+						RGBA rgb;
+						VEHICLE::GET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, &rgb.R, &rgb.G, &rgb.B);
+						int currentPrimary = 0;
+						int currentSecondary = 0;
+						int colorID = 0;
+						int paintType = 0;
+						int pearlescent = 0;
+						char* name;
+						VEHICLE::GET_VEHICLE_COLOURS(veh, &currentPrimary, &currentSecondary);
+						switch (PaintTypeIndexSecondary) {
+						case 0: SetPaint(1, name, paintType, colorID, pearlescent); break;
+						case 1:	SetPaint(2, name, paintType, colorID, pearlescent); break;
+						case 2:	SetPaint(153, name, paintType, colorID, pearlescent); break;
+						case 3:	SetPaint(0, name, paintType, colorID, pearlescent); break;
+
+						}
+						VEHICLE::SET_VEHICLE_MOD_COLOR_2(veh, paintType, colorID);
+						VEHICLE::SET_VEHICLE_COLOURS(veh, currentPrimary, colorID);
+						VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rgb.R, rgb.G, rgb.B);
+					}
+				}
+			}
+		}
+	}
+}
+void CustomPaintRGB(bool primary) {
+	if (primary) {
+		AddTitle("Custom Primary");
+		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+		bool  greenChanged = 0, blueChanged = 0, redChanged = 0;
+		int pr = 0, pg = 0, pb = 0;
+		VEHICLE::GET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, &pr, &pg, &pb);
+		AddPaintTypes(primary);
+		AddIntEasy("Red", pr, pr, 1, 0, redChanged);
+		AddIntEasy("Green", pg, pg, 1, 0, greenChanged);
+		AddIntEasy("Blue", pb, pb, 1, 0, blueChanged);
+		if (redChanged || greenChanged || blueChanged) {
+			RequestControlOfEnt(veh);
+			VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, pr, pg, pb);
+
+		}
+	}
+	else {
+		AddTitle("Custom Secondary");
+		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0);
+		bool  greenChanged = 0, blueChanged = 0, redChanged = 0;
+		int pr = 0, pg = 0, pb = 0;
+		VEHICLE::GET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, &pr, &pg, &pb);
+		AddPaintTypes(primary);
+		AddIntEasy("Red", pr, pr, 1, 0, redChanged);
+		AddIntEasy("Green", pg, pg, 1, 0, greenChanged);
+		AddIntEasy("Blue", pb, pb, 1, 0, blueChanged);
+		if (redChanged || greenChanged || blueChanged) {
+			RequestControlOfEnt(veh);
+			VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, pr, pg, pb);
+		}
+	}
+}
+
 void menu::submenu_switch()
 { // Make calls to submenus over here.
 
@@ -6667,7 +9309,54 @@ void menu::submenu_switch()
 	case SUB::LANDMARKS: sub::Landmarks(); break;
 	case SUB::OPLAYERATTACKERS: sub::oPlayersSendAttackers(selpName, selPlayer); break;
 	case SUB::OPLAYERDROPOPTIONS: sub:oPlayerDROPMenu(selpName, selPlayer); break;
+	case SUB::VEHICLE_LSC2:  sub::VehicleLSCSubMenu2(); break;
+	case SUB::SPOILER:					Spoiler(); break;
+	case SUB::FRONTBUMPER:				FrontBumper(); break;
+	case SUB::REARBUMPER:				RearBumper(); break;
+	case SUB::SIDESKIRT:				SideSkirt(); break;
+	case SUB::EXHAUST:					Exhaust(); break;
+	case SUB::FRAME:					Frame(); break;
+	case SUB::GRILLE:					Grille(); break;
+	case SUB::HOOD:						Hood(); break;
+	case SUB::FENDER:					Fender(); break;
+	case SUB::RIGHTFENDER:				RightFender(); break;
+	case SUB::ROOF:						Roof(); break;
+	case SUB::ENGINE:					Engine(); break;
+	case SUB::BRAKES:					Brakes(); break;
+	case SUB::TRANSMISSION:				Transmission(); break;
+	case SUB::HORNS:					Horns(); break;
+	case SUB::SUSPENSION:				Suspension(); break;
+	case SUB::ARMOR:					Armor(); break;
+	case SUB::WHEELSMOKE:				TireSmoke(); break;
+	case SUB::WTINT:					WindowsTint(0); break;
+	case SUB::GAMEPAINT:				sub::LSCPaintSelector(); break;
+	case SUB::METALLIC:					gamePaint(0); break;
+	case SUB::CLASSIC:					gamePaint(1); break;
+	case SUB::PEARLESCENT:				gamePaint(4); break;
+	case SUB::MATTE:					gamePaint(2); break;
+	case SUB::METALS:					gamePaint(3); break;
+	case SUB::SMETALLIC:				gamePaint(0, 1); break;
+	case SUB::SCLASSIC:					gamePaint(1, 1); break;
+	case SUB::SPEARLESCENT:				gamePaint(4, 1); break;
+	case SUB::SMATTE:					gamePaint(2, 1); break;
+	case SUB::SMETALS:					gamePaint(3, 1); break;
+	case SUB::SPAINT:					sub::LSCPaintSelector(0, 1);
+	case SUB::PPAINT:					sub::LSCPaintSelector(1, 0);
+	case SUB::NEON:						Neon(false); break;
+	case SUB::WSPORT:					Wheels(1, 5); break;
+	case SUB::WMUSCLE:					Wheels(1, 3); break;
+	case SUB::WLOWRIDER:				Wheels(1, 2); break;
+	case SUB::WSUV:						Wheels(1, 6); break;
+	case SUB::WOFFROAD:					Wheels(1, 4); break;
+	case SUB::WTUNER:					Wheels(1, 7); break;
+	case SUB::WBENNY:					Wheels(1, 8); break;
+	case SUB::WBIKE:					Wheels(1, 0); break;
+	case SUB::WHIGHEND:					Wheels(1, 1); break;
+	case SUB::WHEEL:					Wheels(0); break;
+	case SUB::CHANGEWHEELS:				Wheels(1); break;
+	
 
+	
 	}
 }
 void set_VehSpeedBoost()
@@ -6696,10 +9385,26 @@ void set_VehSpeedBoost()
 }
 void set_godmode()
 {
-	if (invincible) {
-		ENTITY::SET_ENTITY_INVINCIBLE(PLAYER::PLAYER_PED_ID(), true);
 
-	}
+	//if (invincible)
+	//{
+	//	BYTE Setter = 1;
+	//	BYTE Current = Memory::get_value<BYTE>({ 0x08, 0x189 });
+	//	if (Current != Setter)
+	//	{
+	//		Memory::set_value({ 0x08, 0x189 }, Setter);
+	//	}
+	//}
+	//if(gModDisabled)
+
+	//{
+	//	BYTE Setter = 0;
+	//	BYTE Current = Memory::get_value<BYTE>({ 0x08, 0x189 });
+	//	if (Current != Setter)
+	//	{
+	//		Memory::set_value({ 0x08, 0x189 }, Setter);
+	//	}
+	//}
 }
 void set_PlayerSuperJump()
 {
@@ -6776,22 +9481,22 @@ void FlipVehicle() {
 }
 bool mph = 1;
 void printSpeed() {
-	/*SET_TEXT_FONT(0);
-	SET_TEXT_SCALE(7.26f, 7.26f);
-	SET_TEXT_CENTRE(1);speedometertypesize
-	_SET_TEXT_ENTRY("STRING");
-	_ADD_TEXT_COMPONENT_STRING(name);*/
+	UI::SET_TEXT_FONT(0);
+	UI::SET_TEXT_SCALE(7.26f, 7.26f);
+	UI::SET_TEXT_CENTRE(1);
+	UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING");
+	
 	if (PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 0)) {
 		UI::SET_TEXT_FONT(0);
 		UI::SET_TEXT_PROPORTIONAL(1);
-		//SET_TEXT_SCALE(0.0, 0.60);
+		UI::SET_TEXT_SCALE(0.0, 0.60);
 		UI::SET_TEXT_SCALE(0.0, 0.92);
 		UI::SET_TEXT_COLOUR(255, 255, 255, 255);
 		UI::SET_TEXT_DROPSHADOW(0, 0, 0, 0, 255);
 		UI::SET_TEXT_EDGE(1, 0, 0, 0, 255);
 		UI::SET_TEXT_DROP_SHADOW();
 		UI::SET_TEXT_OUTLINE();
-		UI::_SET_TEXT_ENTRY("STRING");
+	UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING");
 		std::ostringstream oss;
 		float speed;
 		float mps = ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), 0));
@@ -6801,7 +9506,7 @@ void printSpeed() {
 		if (!mph) speed = round(kmh);
 		oss << speed;
 		//	UI::_ADD_TEXT_COMPONENT_STRING((char*)oss.str().c_str());
-		//UI::_DRAW_TEXT((screen_res_x / 1000) - 0.096, 1 - 0.074);
+		//UI::END_TEXT_COMMAND_DISPLAY_TEXT((screen_res_x / 1000) - 0.096, 1 - 0.074);
 		UI::SET_TEXT_FONT(0);
 		UI::SET_TEXT_PROPORTIONAL(1);
 		//SET_TEXT_SCALE(0.0, 0.60);
@@ -6811,13 +9516,13 @@ void printSpeed() {
 		UI::SET_TEXT_EDGE(1, 0, 0, 0, 255);
 		UI::SET_TEXT_DROP_SHADOW();
 		UI::SET_TEXT_OUTLINE();
-		UI::_SET_TEXT_ENTRY("STRING");
+//		UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING");
 		std::ostringstream osss;
 		if (mph) osss << "~g~mph"; else osss << "~g~km/h";
 		//		UI::_ADD_TEXT_COMPONENT_STRING((char*)osss.str().c_str());
-		//	UI::_DRAW_TEXT((screen_res_x / 1000) - 0.045, 1 - 0.043);
+		//	UI::END_TEXT_COMMAND_DISPLAY_TEXT((screen_res_x / 1000) - 0.045, 1 - 0.043);
 	}
-	//_DRAW_TEXT(-0.015f + (screen_res_x / 100), -0.015f + (screen_res_y / 100));
+	//END_TEXT_COMMAND_DISPLAY_TEXT(-0.015f + (screen_res_x / 100), -0.015f + (screen_res_y / 100));
 
 }
 void set_spodercarmode()
@@ -6834,25 +9539,25 @@ void set_spodercarmode()
 }
 void set_loop_fuckCam()
 {
-	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	Player playerPed = selPlayer;
 	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
 	FIRE::ADD_EXPLOSION(pCoords.x, pCoords.y, pCoords.z + 15, 29, 999999.5f, false, true, 1.0f);
 }
 void set_loop_annoyBomb()
 {
-	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	Player playerPed = selPlayer;
 	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
 	FIRE::ADD_EXPLOSION(pCoords.x, pCoords.y, pCoords.z, 29, 9.0f, true, false, 0.0f);
 }
 void set_loop_forcefield()
 {
-	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	Player playerPed = selPlayer;
 	Vector3 pCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
 	FIRE::ADD_EXPLOSION(pCoords.x, pCoords.y, pCoords.z, 7, 9.0f, false, true, 0.0f);
 }
 void set_clearpTasks()
 {
-	Player playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selPlayer);
+	Player playerPed = selPlayer;
 	AI::CLEAR_PED_TASKS_IMMEDIATELY(playerPed);
 }
 
@@ -6865,8 +9570,20 @@ void set_RainbowP()
 	if (VEHICLE::GET_IS_VEHICLE_SECONDARY_COLOUR_CUSTOM(veh))
 		VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
 }
+Hooking::NativeHandler ORIG_NETWORK_EARN_FROM_PICKUP = NULL;
+void* __cdecl MY_NETWORK_EARN_FROM_PICKUP(NativeContext *cxt)
+{
+	Log::Msg("NETWORKCASH::NETWORK_EARN_FROM_PICKUP(%i);\n", cxt->GetArgument<int>(0));
+	cxt->SetResult(0, 600000);
+	return cxt;
+}
+
 void menu::loops() {
 
+	if (stealth)
+	{
+		MY_NETWORK_EARN_FROM_PICKUP(0);
+	}
 	/*	if (DOES_ENTITY_EXIST(PLAYER_PED_ID())){
 	tickForForce++;
 	if (tickForForce > 500){
