@@ -293,7 +293,26 @@ namespace Memory {
 	}
 
 	std::vector<DWORD64> get_string_addresses(std::string str);
+	template <typename T>
+	T get_value(std::vector<DWORD> offsets) {
 
+		uintptr_t Addr = get_multilayer_pointer(Hooking::getWorldPtr(), offsets);
+		if (Addr == NULL) {
+			return NULL;
+		}
+
+		return *((T*)Addr);
+	}
+
+	template <typename T>
+	void set_value(std::vector<DWORD> offsets, T value) {
+		uintptr_t Addr = get_multilayer_pointer(Hooking::getWorldPtr(), offsets);
+		if (Addr == NULL) {
+			return;
+		}
+
+		*reinterpret_cast<T*>(Addr) = value;
+	}
 }
 
 #endif // __MEMORY_H__

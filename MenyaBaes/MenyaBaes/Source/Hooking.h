@@ -10,6 +10,7 @@ public:
 	static void InitNativeHooK();
 	static void onTickInit();
 	static bool HookNatives();
+	static uint64_t getWorldPtr();
 	static __int64** getGlobalPtr();
 	// Native function handler type
 	typedef void(__cdecl * NativeHandler)(scrNativeCallContext * context);

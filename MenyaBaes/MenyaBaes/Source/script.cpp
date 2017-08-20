@@ -2203,7 +2203,25 @@ void VehicleLSCSubMenu2(bool useSelectPlayer = 0) {
 		//	AddToggle("God Mode", invincible, null, invincibleDisabled);
 		AddToggle("God Mode", invincible, null, gModDisabled);
 		
+		if (invincible)
+		{
+			BYTE Setter = 1;
+			BYTE Current = Memory::get_value<BYTE>({ 0x08, 0x189 });
+			if (Current != Setter)
+			{
+				Memory::set_value({ 0x08, 0x189 }, Setter);
+			}
+		}
+		if (gModDisabled)
 
+		{
+			BYTE Setter = 0;
+			BYTE Current = Memory::get_value<BYTE>({ 0x08, 0x189 });
+			if (Current != Setter)
+			{
+				Memory::set_value({ 0x08, 0x189 }, Setter);
+			}
+		}
 		AddToggle("No Cops", ms_neverWanted);
 		AddToggle("RP Increaser", ms_rpIncreaser, increaserEnabled);
 		AddToggle("Invisible", ms_invisible, null, invisibleDisabled);

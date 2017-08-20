@@ -7,6 +7,7 @@ HANDLE mainFiber;
 DWORD wakeAt;
 
 static eGameState* 									m_gameState;
+
 static uint64_t										m_worldPtr;
 static BlipList*									m_blipList;
 static Hooking::NativeRegistration**				m_registrationTable;
@@ -294,6 +295,10 @@ eGameState Hooking::GetGameState()
 BlipList* Hooking::GetBlipList()
 {
 	return m_blipList;
+}
+uint64_t Hooking::getWorldPtr()
+{
+	return m_worldPtr;
 }
 void WAIT(DWORD ms)
 {
