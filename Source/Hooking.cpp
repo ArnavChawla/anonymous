@@ -7,7 +7,6 @@ HANDLE mainFiber;
 DWORD wakeAt;
 
 static eGameState* 									m_gameState;
-
 static uint64_t										m_worldPtr;
 static BlipList*									m_blipList;
 static Hooking::NativeRegistration**				m_registrationTable;
@@ -80,15 +79,15 @@ public:
 BOOL Hooking::InitializeHooks()
 {
 	BOOL returnVal = TRUE;
-	Ini *settingsIni = new Ini(".\\AnoymousFiles\\settings.ini");
+	/*Ini *settingsIni = new Ini(".\\AnoymousFiles\\settings.ini");
 	string name = settingsIni->GetString("Login", "User");
-	string pw = settingsIni->GetString("Login", "Pass");
+	string pw = settingsIni->GetString("Login", "Pass");*/
 	// Input hook
-	if (!is_user_authed(name, pw))
+	/*if (!is_user_authed(name, pw))
 	{
 		Log::Fatal("Buy The Menu First");
 		exit(0);
-	}
+	}*/
 	if (!iHook.Initialize()) {
 
 		Log::Error("Failed to initialize InputHook");
@@ -295,10 +294,6 @@ eGameState Hooking::GetGameState()
 BlipList* Hooking::GetBlipList()
 {
 	return m_blipList;
-}
-uint64_t Hooking::getWorldPtr()
-{
-	return m_worldPtr;
 }
 void WAIT(DWORD ms)
 {

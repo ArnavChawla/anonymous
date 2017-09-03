@@ -3,16 +3,24 @@
 
 DWORD WINAPI ControlThread(LPVOID lpParam)
 {
+	//EnableCars::Run((HINSTANCE)lpParam);
 	Hooking::Start((HMODULE)lpParam);
+	//EnableCars::Run((HINSTANCE)lpParam);
 	return 0;
 }
 
+DWORD WINAPI MainEntryPoint(LPVOID lpParam)
+{
+	EnableCars::Run((HINSTANCE)lpParam);
+	return 0;
+}
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved )
 {
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
 		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ControlThread, hModule, NULL, NULL);
+		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)MainEntryPoint, hModule, NULL, NULL);
 		break;
 	case DLL_THREAD_ATTACH:
 		break;

@@ -781,7 +781,7 @@ enum eBone
 	FB_L_CheekBone_000 = 0x542e,
 	FB_L_Lip_Corner_000 = 0x74ac,
 	FB_R_Lid_Upper_000 = 0xaa10,
-	FB_R_Eye_000 = 0x6b52,
+	FB_R_Eye_000 = 0x5A52,
 	FB_R_CheekBone_000 = 0x4b88,
 	FB_R_Brow_Out_000 = 0x54c,
 	FB_R_Lip_Corner_000 = 0x2ba6,

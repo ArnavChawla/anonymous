@@ -33,7 +33,7 @@ void Log::Init(HMODULE hModule) {
 		if (slash != -1) {
 			g_logFile[slash + 1] = '\0';
 			strcpy_s(g_debugLogFile, g_logFile);
-			strcat_s(g_debugLogFile, "SudoMod.log");
+			strcat_s(g_debugLogFile, "Anonymous.log");
 			
 			FILE* file;
 			if ((fopen_s(&file, g_debugLogFile, "w")) == 0)
